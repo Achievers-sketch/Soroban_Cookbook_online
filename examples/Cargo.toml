@@ -3,5 +3,7 @@ members = [
     "hello-world",
     "counter",
     "token-transfer",
+    "contract-factory",
+    "oracle-consumer",
 ]
 resolver = "2"

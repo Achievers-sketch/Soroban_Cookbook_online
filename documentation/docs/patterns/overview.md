@@ -34,6 +34,18 @@ Error taxonomy, custom error patterns, error propagation strategies, and user-fa
 
 Comprehensive error handling patterns including Result types, fallback logic, graceful degradation, transaction rollback, and input validation. Essential for production-ready contracts.
 
+### [Contract Factory](/docs/patterns/contract-factory)
+
+<span class="sb-badge sb-badge--intermediate">Intermediate</span> <span class="sb-tag sb-tag--deployment">Deployment</span> <span class="sb-badge sb-badge--stable">Stable</span>
+
+Deploy multiple contract instances from a factory contract. Demonstrates dynamic deployment, instance tracking, and parameter initialization for standardized contracts.
+
+### [Oracle Consumer](/docs/patterns/oracle-consumer)
+
+<span class="sb-badge sb-badge--intermediate">Intermediate</span> <span class="sb-tag sb-tag--integration">Integration</span> <span class="sb-badge sb-badge--stable">Stable</span>
+
+Read external price feeds and data from oracle contracts. Includes data validation, freshness checking, and trust assumptions for oracle-dependent applications.
+
 ## Pattern Categories
 
 ### 🪙 Token Standards

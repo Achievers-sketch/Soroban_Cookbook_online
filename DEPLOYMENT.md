@@ -163,6 +163,26 @@ Currently, no environment variables are required for deployment. The workflow us
 
 ## Security
 
+### Content Security Policy (CSP)
+
+The documentation site is protected by a strict Content-Security-Policy that prevents XSS and injection attacks.
+
+**CSP Implementation:**
+- Meta tag added to all pages via Docusaurus configuration (`documentation/docusaurus.config.ts`)
+- Static `_headers` file provided for edge deployment compatibility
+- Additional security headers configured for defense-in-depth
+
+**Key Directives:**
+- `default-src 'self'`: All content from same origin
+- `script-src 'self' 'wasm-unsafe-eval'`: Scripts from same origin (wasm needed for Docusaurus)
+- `style-src 'self' 'unsafe-inline'`: Styles from same origin with inline support (required for theming)
+- `frame-ancestors 'none'`: Prevents clickjacking
+- Other headers: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`
+
+See [SECURITY.md](./SECURITY.md) for detailed CSP documentation and testing instructions.
+
+### Workflow Security
+
 - Workflow uses `actions/checkout@v4` (latest stable)
 - Permissions are minimal: `contents: read`, `pages: write`, `id-token: write`
 - No secrets required for GitHub Pages deployment

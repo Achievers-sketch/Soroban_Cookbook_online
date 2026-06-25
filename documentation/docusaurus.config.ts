@@ -46,6 +46,15 @@ const config: Config = {
         content: '#1e1e2e',
       },
     },
+    // Content Security Policy (CSP) meta tag
+    // Enforces security policies for resource loading to prevent XSS and injection attacks
+    {
+      tagName: 'meta',
+      attributes: {
+        'http-equiv': 'Content-Security-Policy',
+        content: "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';",
+      },
+    },
     // Preload the Inter variable font (latin woff2) — critical for above-the-fold text.
     // The href must match the path emitted by @fontsource-variable/inter after build.
     {
