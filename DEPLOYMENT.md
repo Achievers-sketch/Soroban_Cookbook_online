@@ -168,6 +168,89 @@ Currently, no environment variables are required for deployment. The workflow us
 - No secrets required for GitHub Pages deployment
 - All code is built from the repository source
 
+## Redirect Management
+
+### Overview
+
+301 client-side redirects are configured via `@docusaurus/plugin-client-redirects` in `documentation/docusaurus.config.ts`. This preserves bookmarks and external links whenever a doc is renamed or relocated.
+
+The plugin generates static HTML redirect pages at build time, so each redirect is a real file that browsers resolve before any JavaScript runs.
+
+### How It Works
+
+Docusaurus builds a lightweight HTML file at every `from` path. Each file contains a `<meta http-equiv="refresh">` redirect and a canonical `<link>` pointing to the `to` destination. This is functionally equivalent to a 301 at the hosting level.
+
+### Adding a New Redirect
+
+When a doc is renamed or moved:
+
+1. Open `documentation/docusaurus.config.ts`.
+2. Locate the `@docusaurus/plugin-client-redirects` entry in the `plugins` array.
+3. Add an object to the `redirects` array:
+
+```ts
+{
+  from: '/docs/old-path',   // the URL that no longer exists
+  to: '/docs/new-path',     // the current canonical URL
+},
+```
+
+4. Commit the change. The redirect is live on the next deployment.
+
+> **Rules:**
+> - `from` must be an **old** path that no longer has a doc at that location.  
+>   Adding a redirect for a path that still resolves to a real page will cause a build error.
+> - Both `from` and `to` must start with `/`.
+> - One `from` can map to exactly one `to`. For multiple old paths pointing to the same page, add multiple objects.
+
+### Current Redirect Map
+
+| Old path | New path | Reason |
+|---|---|---|
+| `/docs/intro` | `/docs/concepts/introduction` | Renamed from scaffold default |
+| `/docs/setup` | `/docs/getting-started/setup` | Moved into Getting Started section |
+| `/docs/getting-started/installation` | `/docs/getting-started/setup` | Unified setup page |
+| `/docs/getting-started/setup-macos` | `/docs/getting-started/setup` | Unified setup page |
+| `/docs/first-contract` | `/docs/getting-started/first-contract` | Moved into Getting Started section |
+| `/docs/getting-started/build` | `/docs/getting-started/building-and-compilation` | Renamed for clarity |
+| `/docs/getting-started/deploy` | `/docs/getting-started/deploy-testnet` | Split into testnet/mainnet pages |
+| `/docs/getting-started/interaction` | `/docs/getting-started/contract-interaction` | Renamed for clarity |
+| `/docs/concepts` | `/docs/concepts/introduction` | Index path now has dedicated page |
+| `/docs/concepts/intro` | `/docs/concepts/introduction` | Renamed |
+| `/docs/concepts/gas` | `/docs/concepts/gas-and-resources` | Renamed for clarity |
+| `/docs/concepts/cross-contract` | `/docs/concepts/cross-contract-invocation` | Renamed for clarity |
+| `/docs/patterns` | `/docs/patterns/overview` | Index path now has dedicated page |
+| `/docs/patterns/types` | `/docs/patterns/custom-types` | Renamed |
+| `/docs/patterns/auth` | `/docs/patterns/authorization` | Renamed |
+| `/docs/patterns/upgrades` | `/docs/patterns/lifecycle-upgrades` | Renamed |
+| `/docs/patterns/optimization` | `/docs/patterns/optimization-playbook` | Renamed |
+| `/docs/contributing/guide` | `/docs/contributing` | Consolidated |
+| `/docs/contributing/tested-example` | `/docs/contributing/add-tested-example` | Renamed |
+| `/docs/tutorial-basics/create-a-document` | `/docs/getting-started/first-contract` | Legacy scaffold path |
+| `/docs/tutorial-basics/deploy-your-site` | `/docs/getting-started/deploy-testnet` | Legacy scaffold path |
+
+### Verifying Redirects Locally
+
+After adding a redirect, build and serve the site locally to confirm:
+
+```bash
+cd documentation
+bun run build
+bun run serve
+```
+
+Then open `http://localhost:3000/docs/<old-path>` in a browser — you should land on the new page. Check the browser's Network tab to confirm the redirect fires.
+
+### Hosting-Level Redirects (Advanced)
+
+If you need true HTTP 301 responses (e.g., for SEO crawlers that don't execute JavaScript), add matching rules at the hosting layer:
+
+**GitHub Pages** does not support server-side redirects natively. The client-redirects plugin is the recommended approach for this deployment target.
+
+**Custom hosting (Nginx / Caddy / Cloudflare Pages):** Add server-level rules that match the `from` paths. Keep them in sync with the plugin config so there is a single source of truth in the repository.
+
+---
+
 ## Future Improvements
 
 - [ ] Add build caching to speed up deployments
