@@ -22,6 +22,12 @@ Browse battle-tested contract patterns for various use cases.
 
 Minimal Soroban contract demonstrating instance storage. Perfect starting point for understanding contract structure and basic storage operations.
 
+### [Basic Token Implementation](/docs/patterns/basic-token)
+
+<span class="sb-badge sb-badge--beginner">Beginner</span> <span class="sb-tag sb-tag--token">Token</span> <span class="sb-badge sb-badge--stable">Stable</span>
+
+Complete token contract with mint, transfer, and balance functions. Learn core token mechanics and authorization patterns before advancing to standardized interfaces like SAC.
+
 ### [Error Handling](/docs/patterns/error-handling)
 
 **Difficulty**: Intermediate | **Category**: Architecture | **Status**: Stable
