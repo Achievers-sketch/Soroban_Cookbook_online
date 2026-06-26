@@ -17,7 +17,12 @@
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json,md}\"",
-    "format:write": "prettier --write \"src/**/*.{ts,tsx,css,json,md}\""
+    "format:write": "prettier --write \"src/**/*.{ts,tsx,css,json,md}\"",
+    "e2e": "playwright test",
+    "e2e:chromium": "playwright test --project=chromium",
+    "e2e:firefox": "playwright test --project=firefox",
+    "e2e:webkit": "playwright test --project=webkit",
+    "e2e:report": "playwright show-report"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",
@@ -48,7 +53,8 @@
     "globals": "^15.0.0",
     "prettier": "^3.8.1",
     "sharp": "^0.34.5",
-    "typescript": "~5.6.2"
+    "@playwright/test": "1.49.1",
+    "wait-on": "8.0.2"
   },
   "browserslist": {
     "production": [
