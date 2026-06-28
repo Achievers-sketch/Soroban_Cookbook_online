@@ -47,6 +47,7 @@ const sidebars: SidebarsConfig = {
         'patterns/authorization',
         'patterns/optimization-playbook',
         'patterns/lifecycle-upgrades',
+        'patterns/proposal-lifecycle',
       ],
     },
     {
