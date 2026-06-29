@@ -175,23 +175,16 @@ export default function Home() {
       {/* Loading States & Content Section */}
       <div className={styles.container}>
         {isLoading ? (
-          <div style={{ padding: '4rem 0' }}>
-            <div
-              style={{
-                background: 'var(--ifm-background-surface-color)',
-                padding: '2rem',
-                borderRadius: '12px',
-                border: '1px solid var(--ifm-border-color)',
-              }}>
+          <div className={styles.loadingSection}>
+            <div className={styles.loadingContainer}>
               <Skeleton height="40px" width="50%" />
-              <div style={{ marginTop: '1rem' }}>
+              <div className={styles.skeletonGroup}>
                 <Skeleton height="20px" width="100%" />
                 <Skeleton height="20px" width="90%" />
               </div>
-              <div
-                style={{ marginTop: '2rem', display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div className={styles.loadingIndicator}>
                 <Spinner size={24} />
-                <span style={{ color: 'var(--ifm-color-emphasis-700)' }}>
+                <span className={styles.loadingText}>
                   Initializing cookbook data...
                 </span>
               </div>
