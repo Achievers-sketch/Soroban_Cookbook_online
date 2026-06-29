@@ -15,7 +15,7 @@ This guide will help you get started with the contribution process, from setting
 ## 🚀 Getting Started
 
 ### Project Overview
-Soroban Cookbook is a comprehensive documentation platform for Stellar smart contract development. We aim to provides interactive guides, patterns, and tutorials that are easy to follow and production-ready.
+Soroban Cookbook is a comprehensive documentation platform for Stellar smart contract development. We aim to provide interactive guides, patterns, and tutorials that are easy to follow and production-ready.
 
 ### Types of Contributions
 We welcome several types of contributions:
