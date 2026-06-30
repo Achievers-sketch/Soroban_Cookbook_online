@@ -202,7 +202,10 @@ export default function Home() {
             <PatternPreview
               patterns={samplePatterns}
               title="Popular Patterns"
-              subtitle="Explore production-ready smart contract patterns used by developers worldwide"
+              subtitle={
+                'Explore production-ready smart contract patterns used by ' +
+                'developers worldwide'
+              }
               showViewAll={true}
               viewAllHref="/docs/patterns/overview"
               maxVisible={6}
