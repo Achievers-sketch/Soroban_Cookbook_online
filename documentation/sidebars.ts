@@ -13,6 +13,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/setup',
         'getting-started/setup-linux',
         'getting-started/setup-windows',
+        'getting-started/setup-macos',
         'getting-started/first-contract',
         'getting-started/building-and-compilation',
         'getting-started/local-testing-and-simulation',
@@ -57,6 +58,7 @@ const sidebars: SidebarsConfig = {
         'security/fundamentals',
         'security/governance',
         'security/code-audit',
+        'security/defi-patterns',
       ],
     },
     {
