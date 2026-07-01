@@ -7,6 +7,7 @@ import {
   updateCSRFTokenFromResponse,
 } from '../../utils/csrf';
 import styles from './NewsletterSignup.module.css';
+import { isHttpsUrl } from '@site/src/utils/sanitizeUrl';
 
 const EMAIL_RE =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
@@ -23,7 +24,16 @@ export default function NewsletterSignup({ className }: NewsletterSignupProps) {
   } = useDocusaurusContext();
   const endpoint = useMemo(() => {
     const raw = customFields?.newsletterEndpoint;
-    return typeof raw === 'string' && raw.length > 0 ? raw : undefined;
+    if (typeof raw !== 'string' || raw.length === 0) return undefined;
+    if (!isHttpsUrl(raw)) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn(
+          '[NewsletterSignup] newsletterEndpoint must be an https:// URL. Endpoint ignored.',
+        );
+      }
+      return undefined;
+    }
+    return raw;
   }, [customFields]);
 
   const [email, setEmail] = useState('');
