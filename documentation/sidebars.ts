@@ -57,7 +57,6 @@ const sidebars: SidebarsConfig = {
       items: [
         'security/fundamentals',
         'security/governance',
-        'security/code-audit',
         'security/defi-patterns',
       ],
     },
@@ -84,6 +83,13 @@ const sidebars: SidebarsConfig = {
       label: 'Responsive',
       items: [
         'responsive/breakpoints',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Security Audit',
+      items: [
+        'security/code-audit',
       ],
     },
   ],
