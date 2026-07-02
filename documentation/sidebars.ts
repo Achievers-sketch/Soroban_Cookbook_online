@@ -45,6 +45,7 @@ const sidebars: SidebarsConfig = {
         'patterns/overview',
         'patterns/hello-world',
         'patterns/custom-types',
+        'patterns/token-standards',
         'patterns/authorization',
         'patterns/optimization-playbook',
         'patterns/lifecycle-upgrades',
