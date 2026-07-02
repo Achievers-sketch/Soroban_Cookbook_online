@@ -1,98 +1,15 @@
 import Link from '@docusaurus/Link';
 import Head from '@docusaurus/Head';
+
+import NewsletterSignup from '@site/src/components/NewsletterSignup';
 import PatternPreview, { Pattern } from '@site/src/components/PatternPreview';
 import Layout from '@theme/Layout';
 import Stats from '@site/src/components/Stats';
+import QuickStartSection from '@site/src/components/QuickStartSection';
+import Testimonials from '@site/src/components/UI/Testimonials';
 import styles from './index.module.css';
-import React, { Suspense } from 'react';
-
-// Lazy load below-the-fold components for faster mobile rendering
-const QuickStartSection = React.lazy(() => import('@site/src/components/QuickStartSection'));
-const NewsletterSignup = React.lazy(() => import('@site/src/components/NewsletterSignup'));
-const Testimonials = React.lazy(() => import('@site/src/components/UI/Testimonials'));
-
-// ---------------------------------------------------------------------------
-// Schema.org JSON-LD structured data — Issue #165
-// ---------------------------------------------------------------------------
-
-/** WebSite schema enables Google Sitelinks Search Box and rich site previews. */
-const websiteSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Soroban Cookbook',
-  url: 'https://soroban-cookbook.dev',
-  description:
-    'A comprehensive, community-driven guide to building secure and optimised smart contracts on Stellar with Soroban.',
-  inLanguage: 'en',
-  publisher: {
-    '@type': 'Organization',
-    name: 'Soroban Cookbook',
-    url: 'https://soroban-cookbook.dev',
-    logo: {
-      '@type': 'ImageObject',
-      url: 'https://soroban-cookbook.dev/img/logo.svg',
-    },
-    sameAs: [
-      'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online',
-    ],
-  },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: 'https://soroban-cookbook.dev/search?q={search_term_string}',
-    },
-    'query-input': 'required name=search_term_string',
-  },
-};
-
-/** FAQPage schema surfaces Q&A pairs directly in Google Search results. */
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'What is Soroban?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Soroban is Stellar\'s smart-contract platform, written in Rust, that enables developers to build secure, gas-efficient decentralised applications on the Stellar network.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'What language do I use to write Soroban smart contracts?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Soroban smart contracts are written in Rust and compiled to WebAssembly (WASM). The Soroban SDK provides macros and helpers that make contract development ergonomic.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'How do I deploy a Soroban contract to the Stellar testnet?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'You can deploy with the Stellar CLI: `stellar contract deploy --wasm target/wasm32-unknown-unknown/release/contract.wasm --network testnet --source <YOUR_KEY>`. See the Deploy to Testnet guide in the Soroban Cookbook for a full walkthrough.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'How does storage work in Soroban?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Soroban provides three storage tiers — Instance (tied to the contract\'s TTL), Persistent (long-lived, separately billed), and Temporary (cheapest, auto-expired). Choosing the right tier is critical for cost efficiency.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Where can I find reusable Soroban contract patterns?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'The Soroban Cookbook\'s Patterns section (https://soroban-cookbook.dev/docs/patterns/overview) contains production-ready patterns for storage, tokens, governance, error handling, lifecycle management, and more.',
-      },
-    },
-  ],
-};
+import React, { useState, useEffect } from 'react';
+import { Skeleton, Spinner } from '@site/src/components/Loading';
 
 const samplePatterns: Pattern[] = [
   {
@@ -124,7 +41,7 @@ const samplePatterns: Pattern[] = [
     env.storage().instance().extend_ttl(100, 100);
     // Mint logic here
 }`,
-    href: '/docs/patterns/authorization',
+    href: '/docs/patterns/token-contract',
     icon: '🪙',
   },
   {
@@ -139,7 +56,7 @@ const samplePatterns: Pattern[] = [
     require_auth(voter);
     // Voting logic here
 }`,
-    href: '/docs/patterns/custom-types',
+    href: '/docs/patterns/voting-contract',
     icon: '🗳️',
   },
   {
@@ -153,7 +70,7 @@ const samplePatterns: Pattern[] = [
     code: `pub fn mint_nft(env: Env, to: Address, token_id: u64, metadata: String) {
     // NFT minting logic
 }`,
-    href: '/docs/patterns/error-handling',
+    href: '/docs/patterns/nft-contract',
     icon: '🎨',
   },
   {
@@ -167,7 +84,7 @@ const samplePatterns: Pattern[] = [
     code: `pub fn swap(env: Env, token_a: Address, token_b: Address, amount_in: i128) -> i128 {
     // AMM swap logic
 }`,
-    href: '/docs/patterns/lifecycle-upgrades',
+    href: '/docs/patterns/liquidity-pool',
     icon: '💧',
   },
   {
@@ -181,7 +98,7 @@ const samplePatterns: Pattern[] = [
     code: `pub fn submit_transaction(env: Env, from: Address, to: Address, amount: i128) {
     // Multisig transaction logic
 }`,
-    href: '/docs/patterns/optimization-playbook',
+    href: '/docs/patterns/multisig-wallet',
     icon: '🔐',
   },
   {
@@ -195,7 +112,7 @@ const samplePatterns: Pattern[] = [
     code: `pub fn lock_funds(env: Env, amount: i128, release_time: u64) {
     // Time lock logic
 }`,
-    href: '/docs/patterns/error-recovery',
+    href: '/docs/patterns/time-lock',
     icon: '⏰',
   },
   {
@@ -209,23 +126,23 @@ const samplePatterns: Pattern[] = [
     code: `pub fn create_escrow(env: Env, buyer: Address, seller: Address, amount: i128) {
     // Escrow creation logic
 }`,
-    href: '/docs/patterns/overview',
+    href: '/docs/patterns/escrow-contract',
     icon: '🤝',
   },
 ];
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Layout
       title="Soroban Cookbook"
       description="Master Soroban smart contracts with practical patterns and production-ready guides.">
-      {/* ------------------------------------------------------------------ */}
-      {/* Schema.org JSON-LD structured data — Issue #165                     */}
-      {/* ------------------------------------------------------------------ */}
-      <Head>
-        <script type="application/ld+json">{JSON.stringify(websiteSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
-      </Head>
       <header className={styles.hero}>
         <div className={styles.glowOne}></div>
         <div className={styles.glowTwo}></div>
@@ -257,30 +174,43 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Above-the-fold content - critical rendering path */}
+      {/* Loading States & Content Section */}
       <div className={styles.container}>
-        <PatternPreview
-          patterns={samplePatterns}
-          title="Popular Patterns"
-          subtitle="Explore production-ready smart contract patterns used by developers worldwide"
-          showViewAll={true}
-          viewAllHref="/docs/patterns/overview"
-          maxVisible={6}
-          enableCarousel={true}
-        />
-        <Stats />
+        {isLoading ? (
+          <div className={styles.loadingSection}>
+            <div className={styles.loadingContainer}>
+              <Skeleton height="40px" width="50%" />
+              <div className={styles.skeletonGroup}>
+                <Skeleton height="20px" width="100%" />
+                <Skeleton height="20px" width="90%" />
+              </div>
+              <div className={styles.loadingIndicator}>
+                <Spinner size={24} />
+                <span className={styles.loadingText}>
+                  Initializing cookbook data...
+                </span>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+            <PatternPreview
+              patterns={samplePatterns}
+              title="Popular Patterns"
+              subtitle="Explore production-ready smart contract patterns used by developers worldwide"
+              showViewAll={true}
+              viewAllHref="/docs/patterns/overview"
+              maxVisible={6}
+              enableCarousel={true}
+            />
+            <Stats />
+          </>
+        )}
       </div>
 
-      {/* Below-the-fold sections - lazy loaded for better mobile performance */}
-      <Suspense fallback={null}>
-        <QuickStartSection />
-      </Suspense>
-      <Suspense fallback={null}>
-        <NewsletterSignup />
-      </Suspense>
-      <Suspense fallback={null}>
-        <Testimonials />
-      </Suspense>
+      <QuickStartSection />
+      <NewsletterSignup />
+      <Testimonials />
     </Layout>
   );
 }

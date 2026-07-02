@@ -28,11 +28,6 @@ export interface PatternPreviewProps {
 }
 
 const CATEGORIES = ['all', 'storage', 'tokens', 'governance', 'utility', 'defi', 'nft'];
-const DIFFICULTY_COLORS = {
-  beginner: '#10b981',
-  intermediate: '#f59e0b',
-  advanced: '#ef4444',
-};
 
 export default function PatternPreview({
   patterns,
@@ -170,8 +165,8 @@ export default function PatternPreview({
                 key={pattern.id}
                 className={styles.patternCardWrapper}
                 style={{
-                  animationDelay: `${index * 50}ms`,
-                }}>
+                  '--animation-delay': `${index * 50}ms`,
+                } as React.CSSProperties}>
                 <PatternCard
                   contractName={pattern.contractName}
                   description={pattern.description}
@@ -186,9 +181,7 @@ export default function PatternPreview({
                   <div className={styles.metadataRow}>
                     <span
                       className={styles.difficulty}
-                      style={{
-                        color: DIFFICULTY_COLORS[pattern.difficulty],
-                      }}>
+                      data-difficulty={pattern.difficulty}>
                       {pattern.difficulty}
                     </span>
                     <span className={styles.popularity}>
