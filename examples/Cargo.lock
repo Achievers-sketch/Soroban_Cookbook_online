@@ -3,13 +3,6 @@
 version = 4
 
 [[package]]
-name = "access-control"
-version = "0.1.0"
-dependencies = [
- "soroban-sdk",
-]
-
-[[package]]
 name = "ahash"
 version = "0.8.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -549,13 +542,6 @@ dependencies = [
  "sec1",
  "subtle",
  "zeroize",
-]
-
-[[package]]
-name = "emergency-stop"
-version = "0.1.0"
-dependencies = [
- "soroban-sdk",
 ]
 
 [[package]]
@@ -1214,12 +1200,6 @@ dependencies = [
 
 [[package]]
 name = "simple-dao"
-version = "0.1.0"
-dependencies = [
- "soroban-sdk",
-]
-
-[[package]]
 name = "simple-voting"
 version = "0.1.0"
 dependencies = [
