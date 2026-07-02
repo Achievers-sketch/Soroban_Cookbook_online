@@ -187,6 +187,24 @@ export default function Home() {
               <div className={styles.loadingIndicator}>
                 <Spinner size={24} />
                 <span className={styles.loadingText}>
+
+          <div style={{ padding: '4rem 0' }}>
+            <div
+              style={{
+                background: 'var(--ifm-background-surface-color)',
+                padding: '2rem',
+                borderRadius: '12px',
+                border: '1px solid var(--ifm-border-color)',
+              }}>
+              <Skeleton height="40px" width="50%" />
+              <div style={{ marginTop: '1rem' }}>
+                <Skeleton height="20px" width="100%" />
+                <Skeleton height="20px" width="90%" />
+              </div>
+              <div
+                style={{ marginTop: '2rem', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Spinner size={24} />
+                <span style={{ color: 'var(--ifm-color-emphasis-700)' }}>
                   Initializing cookbook data...
                 </span>
               </div>
@@ -198,6 +216,11 @@ export default function Home() {
               patterns={samplePatterns}
               title="Popular Patterns"
               subtitle="Explore production-ready smart contract patterns used by developers worldwide"
+
+              subtitle={
+                'Explore production-ready smart contract patterns used by ' +
+                'developers worldwide'
+              }
               showViewAll={true}
               viewAllHref="/docs/patterns/overview"
               maxVisible={6}

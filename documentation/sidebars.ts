@@ -44,9 +44,12 @@ const sidebars: SidebarsConfig = {
       items: [
         'patterns/overview',
         'patterns/hello-world',
+        'patterns/basic-token',
         'patterns/custom-types',
         'patterns/token-standards',
         'patterns/authorization',
+        'patterns/error-handling',
+        'patterns/error-recovery',
         'patterns/optimization-playbook',
         'patterns/lifecycle-upgrades',
         'patterns/proposal-lifecycle',
