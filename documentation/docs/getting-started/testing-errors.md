@@ -4,8 +4,6 @@ description: Guide to testing error handling in Soroban contracts
 sidebar_position: 6
 ---
 
-# Testing Error Scenarios
-
 ## Overview
 
 Comprehensive error testing ensures your contract handles failures gracefully and maintains security. This guide covers testing strategies for error conditions in Soroban smart contracts.
@@ -448,6 +446,6 @@ When error tests fail:
 
 ## Additional Resources
 
-- [Soroban Testing Guide](https://developers.stellar.org/docs/smart-contracts/testing)
+- [Soroban Testing Guide](https://developers.stellar.org/docs/build/smart-contracts/example-contracts)
 - [Rust Testing Documentation](https://doc.rust-lang.org/book/ch11-00-testing.html)
 - [Soroban SDK Test Utils](https://docs.rs/soroban-sdk/latest/soroban_sdk/testutils/)

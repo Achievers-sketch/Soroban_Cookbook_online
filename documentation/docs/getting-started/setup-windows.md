@@ -6,6 +6,11 @@ description: Set up your Soroban development environment on Windows — guides f
 
 # Windows Environment Setup
 
+title: Windows Environment Setup
+description: Complete guide to setting up Soroban development on Windows with WSL 2.
+sidebar_position: 2
+---
+
 Set up your Soroban development environment on Windows. This guide covers both WSL (Windows Subsystem for Linux) - the recommended approach - and native Windows installation.
 
 ## Quick Decision: WSL vs Native
@@ -693,7 +698,7 @@ Now that your Windows environment is set up:
 
 - [WSL Documentation](https://learn.microsoft.com/en-us/windows/wsl/)
 - [Rust Installation Guide](https://www.rust-lang.org/tools/install)
-- [Soroban CLI Documentation](https://developers.stellar.org/docs/smart-contracts/soroban-cli)
+- [Soroban CLI Documentation](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup#install-the-stellar-cli)
 - [VS Code Remote WSL](https://code.visualstudio.com/docs/remote/wsl)
 - [Git for Windows](https://git-scm.com/download/win)
 - [Stellar Discord Community](https://discord.gg/stellardev)
@@ -702,7 +707,7 @@ Now that your Windows environment is set up:
 
 If you encounter issues not covered in this guide:
 
-1. Check the [Soroban Documentation](https://developers.stellar.org/docs/smart-contracts)
-2. Search [GitHub Issues](https://github.com/Soroban-Cookbook/Soroban-Cookbook-/issues)
+1. Check the [Soroban Documentation](https://developers.stellar.org/docs/build/smart-contracts)
+2. Search [GitHub Issues](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/issues)
 3. Ask in the [Stellar Discord](https://discord.gg/stellardev)
 4. Create a new issue with your error message and Windows version info

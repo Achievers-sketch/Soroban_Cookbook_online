@@ -4,8 +4,6 @@ sidebar_position: 2
 description: Security considerations for decentralized governance contracts in Soroban — voting systems, proposal mechanisms, and attack mitigation.
 ---
 
-# Governance Security
-
 Governance systems enable decentralized decision-making, but they introduce unique attack vectors that must be carefully mitigated. This guide covers critical security considerations for Soroban governance contracts.
 
 ---
@@ -33,7 +31,7 @@ A typical governance system includes:
 **Mitigation Strategies:**
 
 - **Time-Locked Voting Power:** Require tokens to be locked for a minimum period (e.g., 7 days) before they can be used to vote.
-- **Snapshot-Based Voting:** Use historical balances (snapshots) instead of current balances to determine voting power.
+- **Snapshot-Based Voting:** Use historical balances (snapshots) instead of current balances to determine voting power. See [Token Pattern Security Audit — Snapshots](/docs/security/token-audit#29-snapshot-balances-governance--dividends) for snapshot hardening.
 - **Voting Delay:** Add a delay between proposal creation and the start of voting to give stakeholders time to react.
 - **Staking-Based Voting:** Only allow staked tokens (with unstaking delays) to vote.
 
@@ -105,3 +103,11 @@ Use a separate timelock contract that queues and executes proposals after a dela
 ### Pattern 3: Multi-Sig + Timelock
 
 Combine a multi-signature wallet with a timelock for critical governance actions.
+
+---
+
+## Related links
+
+- [Security Fundamentals](/docs/security/fundamentals) — general contract security baseline
+- [Proposal Lifecycle pattern](/docs/patterns/proposal-lifecycle) — DAO state machine example
+- [Token Pattern Security Audit](/docs/security/token-audit) — snapshot and voting-power hardening

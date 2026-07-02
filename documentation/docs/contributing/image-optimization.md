@@ -3,8 +3,6 @@ title: Image Optimization Guidelines
 description: Best practices for using images in Soroban Cookbook documentation
 ---
 
-# Image Optimization Guidelines
-
 This guide covers best practices for using images in the Soroban Cookbook documentation to ensure optimal performance and user experience.
 
 ## Quick Start
@@ -216,3 +214,11 @@ Before adding new images:
 - **404 page**: Reduced from 1.9MB to ~50KB (97% reduction)
 - **Social cards**: Reduced by 60-80%
 - **Overall site weight**: Reduced by 40-60%
+
+---
+
+## Related links
+
+- [Contributing Guide](/docs/contributing) — documentation contribution workflow
+- [Image Optimization Performance Impact](/docs/contributing/performance-impact) — before/after metrics
+- [Empty States](/docs/design-system/empty-states) — image usage in UI patterns

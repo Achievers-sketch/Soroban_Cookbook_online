@@ -6,6 +6,11 @@ description: Essential do's and don'ts for Soroban smart contract development â€
 
 # Soroban Best Practices
 
+title: Soroban Best Practices
+description: Practical do/don't rules and checklists for production-ready Soroban contracts.
+sidebar_position: 3
+---
+
 A concise, beginner-friendly guide for new Soroban developers. Use this page to learn practical do/don't rules, common anti-patterns, and a reusable checklist for your first production-ready contract.
 
 ## Do: Start with a safe contract structure
@@ -177,6 +182,7 @@ A production-ready Soroban contract should pass more than just compilation. Use 
 
 ## Learn more
 
-- [First Contract](../getting-started/first-contract)
-- [Storage Best Practices](./storage)
-- [Authorization Concepts](./authorization)
+- [First Contract](/docs/getting-started/first-contract)
+- [Storage Best Practices](/docs/concepts/storage)
+- [Authorization Concepts](/docs/concepts/authorization)
+- [Security Fundamentals](/docs/security/fundamentals)

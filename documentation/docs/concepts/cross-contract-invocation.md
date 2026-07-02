@@ -4,8 +4,6 @@ description: A practical guide to secure and maintainable cross-contract calls i
 sidebar_position: 7
 ---
 
-# Cross-Contract Invocation
-
 Soroban contracts can call functions on other on-chain contracts. This is the mechanism that enables composable applications: a lending protocol can invoke a token contract, a router can delegate to a price oracle, and an aggregator can orchestrate multiple DeFi primitives in a single transaction.
 
 This guide explains how cross-contract calls work, where they can go wrong, and how to write and test them safely.

@@ -1,10 +1,8 @@
 ---
-title: Error Handling
+title: Error Handling in Soroban
 description: Understanding error handling in Soroban smart contracts
 sidebar_position: 5
 ---
-
-# Error Handling in Soroban
 
 ## Overview
 
@@ -243,4 +241,4 @@ Proper error handling is critical for security:
 
 - [Rust Error Handling Book](https://doc.rust-lang.org/book/ch09-00-error-handling.html)
 - [Soroban SDK Documentation](https://docs.rs/soroban-sdk/)
-- [Stellar Developer Portal](https://developers.stellar.org/docs/smart-contracts)
+- [Stellar Developer Portal](https://developers.stellar.org/docs/build/smart-contracts)

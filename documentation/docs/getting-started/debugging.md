@@ -3,8 +3,6 @@ title: Debugging Guide
 description: Systematic debugging workflows and practical troubleshooting techniques for Soroban smart contract development
 ---
 
-# Debugging Guide
-
 Learn systematic debugging techniques to quickly identify and resolve issues in your contract development. This guide covers the debugging workflow, common issues across different failure categories, and practical development tools.
 
 ## Systematic Debugging Workflow
@@ -118,11 +116,11 @@ echo $PATH
 
    ```bash
    # macOS/Linux
-   curl --proto '=https' --tlsv1.2 -sSf https://install.stellar.org/soroban-cli | bash
+   curl -fsSL https://github.com/stellar/stellar-cli/raw/main/install.sh | sh
    source ~/.bashrc  # or ~/.zshrc for zsh
 
    # Windows (with WSL)
-   curl --proto '=https' --tlsv1.2 -sSf https://install.stellar.org/soroban-cli | bash
+   curl -fsSL https://github.com/stellar/stellar-cli/raw/main/install.sh | sh
    source ~/.bashrc
    ```
 
@@ -806,7 +804,7 @@ Before asking for help, verify:
 
 - [Error Handling in Soroban](../concepts/error-handling.md) - Detailed error patterns
 - [Testing Error Scenarios](./testing-errors.md) - Comprehensive error testing
-- [Soroban Documentation](https://developers.stellar.org/soroban) - Official docs
+- [Soroban Documentation](https://developers.stellar.org/docs/build/smart-contracts) - Official docs
 - [Rust Book](https://doc.rust-lang.org/book/) - Rust fundamentals
 
 ---

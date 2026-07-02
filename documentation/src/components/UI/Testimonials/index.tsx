@@ -140,7 +140,7 @@ const defaultCommunityLinks: CommunityLink[] = [
   },
   {
     label: 'GitHub',
-    url: 'https://github.com/Soroban-Cookbook/Soroban-Cookbook-',
+    url: 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online',
     icon: <GithubIcon />,
     description: 'Contribute code, docs, and examples.',
   },

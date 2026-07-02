@@ -1,10 +1,8 @@
 ---
 sidebar_position: 10
-title: Contributing Guide
+title: Contributing to Soroban Cookbook
 description: Learn how to contribute to the Soroban Cookbook project.
 ---
-
-# Contributing to Soroban Cookbook
 
 First off, thank you for considering contributing to the Soroban Cookbook! It's people like you that make this a great resource for the Stellar community.
 
@@ -38,6 +36,8 @@ To contribute code or documentation changes, you'll need to set up the project l
 ### Prerequisites
 
 - **Rust & Soroban CLI:** [Install Rust](https://www.rust-lang.org/tools/install) and the [Soroban CLI](https://developers.stellar.org/docs/smart-contracts/getting-started/setup#install-the-soroban-cli).
+
+- **Rust & Soroban CLI:** [Install Rust](https://www.rust-lang.org/tools/install) and the [Soroban CLI](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup#install-the-stellar-cli).
 - **Bun:** We use [Bun](https://bun.sh/) as our primary JavaScript runtime and package manager.
 - **Git:** For version control.
 
@@ -111,7 +111,7 @@ Contract examples should be minimal, focused, and well-documented.
 
 - **Storage:** Use `examples/` for standalone Rust projects (if applicable).
 - **Inline Docs:** Explain complex logic within the Rust code snippets using comments.
-- **Best Practices:** Follow [Soroban Best Practices](https://developers.stellar.org/docs/smart-contracts/best-practices/security-checklist).
+- **Best Practices:** Follow [Soroban Best Practices](https://developers.stellar.org/docs/build/smart-contracts/example-contracts).
 
 ### C. Fixes & Improvements
 
@@ -253,8 +253,18 @@ Expect some feedback! We might ask for clarifications or small adjustments. This
 If you're stuck, feel free to:
 
 - Open a [GitHub Discussion](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/discussions).
+
+- Open a [GitHub Issue](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/issues).
 - Join the [Stellar Dev Discord](https://discord.gg/stellardev) and ask in the `#soroban` channel.
 
 ---
 
 **Thank you for helping us build the best Soroban resource! 🚀**
+
+---
+
+## Related links
+
+- [Internal Linking Strategy](/docs/contributing/internal-linking) — how we structure cross-links for SEO and navigation
+- [Adding a Tested Code Example](/docs/contributing/add-tested-example) — contribute verified examples
+- [Pattern Library](/docs/patterns/overview) — where new patterns are catalogued

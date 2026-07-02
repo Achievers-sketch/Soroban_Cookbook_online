@@ -5,8 +5,6 @@ description: Test and simulate your Soroban contracts locally before deploying t
 image: /img/soroban-social-card.png
 ---
 
-# Local Testing and Simulation
-
 Test your Soroban contracts in a local sandbox environment before deploying to testnet. This guide covers the complete local development workflow — from unit tests and CLI sandbox invocation to state inspection and debugging loops.
 
 ## Prerequisites
@@ -677,7 +675,7 @@ When you are ready, proceed to:
 ## Additional Resources
 
 - [Soroban SDK Testutils](https://docs.rs/soroban-sdk/latest/soroban_sdk/testutils/index.html)
-- [Soroban CLI Reference](https://developers.stellar.org/docs/smart-contracts/soroban-cli)
+- [Soroban CLI Reference](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup#install-the-stellar-cli)
 - [Rust Testing Documentation](https://doc.rust-lang.org/book/ch11-00-testing.html)
 - [Debugging Guide](./debugging.md)
 - [Testing Error Scenarios](./testing-errors.md)

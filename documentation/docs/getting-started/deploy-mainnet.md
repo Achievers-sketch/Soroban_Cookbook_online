@@ -4,8 +4,6 @@ description: A risk-aware guide to deploying Soroban smart contracts to Stellar 
 sidebar_position: 6
 ---
 
-# Deploy to Mainnet
-
 Deploying to Stellar mainnet is a one-way door: **there is no undo**. Bugs ship with real financial consequences, and the cost to remediate a vulnerability after deployment is always higher than the cost to prevent it before. This guide walks through every stage of a production deployment — from pre-deploy verification through post-deploy monitoring — with explicit safety controls at each step.
 
 > **Complete [Deploy to Testnet](./deploy-testnet.md) first.** Every step in this guide assumes your contract has been deployed, invoked, and fully validated on testnet.
@@ -380,5 +378,5 @@ Copy this checklist into your release notes for every mainnet deployment.
 
 - [Stellar Expert block explorer](https://stellar.expert/explorer/public)
 - [Stellar Status page](https://status.stellar.org)
-- [Soroban CLI reference](https://developers.stellar.org/docs/smart-contracts/soroban-cli)
+- [Soroban CLI reference](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup#install-the-stellar-cli)
 - [Stellar Discord — #soroban channel](https://discord.gg/stellardev)

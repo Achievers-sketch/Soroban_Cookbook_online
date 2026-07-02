@@ -3,8 +3,6 @@ title: Image Optimization Performance Impact
 description: Before and after metrics for image optimization implementation
 ---
 
-# Image Optimization Performance Impact
-
 This document outlines the performance improvements achieved through implementing image optimization best practices in the Soroban Cookbook.
 
 ## Summary of Changes
@@ -151,3 +149,11 @@ The image optimization implementation has resulted in:
 - **Better user experience** across all devices and connection speeds
 
 These improvements directly contribute to better SEO rankings, user retention, and overall site performance. The implemented solution is maintainable, scalable, and follows modern web performance best practices.
+
+---
+
+## Related links
+
+- [Contributing Guide](/docs/contributing) — documentation standards
+- [Image Optimization Guidelines](/docs/contributing/image-optimization) — how to optimize images in docs
+- [Internal Linking Strategy](/docs/contributing/internal-linking) — SEO and navigation conventions

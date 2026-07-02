@@ -6,6 +6,11 @@ description: Deploy Soroban contracts to Stellar testnet for validation, testing
 
 # Deploy to Testnet
 
+title: Deploy to Testnet
+description: Deploy your Soroban contract to Stellar testnet for validation in a live network environment.
+sidebar_position: 5
+---
+
 Deploy your Soroban contract to Stellar testnet for validation in a live network environment. This guide covers the complete workflow from contract artifact to verification.
 
 ## Prerequisites
@@ -531,24 +536,24 @@ soroban account transactions --account my-testnet-account --network testnet
 
 Now that your contract is deployed:
 
-1. **Test thoroughly** - Invoke all contract functions and verify behavior
-2. **Monitor events** - Check contract events and logs
-3. **Prepare for mainnet** - When ready, follow similar steps for mainnet deployment
-4. **Learn more** - Explore [Core Concepts](../concepts/overview.md) and [Patterns](../patterns/overview.md)
+1. **Test thoroughly** — Invoke all contract functions and verify behavior
+2. **Monitor events** — Check contract events and logs
+3. **Prepare for mainnet** — [Deploy to Mainnet](/docs/getting-started/deploy-mainnet) when validation is complete
+4. **Learn more** — Explore [Core Concepts](/docs/concepts/overview) and [Patterns](/docs/patterns/overview)
 
 ## Additional Resources
 
-- [Soroban CLI Documentation](https://developers.stellar.org/docs/smart-contracts/soroban-cli)
+- [Soroban CLI Documentation](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup#install-the-stellar-cli)
 - [Stellar Testnet](https://developers.stellar.org/docs/fundamentals-and-concepts/testnet-public-network)
 - [Soroban SDK Reference](https://docs.rs/soroban-sdk)
-- [Stellar Expert Testnet Explorer](https://testnet.stellar.expert)
+- [Stellar Expert Testnet Explorer](https://stellar.expert/explorer/testnet)
 - [Stellar Discord Community](https://discord.gg/stellardev)
 
 ## Need Help?
 
 If you encounter issues not covered in this guide:
 
-1. Check the [Soroban Documentation](https://developers.stellar.org/docs/smart-contracts)
-2. Search [GitHub Issues](https://github.com/Soroban-Cookbook/Soroban-Cookbook-/issues)
+1. Check the [Soroban Documentation](https://developers.stellar.org/docs/build/smart-contracts)
+2. Search [GitHub Issues](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/issues)
 3. Ask in the [Stellar Discord](https://discord.gg/stellardev)
 4. Create a new issue with your error message and contract code

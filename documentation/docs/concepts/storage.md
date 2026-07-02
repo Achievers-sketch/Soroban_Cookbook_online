@@ -6,6 +6,11 @@ description: Master Soroban's three storage types — instance, persistent, and 
 
 # Storage Patterns
 
+title: Storage Patterns
+description: Instance, persistent, and temporary storage types in Soroban contracts.
+sidebar_position: 4
+---
+
 Soroban contracts use three storage types: **instance**, **persistent**, and **temporary**. Each storage type has a different lifetime, cost profile, and common use case.
 
 - **Instance storage**: contract-owned data that survives between transactions and is scoped to the contract instance.
@@ -228,6 +233,6 @@ Concrete heuristics:
 
 - [Hello World Storage](/docs/patterns/hello-world) — simple instance storage example
 - [Error Recovery](/docs/patterns/error-recovery) — storage usage in resilient smart contracts
-- [Authorization](/docs/concepts/authorization.md)
+- [Authorization](/docs/concepts/authorization)
 - [Security Fundamentals](/docs/security/fundamentals.md)
 - [First Contract Walkthrough](/docs/getting-started/first-contract.md)

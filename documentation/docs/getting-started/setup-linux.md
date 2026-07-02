@@ -6,6 +6,11 @@ description: Set up your Soroban development environment on Linux — complete g
 
 # Linux Environment Setup
 
+title: Linux Environment Setup
+description: Set up your Soroban development environment on Linux.
+sidebar_position: 3
+---
+
 Set up your Soroban development environment on Linux to start building smart contracts. This guide covers Ubuntu/Debian-based distributions with notes for other Linux distros.
 
 ## Prerequisites
@@ -330,7 +335,7 @@ Now that your Linux environment is ready:
 ## Additional Resources
 
 - [Rust Installation Guide](https://www.rust-lang.org/tools/install)
-- [Soroban Official Documentation](https://developers.stellar.org/docs/smart-contracts)
+- [Soroban Official Documentation](https://developers.stellar.org/docs/build/smart-contracts)
 - [Stellar Discord Community](https://discord.gg/stellardev)
 - [Linux Package Management Guide](https://wiki.archlinux.org/title/Pacman/Rosetta)
 
@@ -338,7 +343,7 @@ Now that your Linux environment is ready:
 
 If you encounter issues not covered in this guide:
 
-1. Check the [Soroban Documentation](https://developers.stellar.org/docs/smart-contracts)
+1. Check the [Soroban Documentation](https://developers.stellar.org/docs/build/smart-contracts)
 2. Ask in the [Stellar Discord](https://discord.gg/stellardev)
-3. Search existing [GitHub Issues](https://github.com/Soroban-Cookbook/Soroban-Cookbook-/issues)
+3. Search existing [GitHub Issues](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/issues)
 4. Create a new issue with detailed error messages and your Linux distribution info

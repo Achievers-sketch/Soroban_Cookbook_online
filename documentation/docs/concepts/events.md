@@ -6,6 +6,11 @@ description: Emit and track contract events for observability, debugging, and of
 
 # Events
 
+title: Events
+description: Emitting and consuming events for observability and off-chain indexing.
+sidebar_position: 6
+---
+
 Events provide a reliable audit trail of what happened in your contract and help indexers and UIs react to on-chain activity.
 
 ## Why Emit Events

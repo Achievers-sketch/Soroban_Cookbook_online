@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: Error Recovery
+title: Error Recovery Patterns
 description: Comprehensive error handling patterns for Soroban smart contracts
 image: /img/soroban-social-card.png
 ---
@@ -9,8 +9,6 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { Callout } from '@site/src/components/Callout';
 import { Alert } from '@site/src/components/Alert';
-
-# Error Recovery Patterns
 
 ## Overview
 
@@ -884,13 +882,14 @@ Before deploying your contract, verify:
 
 ## Related Patterns
 
-- [Storage concepts](/docs/concepts/storage) - Understanding storage for rollback
-- [Authorization](/docs/concepts/authorization) - Auth error handling
-- [Security fundamentals](/docs/security/fundamentals) - Security best practices
+- [Error Handling concepts](/docs/concepts/error-handling) — error taxonomy and Result types
+- [Storage concepts](/docs/concepts/storage) — understanding storage for rollback
+- [Authorization](/docs/concepts/authorization) — auth error handling
+- [Security fundamentals](/docs/security/fundamentals) — security best practices
 - [Hello World](/docs/patterns/hello-world) - Basic pattern structure
 
 ## Additional Resources
 
 - [Rust Error Handling](https://doc.rust-lang.org/book/ch09-00-error-handling.html)
-- [Soroban SDK Errors](https://docs.rs/soroban-sdk/latest/soroban_sdk/contracterror/index.html)
-- [Stellar Developer Docs](https://developers.stellar.org/docs/smart-contracts)
+- [Soroban SDK Errors](https://docs.rs/soroban-sdk/latest/soroban_sdk/)
+- [Stellar Developer Docs](https://developers.stellar.org/docs/build/smart-contracts)

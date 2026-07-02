@@ -4,8 +4,6 @@ description: Font families, type scale, heading hierarchy, responsive sizing, an
 sidebar_label: Typography
 ---
 
-# Typography System
-
 A consistent type system for readable, accessible content across the Soroban Cookbook.
 
 ---
@@ -92,6 +90,10 @@ h3 {
 
 :::caution
 Never skip heading levels (e.g. `h1` → `h3`). Screen readers rely on the heading tree for navigation.
+:::
+
+:::tip Docusaurus docs convention
+Set the page title in frontmatter (`title:`) — Docusaurus renders it as the sole `h1`. Start page body content with `##` sections; do not add a duplicate `#` heading in the markdown. Run `bun run audit:headings` to validate the site.
 :::
 
 ---
@@ -207,3 +209,12 @@ All text colors are already defined in `custom.css` for both light and dark them
 - Use `line-height` below `1.4` for multi-line body text
 - Set text color with raw hex — use the existing `--ifm-*` tokens so dark mode works
 - Use `font-weight: bold` on large blocks of text — reserve bold for emphasis
+
+---
+
+## Related links
+
+- [Button System](/docs/design-system/buttons) — interactive control tokens
+- [Iconography](/docs/components/iconography) — icon usage in UI
+- [Responsive Breakpoints](/docs/responsive/breakpoints) — responsive type utilities
+- [Internal Linking Strategy](/docs/contributing/internal-linking) — doc navigation conventions

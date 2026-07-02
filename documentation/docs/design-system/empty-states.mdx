@@ -6,8 +6,6 @@ sidebar_label: Empty States
 
 import EmptyState from '@site/src/components/EmptyState/EmptyState';
 
-# Empty States
-
 Empty states appear when there's no content to display — a search returns nothing, a pattern list is empty, or a section hasn't been populated yet. A good empty state reduces confusion by explaining _why_ content is missing and offering a clear next step.
 
 ---
@@ -83,6 +81,8 @@ Three sizes to match the surrounding context.
       label: 'Contribute a pattern',
       href: 'https://github.com/Soroban-Cookbook/Soroban-Cookbook-/blob/main/CONTRIBUTING.md',
     },
+
+    { label: 'Contribute a pattern', href: 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/CONTRIBUTING.md' },
     { label: 'Browse all patterns', variant: 'secondary', href: '/docs/patterns/overview' },
   ]}
 />
@@ -148,6 +148,8 @@ Use when a pattern category exists but has no entries yet.
       label: 'Contribute a pattern',
       href: 'https://github.com/Soroban-Cookbook/Soroban-Cookbook-/blob/main/CONTRIBUTING.md',
     },
+
+    { label: 'Contribute a pattern', href: 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/CONTRIBUTING.md' },
     { label: 'View token patterns', variant: 'secondary', href: '/docs/patterns/overview' },
   ]}
 />
@@ -213,3 +215,11 @@ Use when a pattern category exists but has no entries yet.
 ```tsx
 import { EmptyState } from '@site/src/components/EmptyState';
 ```
+
+---
+
+## Related links
+
+- [Button System](/docs/design-system/buttons) — primary actions in empty states
+- [Testimonials Component](/docs/components/testimonials) — community section layout
+- [Typography System](/docs/design-system/typography) — heading and body styles

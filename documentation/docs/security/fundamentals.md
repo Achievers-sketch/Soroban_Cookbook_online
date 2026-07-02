@@ -4,8 +4,6 @@ sidebar_position: 1
 description: Essential security practices for Soroban smart contracts — threat modeling, secure coding patterns, and protecting funds from vulnerabilities.
 ---
 
-# Security Fundamentals
-
 Building on Stellar requires a security-first mindset. Unlike traditional web applications, smart contract vulnerabilities often lead to immediate and irreversible loss of funds.
 
 This guide provides a practical foundation for securing your Soroban smart contracts.
@@ -120,6 +118,8 @@ Use this checklist before every deployment:
 - [ ] **Events:** Sensitive operations (admin changes, large transfers) emit descriptive events.
 - [ ] **Error Handling:** Errors are explicit (using `Result` and custom error enums).
 
+For token contracts (mint, transfer, allowances, vaults, wrappers), complete the dedicated [Token Pattern Security Audit](/docs/security/token-audit) checklist before deployment.
+
 ---
 
 ## 4. Secure Development Workflow
@@ -130,3 +130,12 @@ Use this checklist before every deployment:
 4.  **Integration Testing:** Test interactions between multiple contracts.
 5.  **Self-Audit:** Review code against the [Mitigation Checklist](#3-mitigation-checklist).
 6.  **Peer Review:** Have another developer review the logic and security assumptions.
+
+---
+
+## Related links
+
+- [Authorization](/docs/concepts/authorization) — access control patterns for sensitive functions
+- [Token Pattern Security Audit](/docs/security/token-audit) — token-specific audit checklist
+- [Governance Security](/docs/security/governance) — voting and timelock risks
+- [Cross-Contract Invocation](/docs/concepts/cross-contract-invocation) — safe external call patterns

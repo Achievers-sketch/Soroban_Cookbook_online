@@ -6,6 +6,11 @@ description: Learn what Soroban is — Stellar's smart contract platform built f
 
 # What is Soroban?
 
+title: What is Soroban?
+description: Introduction to Soroban, Stellar's smart contract platform.
+sidebar_position: 1
+---
+
 Welcome to Soroban, Stellar's smart contract platform. This guide introduces you to Soroban and explains why it matters in the Stellar ecosystem.
 
 ## The Basics
@@ -189,7 +194,7 @@ With Soroban, you can create:
 
 ## Resources
 
-- [Official Soroban Documentation](https://developers.stellar.org/docs/smart-contracts)
+- [Official Soroban Documentation](https://developers.stellar.org/docs/build/smart-contracts)
 - [Soroban SDK Reference](https://docs.rs/soroban-sdk)
 - [Soroban Examples Repository](https://github.com/stellar/soroban-examples)
 - [Stellar Developer Discord](https://discord.gg/stellardev)
@@ -200,5 +205,5 @@ With Soroban, you can create:
 Join the community:
 
 - **Discord** - [Stellar Developer Community](https://discord.gg/stellardev)
-- **GitHub** - [Soroban Cookbook Discussions](https://github.com/Soroban-Cookbook/Soroban-Cookbook-/discussions)
+- **GitHub** - [Soroban Cookbook Issues](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/issues)
 - **Stack Overflow** - Tag your questions with `soroban`
