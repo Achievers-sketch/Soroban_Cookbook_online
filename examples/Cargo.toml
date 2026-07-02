@@ -6,6 +6,8 @@ members = [
     "timelock-vault",
 
     "simple-dao",
+
+    "token-wrapper",
     "simple-voting",
     "simple-dao",
     "upgradeable",
