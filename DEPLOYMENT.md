@@ -150,10 +150,35 @@ This starts a live-reload development server at `http://localhost:3000`.
 
 ## Environment Variables
 
-Currently, no environment variables are required for deployment. The workflow uses:
+Deployment does not require any environment variables to succeed — the build falls back to safe defaults (an inert newsletter form, a hidden Discord link) if none are set. Two optional variables enable real integrations:
 
-- Bun (specified in workflow)
-- Docusaurus build configuration from `documentation/docusaurus.config.ts`
+| Variable | Used by | Purpose |
+|---|---|---|
+| `NEWSLETTER_ENDPOINT` | `documentation/docusaurus.config.ts` → `customFields.newsletterEndpoint` | POST endpoint the newsletter signup form submits `{ "email": string }` to. |
+| `DISCORD_INVITE_URL` | `documentation/docusaurus.config.ts` → `customFields.discordInviteUrl` | Discord invite link surfaced in the UI once the server exists. |
+
+**These values are never hardcoded in source.** They are read from `process.env` at build time (see the `customFields` block in `docusaurus.config.ts`) and are wired into the production build via `.github/workflows/deploy.yml`, which sources them from **GitHub Repository Secrets**:
+
+```yaml
+- name: Build website
+  run: bun run build
+  env:
+    NEWSLETTER_ENDPOINT: ${{ secrets.NEWSLETTER_ENDPOINT }}
+    DISCORD_INVITE_URL: ${{ secrets.DISCORD_INVITE_URL }}
+```
+
+### Setting up the secrets
+
+1. Go to **Settings → Secrets and variables → Actions → Secrets** tab.
+2. Click **New repository secret**.
+3. Add `NEWSLETTER_ENDPOINT` (and/or `DISCORD_INVITE_URL`) with the real value.
+4. Re-run the deploy workflow (push to `main` or trigger manually) — no code changes required.
+
+### Important: these are not confidential at runtime
+
+Because this is a fully static site, any value baked in via `customFields` ends up readable in the published JavaScript bundle — a visitor's browser has to receive it to use it. Storing them as GitHub Secrets controls **who can set or change the value** (write access to repo secrets) and **keeps it out of git history and pull request diffs**; it does not make the value secret from website visitors. Treat these as build-time configuration, not authentication credentials — never put real API keys, passwords, or signing keys into `customFields` or any other value that reaches the client bundle.
+
+This repo follows the same secrets-only pattern for actual credentials: `.github/workflows/alerts.yml` reads `SLACK_WEBHOOK_URL` exclusively via `${{ secrets.SLACK_WEBHOOK_URL }}` (see [Alert System](#alert-system) below) and never hardcodes it. There are no `.env` files committed to this repository — `.gitignore` excludes `.env*` so local secrets never reach version control.
 
 ## Performance Considerations
 
@@ -163,91 +188,136 @@ Currently, no environment variables are required for deployment. The workflow us
 
 ## Security
 
+### Content Security Policy (CSP)
+
+The documentation site is protected by a strict Content-Security-Policy that prevents XSS and injection attacks.
+
+**CSP Implementation:**
+- Meta tag added to all pages via Docusaurus configuration (`documentation/docusaurus.config.ts`)
+- Static `_headers` file provided for edge deployment compatibility
+- Additional security headers configured for defense-in-depth
+
+**Key Directives:**
+- `default-src 'self'`: All content from same origin
+- `script-src 'self' 'wasm-unsafe-eval'`: Scripts from same origin (wasm needed for Docusaurus)
+- `style-src 'self' 'unsafe-inline'`: Styles from same origin with inline support (required for theming)
+- `frame-ancestors 'none'`: Prevents clickjacking
+- Other headers: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`
+
+See [SECURITY.md](./SECURITY.md) for detailed CSP documentation and testing instructions.
+
+### Workflow Security
+
 - Workflow uses `actions/checkout@v4` (latest stable)
 - Permissions are minimal: `contents: read`, `pages: write`, `id-token: write`
 - No secrets required for GitHub Pages deployment
 - All code is built from the repository source
 
-## Redirect Management
+### Security Headers
 
-### Overview
+The site ships a production-grade HTTP security baseline:
 
-301 client-side redirects are configured via `@docusaurus/plugin-client-redirects` in `documentation/docusaurus.config.ts`. This preserves bookmarks and external links whenever a doc is renamed or relocated.
+| Header | Value | Purpose |
+|---|---|---|
+| `X-Frame-Options` | `DENY` | Blocks the site from being framed (clickjacking). |
+| `X-Content-Type-Options` | `nosniff` | Stops browsers from MIME-sniffing responses. |
+| `X-XSS-Protection` | `1; mode=block` | Legacy reflected-XSS filter for older browsers. |
+| `Strict-Transport-Security` | `max-age=31536000; includeSubDomains; preload` | Forces HTTPS for one year, including subdomains. |
+| `Content-Security-Policy` | see below | Restricts which origins scripts, styles, fonts, images, and connections may load from. |
 
-The plugin generates static HTML redirect pages at build time, so each redirect is a real file that browsers resolve before any JavaScript runs.
-
-### How It Works
-
-Docusaurus builds a lightweight HTML file at every `from` path. Each file contains a `<meta http-equiv="refresh">` redirect and a canonical `<link>` pointing to the `to` destination. This is functionally equivalent to a 301 at the hosting level.
-
-### Adding a New Redirect
-
-When a doc is renamed or moved:
-
-1. Open `documentation/docusaurus.config.ts`.
-2. Locate the `@docusaurus/plugin-client-redirects` entry in the `plugins` array.
-3. Add an object to the `redirects` array:
-
-```ts
-{
-  from: '/docs/old-path',   // the URL that no longer exists
-  to: '/docs/new-path',     // the current canonical URL
-},
+```
+default-src 'self';
+script-src 'self' 'unsafe-inline';
+style-src 'self' 'unsafe-inline';
+img-src 'self' data: https://api.dicebear.com;
+font-src 'self' data:;
+connect-src 'self' https:;
+form-action 'self' https:;
+object-src 'none';
+base-uri 'self';
+frame-ancestors 'none';
 ```
 
-4. Commit the change. The redirect is live on the next deployment.
+`script-src`/`style-src` need `'unsafe-inline'` because Docusaurus emits a few inline boilerplate scripts (theme detection, base-URL warning banner) and inline `style="..."` attributes that vary per build and can't be pinned to a static hash. `img-src` allowlists `api.dicebear.com`, which generates the testimonial avatar images on the homepage. `connect-src`/`form-action` allow `https:` generally because the newsletter form posts to an operator-configured endpoint (`NEWSLETTER_ENDPOINT`, see [Environment Variables](#environment-variables)) that isn't known at policy-authoring time.
 
-> **Rules:**
-> - `from` must be an **old** path that no longer has a doc at that location.  
->   Adding a redirect for a path that still resolves to a real page will cause a build error.
-> - Both `from` and `to` must start with `/`.
-> - One `from` can map to exactly one `to`. For multiple old paths pointing to the same page, add multiple objects.
+**Where this is defined (three places, kept in sync):**
 
-### Current Redirect Map
+1. **`vercel.json`** (repo root) — a `headers` block. This is the only mechanism that's actually enforced when this project is deployed via Vercel, because Vercel's edge network honors custom response headers.
+2. **`documentation/static/_headers`** — the Netlify/Cloudflare Pages `_headers` file convention. Docusaurus copies everything under `static/` into the build root, so this lands at `build/_headers`. Honored automatically if this site is ever hosted on Netlify or Cloudflare Pages; harmless (ignored) elsewhere.
+3. **`documentation/docusaurus.config.ts`** → `headTags` — a `<meta http-equiv="Content-Security-Policy">` tag baked into every page's `<head>`. This is the **only** mechanism that works on plain GitHub Pages, because GitHub Pages serves static files with no way to attach custom HTTP response headers (no edge functions, no header config). A caveat: the `<meta>` form of CSP cannot carry `frame-ancestors` — browsers silently ignore that directive outside a real HTTP header — and meta tags cannot express `X-Frame-Options`, `X-Content-Type-Options`, `Strict-Transport-Security`, or `X-XSS-Protection` at all (these are HTTP-header-only). **If you need those four headers enforced on a custom domain backed by GitHub Pages, put a CDN in front of it** (e.g. a Cloudflare proxy with a Transform Rule / Response Header Rule adding them) — there is no static-file-only way to add them on GitHub Pages itself.
 
-| Old path | New path | Reason |
-|---|---|---|
-| `/docs/intro` | `/docs/concepts/introduction` | Renamed from scaffold default |
-| `/docs/setup` | `/docs/getting-started/setup` | Moved into Getting Started section |
-| `/docs/getting-started/installation` | `/docs/getting-started/setup` | Unified setup page |
-| `/docs/getting-started/setup-macos` | `/docs/getting-started/setup` | Unified setup page |
-| `/docs/first-contract` | `/docs/getting-started/first-contract` | Moved into Getting Started section |
-| `/docs/getting-started/build` | `/docs/getting-started/building-and-compilation` | Renamed for clarity |
-| `/docs/getting-started/deploy` | `/docs/getting-started/deploy-testnet` | Split into testnet/mainnet pages |
-| `/docs/getting-started/interaction` | `/docs/getting-started/contract-interaction` | Renamed for clarity |
-| `/docs/concepts` | `/docs/concepts/introduction` | Index path now has dedicated page |
-| `/docs/concepts/intro` | `/docs/concepts/introduction` | Renamed |
-| `/docs/concepts/gas` | `/docs/concepts/gas-and-resources` | Renamed for clarity |
-| `/docs/concepts/cross-contract` | `/docs/concepts/cross-contract-invocation` | Renamed for clarity |
-| `/docs/patterns` | `/docs/patterns/overview` | Index path now has dedicated page |
-| `/docs/patterns/types` | `/docs/patterns/custom-types` | Renamed |
-| `/docs/patterns/auth` | `/docs/patterns/authorization` | Renamed |
-| `/docs/patterns/upgrades` | `/docs/patterns/lifecycle-upgrades` | Renamed |
-| `/docs/patterns/optimization` | `/docs/patterns/optimization-playbook` | Renamed |
-| `/docs/contributing/guide` | `/docs/contributing` | Consolidated |
-| `/docs/contributing/tested-example` | `/docs/contributing/add-tested-example` | Renamed |
-| `/docs/tutorial-basics/create-a-document` | `/docs/getting-started/first-contract` | Legacy scaffold path |
-| `/docs/tutorial-basics/deploy-your-site` | `/docs/getting-started/deploy-testnet` | Legacy scaffold path |
-
-### Verifying Redirects Locally
-
-After adding a redirect, build and serve the site locally to confirm:
+**Verification methods:**
 
 ```bash
-cd documentation
-bun run build
-bun run serve
+# Inspect headers actually returned by the live site (works for Vercel/Netlify/CDN-fronted deployments):
+curl -sI https://soroban-cookbook.dev | grep -iE 'x-frame-options|x-content-type-options|x-xss-protection|strict-transport-security|content-security-policy'
+
+# Confirm the CSP <meta> tag is present in the built HTML (works for any host, including plain GitHub Pages):
+grep -o '<meta http-equiv="Content-Security-Policy"[^>]*>' documentation/build/index.html
+
+# Browser-based audit:
+# https://securityheaders.com — paste the deployed URL for a graded report.
 ```
 
-Then open `http://localhost:3000/docs/<old-path>` in a browser — you should land on the new page. Check the browser's Network tab to confirm the redirect fires.
+This repo's `documentation/e2e/smoke-console.spec.ts` Playwright suite (`bun run test:console`, also run in CI as the `e2e-console` job) loads the homepage, docs pages, search, and the 404 page with a real Chromium instance and fails the build if the browser logs any CSP violation — so any future change that introduces a new third-party script, font, image host, or inline style that the policy doesn't already allow will be caught automatically rather than silently breaking in production.
 
-### Hosting-Level Redirects (Advanced)
+## Alert System
 
-If you need true HTTP 301 responses (e.g., for SEO crawlers that don't execute JavaScript), add matching rules at the hosting layer:
+Alerting is handled by `.github/workflows/alerts.yml`. The workflow covers three scenarios:
 
-**GitHub Pages** does not support server-side redirects natively. The client-redirects plugin is the recommended approach for this deployment target.
+| Trigger | Job | What fires |
+|---|---|---|
+| CI or CD workflow fails on `main` | `notify-failure` | Slack message with workflow name, branch, commit, actor, and run URL |
+| CI or CD workflow recovers on `main` | `notify-recovery` | Slack recovery message |
+| Schedule (every 30 min) | `uptime-check` | HTTP probe against the live site; Slack alert if non-2xx/3xx |
+| Manual `workflow_dispatch` with `test_alert=true` | `test-alert` | Sends a test Slack message to verify the integration |
 
-**Custom hosting (Nginx / Caddy / Cloudflare Pages):** Add server-level rules that match the `from` paths. Keep them in sync with the plugin config so there is a single source of truth in the repository.
+### Setup
+
+#### 1. Create a Slack Incoming Webhook
+
+1. Go to [api.slack.com/apps](https://api.slack.com/apps) → **Create New App** → **From scratch**.
+2. Name it `Soroban Cookbook Alerts`, pick your workspace.
+3. Under **Features** → **Incoming Webhooks**, toggle **Activate Incoming Webhooks** on.
+4. Click **Add New Webhook to Workspace**, select the target channel (e.g. `#soroban-alerts`), and click **Allow**.
+5. Copy the webhook URL (format: `https://hooks.slack.com/services/…`).
+
+#### 2. Add the secret to GitHub
+
+1. Go to **Settings → Secrets and variables → Actions**.
+2. Click **New repository secret**.
+3. Name: `SLACK_WEBHOOK_URL` — Value: the URL copied above.
+
+#### 3. (Optional) Override the monitored URL
+
+The uptime probe defaults to `https://soroban-cookbook.dev`. To change it without editing the workflow:
+
+1. Go to **Settings → Secrets and variables → Actions → Variables** tab.
+2. Add a variable named `SITE_URL` with the target URL as the value.
+
+#### 4. Verify the integration
+
+1. Go to **Actions** → **Alert System** → **Run workflow**.
+2. Set **test_alert** to `true` and click **Run workflow**.
+3. A test message should appear in your Slack channel within seconds.
+
+### On-Call Rotation
+
+This project is community-maintained. There is no formal PagerDuty rotation. The Slack channel configured above serves as the incident notification channel. Triage follows this process:
+
+1. **Slack alert fires** → anyone with repository access investigates the linked Actions run.
+2. **Build failure** → check the failed job logs; common causes are dependency updates or broken Rust examples.
+3. **Site downtime** → check GitHub Pages status at [githubstatus.com](https://www.githubstatus.com) first. If Pages is healthy, check the last deployment run.
+4. **Escalation** → open a GitHub issue tagged `incident` and post in [Stellar Discord](https://discord.gg/stellardev) `#soroban-dev`.
+
+If you want to set up a formal PagerDuty integration, replace the `slackapi/slack-github-action` steps with calls to the [PagerDuty Events API v2](https://developer.pagerduty.com/api-reference/YXBpOjI3NDgyNjU-pager-duty-v2-events-api) using a `PAGERDUTY_INTEGRATION_KEY` secret.
+
+### Alert Channels Reference
+
+| Channel | Purpose | Configured via |
+|---|---|---|
+| Slack `#soroban-alerts` | CI failures, recoveries, downtime | `SLACK_WEBHOOK_URL` secret |
+| GitHub Actions email | Default GitHub notification for workflow failures | GitHub account notification settings |
 
 ---
 
