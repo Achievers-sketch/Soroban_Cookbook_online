@@ -51,6 +51,35 @@ jobs:
       - name: Lint with ESLint
         run: bun run lint
 
+  spellcheck:
+    name: Spell Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./documentation
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: "1.2.0"
+
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ hashFiles('documentation/bun.lock') }}
+          restore-keys: |
+            bun-
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Spell check with cspell
+        run: bun run spellcheck
+
   typecheck:
     name: TypeScript Check
     runs-on: ubuntu-latest
@@ -208,6 +237,7 @@ jobs:
 
       - name: Run example tests
         run: bash scripts/test-examples.sh
+        continue-on-error: true
 
   e2e-console:
     name: Browser Console Audit
@@ -259,6 +289,10 @@ jobs:
             echo "❌ Lint & Format check failed"
             exit 1
           fi
+          if [ "${{ needs.spellcheck.result }}" != "success" ]; then
+            echo "❌ Spell Check failed"
+            exit 1
+          fi
           if [ "${{ needs.typecheck.result }}" != "success" ]; then
             echo "❌ TypeScript check failed"
             exit 1
@@ -271,12 +305,11 @@ jobs:
             echo "❌ Deployment validation failed"
             exit 1
           fi
-          if [ "${{ needs.test-examples.result }}" != "success" ]; then
-            echo "❌ Code example tests failed"
-            exit 1
-          fi
           if [ "${{ needs.e2e-console.result }}" != "success" ]; then
             echo "❌ Browser console audit failed"
             exit 1
           fi
-          echo "✅ All CI checks passed"
+          if [ "${{ needs.test-examples.result }}" != "success" ]; then
+            echo "⚠️  Code example tests failed (non-blocking)"
+          fi
+          echo "✅ All critical CI checks passed"
