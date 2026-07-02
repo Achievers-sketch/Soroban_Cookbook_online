@@ -32,17 +32,20 @@ Before you begin, ensure you have:
 First, update your package manager to ensure you have the latest package lists:
 
 **Ubuntu/Debian:**
+
 ```bash
 sudo apt update
 sudo apt upgrade -y
 ```
 
 **Fedora/RHEL/CentOS:**
+
 ```bash
 sudo dnf update -y
 ```
 
 **Arch Linux:**
+
 ```bash
 sudo pacman -Syu
 ```
@@ -52,21 +55,25 @@ sudo pacman -Syu
 You'll need essential build tools and libraries to compile Rust and Soroban CLI.
 
 **Ubuntu/Debian:**
+
 ```bash
 sudo apt install -y build-essential pkg-config libssl-dev curl git
 ```
 
 **Fedora/RHEL/CentOS:**
+
 ```bash
 sudo dnf install -y gcc gcc-c++ make pkg-config openssl-devel curl git
 ```
 
 **Arch Linux:**
+
 ```bash
 sudo pacman -S base-devel openssl curl git
 ```
 
 **Alpine Linux:**
+
 ```bash
 apk add --no-cache build-base openssl-dev curl git
 ```
@@ -88,6 +95,7 @@ source $HOME/.cargo/env
 ```
 
 **Note:** For non-interactive installations (e.g., in scripts), use:
+
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ```
@@ -176,6 +184,7 @@ Use this checklist to confirm your environment is ready:
 **Problem:** `Permission denied` when running installation commands
 
 **Solution:**
+
 ```bash
 # For curl/rustup installation, ensure you have write permissions to home directory
 ls -la ~/.cargo
@@ -192,6 +201,7 @@ sudo apt install package-name
 **Problem:** `command not found: soroban` or `command not found: rustc`
 
 **Solution:**
+
 ```bash
 # Ensure Cargo bin directory is in your PATH
 echo $PATH | grep ".cargo/bin"
@@ -212,6 +222,7 @@ source ~/.bashrc  # or source ~/.zshrc
 **Problem:** `SSL: CERTIFICATE_VERIFY_FAILED` when downloading Rust
 
 **Solution:**
+
 ```bash
 # Update CA certificates
 sudo apt install -y ca-certificates  # Ubuntu/Debian
@@ -226,6 +237,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 **Problem:** `cargo install soroban-cli` takes too long or times out
 
 **Solution:**
+
 ```bash
 # Increase the timeout and use verbose output
 cargo install --locked soroban-cli -v
@@ -242,6 +254,7 @@ cargo install --locked soroban-cli --version 20.0.0
 **Problem:** Error like `error: linker 'cc' not found`
 
 **Solution:**
+
 ```bash
 # Reinstall build tools
 sudo apt install -y build-essential  # Ubuntu/Debian
@@ -254,6 +267,7 @@ sudo pacman -S base-devel  # Arch Linux
 **Problem:** `No space left on device` during installation
 
 **Solution:**
+
 ```bash
 # Check available disk space
 df -h

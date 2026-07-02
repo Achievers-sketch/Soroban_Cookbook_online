@@ -10,13 +10,13 @@ Set up your Soroban development environment on Windows. This guide covers both W
 
 ## Quick Decision: WSL vs Native
 
-| Aspect | WSL 2 (Recommended) | Native Windows |
-|--------|-------------------|-----------------|
-| Setup Complexity | Moderate | High |
-| Performance | Excellent | Good |
-| Compatibility | Best (Linux-based) | Limited |
-| Troubleshooting | Easier | More issues |
-| Recommended For | Most developers | Advanced users |
+| Aspect           | WSL 2 (Recommended) | Native Windows |
+| ---------------- | ------------------- | -------------- |
+| Setup Complexity | Moderate            | High           |
+| Performance      | Excellent           | Good           |
+| Compatibility    | Best (Linux-based)  | Limited        |
+| Troubleshooting  | Easier              | More issues    |
+| Recommended For  | Most developers     | Advanced users |
 
 **Recommendation**: Use WSL 2 for the smoothest experience. Native Windows setup is more complex due to toolchain differences.
 
@@ -41,11 +41,13 @@ wsl --install
 ```
 
 This command:
+
 - Enables the WSL 2 feature
 - Installs Ubuntu as the default Linux distribution
 - Sets WSL 2 as the default version
 
 Expected output:
+
 ```
 Installing: Virtual Machine Platform
 Virtual Machine Platform has been installed.
@@ -65,6 +67,7 @@ After installation, Ubuntu will launch. You'll be prompted to:
 2. Create a password (you'll need this for `sudo` commands)
 
 Example:
+
 ```
 Installing, this may take a few minutes...
 Please create a default UNIX user account. The username does not need to match your Windows user name.
@@ -192,6 +195,7 @@ rustup target list | grep wasm32-unknown-unknown
 ```
 
 Expected output:
+
 ```
 === WSL Verification ===
   * Ubuntu                            Running           2
@@ -353,6 +357,7 @@ This gives you the best of both worlds: Windows UI with Linux development enviro
 Use this checklist to confirm your setup is complete:
 
 ### WSL Setup
+
 - [ ] WSL 2 installed: `wsl --list --verbose` shows Ubuntu with version 2
 - [ ] Ubuntu updated: `sudo apt update && sudo apt upgrade -y` completes
 - [ ] Rust installed: `rustc --version` returns a version number
@@ -363,6 +368,7 @@ Use this checklist to confirm your setup is complete:
 - [ ] VS Code Remote WSL extension installed (optional but recommended)
 
 ### Native Windows Setup
+
 - [ ] Rust installed: `rustc --version` returns a version number
 - [ ] Cargo installed: `cargo --version` returns a version number
 - [ ] Build tools installed: Visual Studio Build Tools present
@@ -382,6 +388,7 @@ Use this checklist to confirm your setup is complete:
 **Problem**: `Error: The system cannot find the file specified` or installation hangs
 
 **Solution**:
+
 ```powershell
 # Ensure you're running PowerShell as Administrator
 # Check Windows version
@@ -399,6 +406,7 @@ wsl --install -d Ubuntu
 **Problem**: `Error: WSL 2 requires an update to its kernel component`
 
 **Solution**:
+
 ```powershell
 # Download and install WSL 2 kernel update
 # Visit: https://aka.ms/wsl2kernel
@@ -415,6 +423,7 @@ wsl --list --verbose
 **Problem**: `/mnt/c` doesn't exist or is inaccessible
 
 **Solution**:
+
 ```bash
 # Check if mount exists
 ls /mnt
@@ -430,6 +439,7 @@ wsl --shutdown
 **Problem**: `error: could not compile 'soroban-cli'`
 
 **Solution**:
+
 ```bash
 # Update build tools
 sudo apt update
@@ -445,6 +455,7 @@ cargo install --locked soroban-cli -v
 **Problem**: Commands are slow, especially file operations
 
 **Solution**:
+
 ```bash
 # Store projects in WSL filesystem, not Windows
 # Good: ~/soroban-projects
@@ -464,6 +475,7 @@ cargo clean
 **Problem**: `error: Microsoft Visual C++ 14.0 or greater is required`
 
 **Solution**:
+
 1. Download Build Tools for Visual Studio from [visualstudio.microsoft.com](https://visualstudio.microsoft.com/downloads/)
 2. Run installer and select "Desktop development with C++"
 3. Complete installation
@@ -474,6 +486,7 @@ cargo clean
 **Problem**: `cargo install soroban-cli` takes too long or times out
 
 **Solution**:
+
 ```powershell
 # Try with verbose output
 cargo install --locked soroban-cli -v
@@ -489,6 +502,7 @@ Test-NetConnection -ComputerName github.com -Port 443
 **Problem**: `soroban: The term 'soroban' is not recognized`
 
 **Solution**:
+
 ```powershell
 # Check if Cargo bin is in PATH
 $env:PATH -split ';' | Select-String 'cargo'
@@ -505,6 +519,7 @@ $CargoPath = "$env:USERPROFILE\.cargo\bin"
 **Problem**: Scripts fail with `^M` characters or "bad interpreter" errors
 
 **Solution**:
+
 ```powershell
 # Configure Git to handle line endings
 git config --global core.autocrlf true
@@ -522,6 +537,7 @@ git commit -m "Normalize line endings"
 **Problem**: `Permission denied` when running scripts
 
 **Solution**:
+
 ```powershell
 # Check execution policy
 Get-ExecutionPolicy
@@ -538,6 +554,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 **Problem**: `error: linker 'cc' not found` or similar
 
 **Solution**:
+
 ```powershell
 # Ensure Build Tools are installed
 # Download from: https://visualstudio.microsoft.com/downloads/
@@ -555,6 +572,7 @@ rustc --version --verbose
 **Problem**: Files have different line endings on Windows vs WSL
 
 **Solution**:
+
 ```bash
 # In WSL, configure Git
 git config --global core.autocrlf input
@@ -570,6 +588,7 @@ git config --global core.autocrlf true
 **Problem**: Installation is slow or fails intermittently
 
 **Solution**:
+
 1. Add your project directory to antivirus exclusions
 2. Temporarily disable antivirus during installation
 3. Check antivirus logs for blocked operations
@@ -579,6 +598,7 @@ git config --global core.autocrlf true
 **Problem**: `No space left on device` during installation
 
 **Solution**:
+
 ```powershell
 # Check available space
 Get-Volume
@@ -598,38 +618,39 @@ cargo clean
 
 ### WSL Commands
 
-| Command | Purpose |
-|---------|---------|
-| `wsl --install` | Install WSL 2 with Ubuntu |
-| `wsl --list --verbose` | List installed distributions |
-| `wsl --shutdown` | Shut down all WSL instances |
-| `wsl -d Ubuntu` | Launch specific distribution |
-| `wsl --set-default-version 2` | Set WSL 2 as default |
+| Command                       | Purpose                      |
+| ----------------------------- | ---------------------------- |
+| `wsl --install`               | Install WSL 2 with Ubuntu    |
+| `wsl --list --verbose`        | List installed distributions |
+| `wsl --shutdown`              | Shut down all WSL instances  |
+| `wsl -d Ubuntu`               | Launch specific distribution |
+| `wsl --set-default-version 2` | Set WSL 2 as default         |
 
 ### Rust Commands (Same on WSL and Native)
 
-| Command | Purpose |
-|---------|---------|
-| `rustc --version` | Check Rust version |
-| `cargo --version` | Check Cargo version |
+| Command                                    | Purpose                |
+| ------------------------------------------ | ---------------------- |
+| `rustc --version`                          | Check Rust version     |
+| `cargo --version`                          | Check Cargo version    |
 | `rustup target add wasm32-unknown-unknown` | Add WebAssembly target |
-| `rustup target list` | List available targets |
-| `rustup toolchain list` | List Rust toolchains |
+| `rustup target list`                       | List available targets |
+| `rustup toolchain list`                    | List Rust toolchains   |
 
 ### Soroban Commands (Same on WSL and Native)
 
-| Command | Purpose |
-|---------|---------|
-| `soroban --version` | Check Soroban CLI version |
-| `soroban contract init my-contract` | Create new contract |
-| `soroban contract build` | Build contract to WASM |
-| `soroban contract deploy` | Deploy contract to testnet |
+| Command                             | Purpose                    |
+| ----------------------------------- | -------------------------- |
+| `soroban --version`                 | Check Soroban CLI version  |
+| `soroban contract init my-contract` | Create new contract        |
+| `soroban contract build`            | Build contract to WASM     |
+| `soroban contract deploy`           | Deploy contract to testnet |
 
 ---
 
 ## WSL vs Native Comparison
 
 ### WSL 2 Advantages
+
 - ✅ Better compatibility with Soroban tooling
 - ✅ Faster build times
 - ✅ Easier troubleshooting (Linux-based)
@@ -638,16 +659,19 @@ cargo clean
 - ✅ Fewer PATH and permission issues
 
 ### WSL 2 Disadvantages
+
 - ❌ Requires Windows 10/11 with virtualization enabled
 - ❌ Slightly more setup complexity
 - ❌ Requires learning basic Linux commands
 
 ### Native Windows Advantages
+
 - ✅ No virtualization overhead
 - ✅ Direct Windows integration
 - ✅ Familiar Windows tools
 
 ### Native Windows Disadvantages
+
 - ❌ More complex toolchain setup
 - ❌ More PATH and permission issues
 - ❌ Line ending complications

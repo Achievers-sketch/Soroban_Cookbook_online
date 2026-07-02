@@ -29,12 +29,14 @@ soroban contract build
 ```
 
 Expected output:
+
 ```
 Compiling my-first-contract v0.1.0
 Finished release [optimized] target(s) in 2.34s
 ```
 
 The compiled WASM file is located at:
+
 ```
 target/wasm32-unknown-unknown/release/my_first_contract.wasm
 ```
@@ -48,6 +50,7 @@ ls -lh target/wasm32-unknown-unknown/release/*.wasm
 ```
 
 Expected output:
+
 ```
 -rw-r--r-- 1 user group 123K Mar 23 10:30 target/wasm32-unknown-unknown/release/my_first_contract.wasm
 ```
@@ -63,6 +66,7 @@ soroban keys generate --global my-testnet-account
 ```
 
 This generates a new keypair and stores it locally. Expected output:
+
 ```
 Created keypair "my-testnet-account" with public key: GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
@@ -78,6 +82,7 @@ curl "https://friendbot.stellar.org?addr=GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 Replace the address with your public key from the previous step.
 
 Expected response:
+
 ```json
 {
   "hash": "...",
@@ -96,6 +101,7 @@ soroban account balance --account my-testnet-account --network testnet
 ```
 
 Expected output:
+
 ```
 10000.0000000 XLM
 ```
@@ -125,6 +131,7 @@ soroban network ls
 ```
 
 Expected output:
+
 ```
 testnet
   RPC URL: https://soroban-testnet.stellar.org
@@ -153,6 +160,7 @@ soroban contract deploy \
 ```
 
 Expected output:
+
 ```
 Contract deployed successfully.
 Contract ID: CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSC4
@@ -185,6 +193,7 @@ soroban contract info --id $CONTRACT_ID --network testnet
 ```
 
 Expected output:
+
 ```
 Contract ID: CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSC4
 Ledger: 12345678
@@ -199,12 +208,14 @@ soroban contract inspect --id $CONTRACT_ID --network testnet
 ```
 
 This shows:
+
 - Contract specification
 - Available functions
 - Function parameters and return types
 - Authorization requirements
 
 Example output:
+
 ```
 Contract: CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSC4
 
@@ -227,6 +238,7 @@ soroban contract invoke \
 ```
 
 Expected output:
+
 ```
 "Hello"
 ```
@@ -244,6 +256,7 @@ soroban contract invoke \
 ```
 
 Expected output:
+
 ```
 1
 ```
@@ -261,6 +274,7 @@ soroban contract invoke \
 ```
 
 Expected output:
+
 ```
 1
 ```
@@ -323,6 +337,7 @@ Use this checklist to confirm your deployment is complete and working:
 **Problem:** `error: could not compile 'my-first-contract'`
 
 **Solution:**
+
 ```bash
 # Update Soroban SDK to latest version
 cargo update
@@ -343,6 +358,7 @@ soroban contract build
 **Problem:** `Error: Account not found` or `Error: Insufficient balance`
 
 **Solution:**
+
 ```bash
 # Verify your public key
 soroban keys show my-testnet-account
@@ -360,6 +376,7 @@ soroban account balance --account my-testnet-account --network testnet
 **Problem:** `Error: Network 'testnet' not found`
 
 **Solution:**
+
 ```bash
 # Add testnet network
 soroban network add --name testnet \
@@ -375,6 +392,7 @@ soroban network ls
 **Problem:** `Error: Invalid WASM binary`
 
 **Solution:**
+
 ```bash
 # Ensure you're using the correct WASM file
 ls -lh target/wasm32-unknown-unknown/release/*.wasm
@@ -392,6 +410,7 @@ soroban contract build
 **Problem:** `Error: Request timeout` or `Error: Network error`
 
 **Solution:**
+
 ```bash
 # Check network connectivity
 ping soroban-testnet.stellar.org
@@ -411,6 +430,7 @@ soroban contract deploy \
 **Problem:** `Error: Authorization failed` or `Error: Unauthorized`
 
 **Solution:**
+
 ```bash
 # Verify you're using the correct account
 soroban keys show my-testnet-account
@@ -427,6 +447,7 @@ soroban account balance --account my-testnet-account --network testnet
 **Problem:** `Error: Contract not found` when trying to invoke
 
 **Solution:**
+
 ```bash
 # Verify the contract ID is correct
 echo $CONTRACT_ID
@@ -444,6 +465,7 @@ soroban contract info --id $CONTRACT_ID --network testnet
 **Problem:** `Error: Insufficient fee` or `Error: Fee too low`
 
 **Solution:**
+
 ```bash
 # Check current network fees
 soroban network info --network testnet
