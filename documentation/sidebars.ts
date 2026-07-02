@@ -16,6 +16,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/setup-macos',
         'getting-started/first-contract',
         'getting-started/building-and-compilation',
+        'getting-started/local-testing-and-simulation',
         'getting-started/deploy-testnet',
         'getting-started/deploy-mainnet',
         'getting-started/contract-interaction',
@@ -45,11 +46,13 @@ const sidebars: SidebarsConfig = {
         'patterns/hello-world',
         'patterns/basic-token',
         'patterns/custom-types',
+        'patterns/token-standards',
         'patterns/authorization',
         'patterns/error-handling',
         'patterns/error-recovery',
         'patterns/optimization-playbook',
         'patterns/lifecycle-upgrades',
+        'patterns/proposal-lifecycle',
       ],
     },
     {
@@ -57,6 +60,8 @@ const sidebars: SidebarsConfig = {
       label: 'Security',
       items: [
         'security/fundamentals',
+        'security/governance',
+        'security/defi-patterns',
       ],
     },
     {
@@ -82,6 +87,13 @@ const sidebars: SidebarsConfig = {
       label: 'Responsive',
       items: [
         'responsive/breakpoints',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Security Audit',
+      items: [
+        'security/code-audit',
       ],
     },
   ],
