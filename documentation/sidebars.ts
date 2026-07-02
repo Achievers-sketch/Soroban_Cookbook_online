@@ -85,6 +85,13 @@ const sidebars: SidebarsConfig = {
         'responsive/breakpoints',
       ],
     },
+    {
+      type: 'category',
+      label: 'Security Audit',
+      items: [
+        'security/code-audit',
+      ],
+    },
   ],
 };
 
