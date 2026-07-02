@@ -22,8 +22,7 @@
     "e2e:chromium": "playwright test --project=chromium",
     "e2e:firefox": "playwright test --project=firefox",
     "e2e:webkit": "playwright test --project=webkit",
-    "e2e:report": "playwright show-report"
-
+    "e2e:report": "playwright show-report",
     "test": "vitest run",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
@@ -69,9 +68,7 @@
     "jsdom": "^23.0.1",
     "prettier": "^3.8.1",
     "sharp": "^0.34.5",
-    "@playwright/test": "1.49.1",
-    "wait-on": "8.0.2"
-
+    "wait-on": "8.0.2",
     "typescript": "~5.6.2",
     "vitest": "^1.0.4"
   },

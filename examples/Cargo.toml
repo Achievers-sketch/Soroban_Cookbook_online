@@ -4,12 +4,9 @@ members = [
     "counter",
     "token-transfer",
     "timelock-vault",
-
     "simple-dao",
-
     "token-wrapper",
     "simple-voting",
-    "simple-dao",
     "upgradeable",
 ]
 resolver = "2"
