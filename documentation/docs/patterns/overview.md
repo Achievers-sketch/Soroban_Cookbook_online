@@ -1,8 +1,10 @@
 ---
-title: Pattern Library
+title: Pattern library
 description: Reusable Soroban smart contract patterns — storage, tokens, DeFi, and more.
 image: /img/soroban-social-card.png
 ---
+
+# Pattern Library
 
 Reusable smart contract patterns for common use cases.
 
@@ -32,34 +34,67 @@ Error taxonomy, custom error patterns, error propagation strategies, and user-fa
 
 Comprehensive error handling patterns including Result types, fallback logic, graceful degradation, transaction rollback, and input validation. Essential for production-ready contracts.
 
+### [Staking with Reward Distribution](/docs/patterns/staking)
+
+<span class="sb-badge sb-badge--intermediate">Intermediate</span> <span class="sb-tag sb-tag--defi">DeFi</span> <span class="sb-badge sb-badge--stable">Stable</span>
+
+Token staking with pro-rata reward distribution over epochs. Demonstrates lazy reward computation, epoch-based accounting, and efficient O(1) per-user storage without batch operations.
+
 ## Pattern Categories
 
-### 🪙 Token Standards
+### 🪙 [Token Standards](/patterns/tokens)
 
 <span class="sb-tag sb-tag--token">Token</span>
 
+Explore fungible token standards, wrappers, and vault mechanisms for building robust token systems.
+
 - Basic token implementations
-- Token wrappers and vaults
-- Multi-token systems
+- Token wrappers and bridges
+- Multi-token vaults
 
-See [Token Pattern Security Audit](/docs/security/token-audit) for per-pattern audit checklists before deploying token contracts.
-
-### 💰 DeFi Patterns
+### 💰 [DeFi Patterns](/patterns/defi)
 
 <span class="sb-tag sb-tag--defi">DeFi</span>
 
-- Escrow contracts
-- Atomic swaps
-- Liquidity pools
-- Timelock mechanisms
+Build decentralized finance applications with liquidity pools, staking, atomic swaps, and lending protocols.
 
-### 🗳️ Governance
+- Liquidity pools (AMM)
+- **Staking contracts** with epoch-based rewards
+- Atomic swaps
+- Lending and borrowing
+
+### 🗳️ [Governance](/patterns/governance)
 
 <span class="sb-tag sb-tag--governance">Governance</span>
 
-- Simple voting systems
+Implement decentralized governance with voting systems, DAOs, and proposal mechanisms.
+
+- Voting systems
 - DAO implementations
-- Proposal mechanisms
+- Proposal factories
+- Token delegation
+
+### 🎨 [NFT Patterns](/patterns/nft)
+
+<span class="sb-tag sb-tag--nft">NFT</span>
+
+Create and manage non-fungible tokens with marketplaces and collection systems.
+
+- NFT minting and transfers
+- Marketplace contracts
+- Collection management
+- Royalty mechanisms
+
+### 🔧 [Utility & Infrastructure](/patterns/utility)
+
+<span class="sb-badge sb-badge--intermediate">Intermediate</span>
+
+Build essential utility contracts for multi-signature wallets, escrow, and fund management.
+
+- Multi-signature wallets
+- Time-locked contracts
+- Escrow services
+- Registry systems
 
 ### ⚡ Advanced Patterns
 
@@ -81,7 +116,7 @@ Each pattern includes:
 
 ## Contributing
 
-Have a pattern to share? See our [Contributing Guide](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/CONTRIBUTING.md).
+Have a pattern to share? See our [Contributing Guide](https://github.com/Soroban-Cookbook/Soroban-Cookbook-/blob/main/CONTRIBUTING.md).
 
 ## Getting Started
 
@@ -94,8 +129,5 @@ Start exploring:
 
 ## Resources
 
-- [Error Handling pattern](/docs/patterns/error-handling) — error taxonomy for production contracts
-- [Hello World Storage](/docs/patterns/hello-world) — pattern page template
-- [Security Fundamentals](/docs/security/fundamentals) — review before mainnet
 - [Soroban Examples](https://github.com/stellar/soroban-examples)
-- [Community Patterns](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online)
+- [Community Patterns](https://github.com/Soroban-Cookbook/Soroban-Cookbook-)
