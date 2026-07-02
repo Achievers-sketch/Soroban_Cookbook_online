@@ -1,3 +1,9 @@
+---
+sidebar_position: 4
+title: Storage
+description: Master Soroban's three storage types — instance, persistent, and temporary — and learn patterns for efficient, scalable contract state management.
+---
+
 # Storage Patterns
 
 Soroban contracts use three storage types: **instance**, **persistent**, and **temporary**. Each storage type has a different lifetime, cost profile, and common use case.

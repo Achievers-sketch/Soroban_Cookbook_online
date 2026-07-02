@@ -1,3 +1,9 @@
+---
+sidebar_position: 1
+title: Core Concepts
+description: Essential Soroban concepts — storage, authorization, events, error handling, and contract lifecycle for robust smart contracts.
+---
+
 # Core Concepts
 
 Essential concepts for building Soroban smart contracts.

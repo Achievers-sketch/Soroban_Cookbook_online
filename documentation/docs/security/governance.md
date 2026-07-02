@@ -1,6 +1,7 @@
 ---
 title: Governance Security
 sidebar_position: 2
+description: Security considerations for decentralized governance contracts in Soroban — voting systems, proposal mechanisms, and attack mitigation.
 ---
 
 # Governance Security

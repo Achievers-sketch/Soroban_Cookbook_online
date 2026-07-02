@@ -1,3 +1,9 @@
+---
+sidebar_position: 2
+title: Best Practices
+description: Essential do's and don'ts for Soroban smart contract development — safe patterns, input validation, and a production-ready contract checklist.
+---
+
 # Soroban Best Practices
 
 A concise, beginner-friendly guide for new Soroban developers. Use this page to learn practical do/don't rules, common anti-patterns, and a reusable checklist for your first production-ready contract.

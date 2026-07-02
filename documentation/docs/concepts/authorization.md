@@ -1,3 +1,9 @@
+---
+sidebar_position: 6
+title: Authorization
+description: Implement secure authorization patterns in Soroban contracts — identity validation, role-based access control, and permission management for sensitive operations.
+---
+
 # Authorization
 
 Authorization in Soroban ensures only expected identities can execute sensitive contract actions.

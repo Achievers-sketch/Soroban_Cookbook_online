@@ -112,11 +112,58 @@ To manually trigger a deployment:
 
 ### Rollback
 
-GitHub Pages automatically serves the latest deployment. To rollback:
+GitHub Pages automatically serves the latest deployment. To quickly rollback to a previous version:
 
-1. Revert the problematic commit on `main`
-2. Push the revert commit
-3. The workflow will automatically deploy the previous version
+#### Option 1: Revert Commit (Recommended)
+
+This creates an audit trail of all deployments:
+
+1. Identify the problematic commit SHA
+2. Create a revert commit on `main`:
+   ```bash
+   git revert <commit-sha>
+   git push origin main
+   ```
+3. The "Deploy to GitHub Pages" workflow automatically triggers
+4. Wait for workflow to complete (~3-5 minutes)
+5. The live site now serves the previous working version
+
+**Advantages:**
+- Git history shows exactly what was reverted and when
+- Automatic CI/CD pipeline handles deployment
+- Safe: no force-push operations
+
+#### Option 2: Manual Rollback via GitHub Actions
+
+If you need to rollback without committing a revert:
+
+1. Go to **Actions** tab
+2. Select "Deploy to GitHub Pages" workflow
+3. Click "Run workflow"
+4. Select the branch (`main`)
+5. Select a previous git commit from the dropdown
+6. Click "Run workflow"
+
+This deploys the selected commit's state without creating a revert commit.
+
+#### Option 3: GitHub Pages Branch Rollback
+
+If the issue persists after revert, you can manually rollback the GitHub Pages deployment:
+
+1. Navigate to **Settings → Pages**
+2. Under "Build and deployment", the currently deployed commit is shown
+3. Previous deployments are available through GitHub's deployment history
+4. Select a previous deployment to activate it (if available)
+
+#### Staging Verification Before Production
+
+Test fixes on a staging environment first:
+
+1. Deploy to a staging branch
+2. Verify the fix resolves the issue
+3. Merge staging branch to `main` for production deployment
+
+**Note:** This repository uses GitHub Pages for hosting, which tracks deployments. Each successful workflow run creates a deployment artifact that can be restored if needed.
 
 ## Local Development
 

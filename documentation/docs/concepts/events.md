@@ -1,3 +1,9 @@
+---
+sidebar_position: 7
+title: Events
+description: Emit and track contract events for observability, debugging, and off-chain indexing in Soroban smart contracts.
+---
+
 # Events
 
 Events provide a reliable audit trail of what happened in your contract and help indexers and UIs react to on-chain activity.

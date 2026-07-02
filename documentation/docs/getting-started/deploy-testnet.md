@@ -1,3 +1,9 @@
+---
+sidebar_position: 7
+title: Deploy to Testnet
+description: Deploy Soroban contracts to Stellar testnet for validation, testing, and live environment verification before mainnet deployment.
+---
+
 # Deploy to Testnet
 
 Deploy your Soroban contract to Stellar testnet for validation in a live network environment. This guide covers the complete workflow from contract artifact to verification.

@@ -1,6 +1,7 @@
 ---
 title: Security Fundamentals
 sidebar_position: 1
+description: Essential security practices for Soroban smart contracts — threat modeling, secure coding patterns, and protecting funds from vulnerabilities.
 ---
 
 # Security Fundamentals

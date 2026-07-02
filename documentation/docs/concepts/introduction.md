@@ -1,3 +1,9 @@
+---
+sidebar_position: 0
+title: What is Soroban?
+description: Learn what Soroban is — Stellar's smart contract platform built for speed, scalability, and developer experience with Rust.
+---
+
 # What is Soroban?
 
 Welcome to Soroban, Stellar's smart contract platform. This guide introduces you to Soroban and explains why it matters in the Stellar ecosystem.

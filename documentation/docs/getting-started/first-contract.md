@@ -1,3 +1,9 @@
+---
+sidebar_position: 3
+title: Your First Contract
+description: Create, build, and test your first Soroban smart contract from scratch — a beginner-friendly introduction to contract development.
+---
+
 # Your First Contract
 
 Learn how to create, build, and test your first Soroban smart contract.
@@ -76,6 +82,7 @@ cargo test
 
 ## Next Steps
 
+- [Contract Testing Guide](./contract-testing) - Learn how to write and run tests
 - [Deploy to testnet](./deploy-testnet)
 - [Learn about storage](../concepts/storage)
 - [Explore patterns](../patterns/overview.md)

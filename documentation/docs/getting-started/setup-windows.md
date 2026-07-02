@@ -1,3 +1,9 @@
+---
+sidebar_position: 2
+title: Setup on Windows
+description: Set up your Soroban development environment on Windows — guides for both WSL 2 and native Windows installation.
+---
+
 # Windows Environment Setup
 
 Set up your Soroban development environment on Windows. This guide covers both WSL (Windows Subsystem for Linux) - the recommended approach - and native Windows installation.
