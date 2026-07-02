@@ -1,8 +1,9 @@
 #![no_std]
 
-use soroban_sdk::{contract, contractimpl, symbol_short, Address, Env, Symbol, Vec};
+use soroban_sdk::{contract, contracterror, contractimpl, symbol_short, Address, Env, IntoVal, Symbol, Vec};
 
 /// Error types for oracle operations
+#[contracterror]
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 #[repr(u32)]
 pub enum OracleError {
@@ -101,13 +102,11 @@ impl OracleConsumer {
 
         // Call the oracle contract to fetch price
         // This demonstrates cross-contract invocation
-        let price_data: Vec<i128> = env
-            .invoke_contract(
-                &oracle,
-                &symbol_short!("get_price"),
-                soroban_sdk::vec![&env, asset.into_val(&env)],
-            )
-            .map_err(|_| OracleError::InvalidOracle)?;
+        let price_data: Vec<i128> = env.invoke_contract(
+            &oracle,
+            &symbol_short!("get_price"),
+            soroban_sdk::vec![&env, asset.into_val(&env)],
+        );
 
         // Extract price, decimals, and timestamp from response
         if price_data.len() < 3 {
@@ -142,13 +141,11 @@ impl OracleConsumer {
         let max_age = Self::get_max_age(env.clone());
 
         // Call oracle contract
-        let price_data: Vec<i128> = env
-            .invoke_contract(
-                &oracle,
-                &symbol_short!("get_price_data"),
-                soroban_sdk::vec![&env, asset.into_val(&env)],
-            )
-            .map_err(|_| OracleError::InvalidOracle)?;
+        let price_data: Vec<i128> = env.invoke_contract(
+            &oracle,
+            &Symbol::new(&env, "get_price_data"),
+            soroban_sdk::vec![&env, asset.into_val(&env)],
+        );
 
         if price_data.len() < 3 {
             return Err(OracleError::InvalidPrice);
@@ -231,13 +228,21 @@ mod tests {
     #[contractimpl]
     impl MockOracle {
         pub fn get_price(env: Env, asset: Symbol) -> Vec<i128> {
-            // Mock prices for different assets
-            let price = match asset.to_string().as_str() {
-                "USD" => 1_000_000, // $1.00 with 6 decimals
-                "EUR" => 1_100_000, // €1.10
-                "GBP" => 1_250_000, // £1.25
-                "BTC" => 43_000_000_000, // ₿43,000
-                _ => 0,
+            let usd = Symbol::new(&env, "USD");
+            let eur = Symbol::new(&env, "EUR");
+            let gbp = Symbol::new(&env, "GBP");
+            let btc = Symbol::new(&env, "BTC");
+
+            let price = if asset == usd {
+                1_000_000
+            } else if asset == eur {
+                1_100_000
+            } else if asset == gbp {
+                1_250_000
+            } else if asset == btc {
+                43_000_000_000
+            } else {
+                0
             };
 
             soroban_sdk::vec![
@@ -256,8 +261,8 @@ mod tests {
     #[test]
     fn test_oracle_init() {
         let env = Env::default();
-        let consumer_id = env.register_contract(None, OracleConsumer);
-        let oracle_id = env.register_contract(None, MockOracle);
+        let consumer_id = env.register(OracleConsumer, ());
+        let oracle_id = env.register(MockOracle, ());
         let client = OracleConsumerClient::new(&env, &consumer_id);
 
         client.init(&oracle_id, &3600);
@@ -269,30 +274,30 @@ mod tests {
     #[test]
     fn test_get_price() {
         let env = Env::default();
-        let consumer_id = env.register_contract(None, OracleConsumer);
-        let oracle_id = env.register_contract(None, MockOracle);
+        let consumer_id = env.register(OracleConsumer, ());
+        let oracle_id = env.register(MockOracle, ());
         let client = OracleConsumerClient::new(&env, &consumer_id);
 
         client.init(&oracle_id, &3600);
 
-        let usd_price = client.get_price(&Symbol::new(&env, "USD")).unwrap();
+        let usd_price = client.get_price(&Symbol::new(&env, "USD"));
         assert_eq!(usd_price, 1_000_000);
 
-        let btc_price = client.get_price(&Symbol::new(&env, "BTC")).unwrap();
+        let btc_price = client.get_price(&Symbol::new(&env, "BTC"));
         assert_eq!(btc_price, 43_000_000_000);
     }
 
     #[test]
     fn test_get_price_data() {
         let env = Env::default();
-        let consumer_id = env.register_contract(None, OracleConsumer);
-        let oracle_id = env.register_contract(None, MockOracle);
+        let consumer_id = env.register(OracleConsumer, ());
+        let oracle_id = env.register(MockOracle, ());
         let client = OracleConsumerClient::new(&env, &consumer_id);
 
         client.init(&oracle_id, &3600);
 
         let (price, decimals, _timestamp) =
-            client.get_price_data(&Symbol::new(&env, "EUR")).unwrap();
+            client.get_price_data(&Symbol::new(&env, "EUR"));
 
         assert_eq!(price, 1_100_000);
         assert_eq!(decimals, 6);
@@ -301,30 +306,28 @@ mod tests {
     #[test]
     fn test_calculate_value() {
         let env = Env::default();
-        let consumer_id = env.register_contract(None, OracleConsumer);
-        let oracle_id = env.register_contract(None, MockOracle);
+        let consumer_id = env.register(OracleConsumer, ());
+        let oracle_id = env.register(MockOracle, ());
         let client = OracleConsumerClient::new(&env, &consumer_id);
 
         client.init(&oracle_id, &3600);
 
         // 100 USD = 100 * 1,000,000 / 10^6 = 100
         let value = client
-            .calculate_value(&Symbol::new(&env, "USD"), &100)
-            .unwrap();
+            .calculate_value(&Symbol::new(&env, "USD"), &100);
         assert_eq!(value, 100);
 
         // 0.5 BTC at $43,000 each
         let btc_value = client
-            .calculate_value(&Symbol::new(&env, "BTC"), &500_000)
-            .unwrap();
+            .calculate_value(&Symbol::new(&env, "BTC"), &500_000);
         assert_eq!(btc_value, 21_500_000_000);
     }
 
     #[test]
     fn test_get_prices_multiple() {
         let env = Env::default();
-        let consumer_id = env.register_contract(None, OracleConsumer);
-        let oracle_id = env.register_contract(None, MockOracle);
+        let consumer_id = env.register(OracleConsumer, ());
+        let oracle_id = env.register(MockOracle, ());
         let client = OracleConsumerClient::new(&env, &consumer_id);
 
         client.init(&oracle_id, &3600);
@@ -336,7 +339,7 @@ mod tests {
             Symbol::new(&env, "GBP"),
         ];
 
-        let prices = client.get_prices(&assets).unwrap();
+        let prices = client.get_prices(&assets);
         assert_eq!(prices.len(), 3);
         assert_eq!(prices.get_unchecked(0), 1_000_000);
         assert_eq!(prices.get_unchecked(1), 1_100_000);
@@ -346,9 +349,9 @@ mod tests {
     #[test]
     fn test_set_oracle() {
         let env = Env::default();
-        let consumer_id = env.register_contract(None, OracleConsumer);
-        let oracle1_id = env.register_contract(None, MockOracle);
-        let oracle2_id = env.register_contract(None, MockOracle);
+        let consumer_id = env.register(OracleConsumer, ());
+        let oracle1_id = env.register(MockOracle, ());
+        let oracle2_id = env.register(MockOracle, ());
         let client = OracleConsumerClient::new(&env, &consumer_id);
 
         client.init(&oracle1_id, &3600);
@@ -361,8 +364,8 @@ mod tests {
     #[test]
     fn test_set_max_age() {
         let env = Env::default();
-        let consumer_id = env.register_contract(None, OracleConsumer);
-        let oracle_id = env.register_contract(None, MockOracle);
+        let consumer_id = env.register(OracleConsumer, ());
+        let oracle_id = env.register(MockOracle, ());
         let client = OracleConsumerClient::new(&env, &consumer_id);
 
         client.init(&oracle_id, &3600);

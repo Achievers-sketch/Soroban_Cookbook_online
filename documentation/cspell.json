@@ -9,6 +9,13 @@
       "addWords": true
     }
   ],
-  "ignorePaths": ["node_modules/**", "build/**", "*.lock"],
-  "files": ["**/*.{md,mdx,ts,tsx,js,json}"]
+  "files": ["docs/**/*.{md,mdx}", "README.md"],
+  "ignorePaths": [
+    "node_modules/**",
+    "build/**",
+    "*.lock",
+    "bun.lock",
+    "package-lock.json"
+  ],
+  "flagWords": []
 }

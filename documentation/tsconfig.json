@@ -3,8 +3,14 @@
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
     "jsx": "react",
-    "baseUrl": ".",
-    "types": ["bun-types"]
+    "baseUrl": "."
   },
-  "exclude": [".docusaurus", "build", "e2e", "node_modules", "playwright.config.ts"]
+  "exclude": [
+    ".docusaurus",
+    "build",
+    "e2e",
+    "node_modules",
+    "playwright.config.ts",
+    "**/__tests__/**"
+  ]
 }

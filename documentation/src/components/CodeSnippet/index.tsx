@@ -35,9 +35,10 @@ export default function CodeSnippet({
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const resolved = hasTabs && tabs
-    ? tabs[Math.max(0, Math.min(activeTab, tabs.length - 1))]
-    : { code, language, fileName, highlightLines };
+  const resolved =
+    hasTabs && tabs
+      ? tabs[Math.max(0, Math.min(activeTab, tabs.length - 1))]
+      : { code, language, fileName, highlightLines };
 
   const rawLines = useMemo(() => resolved.code.replace(/\n$/, '').split('\n'), [resolved.code]);
   const shouldCollapse = rawLines.length > collapseAt;

@@ -31,7 +31,8 @@
     "audit:links": "node scripts/audit-internal-links.mjs",
     "check:external-links": "node scripts/check-external-links.mjs",
     "test:e2e": "playwright test",
-    "test:console": "playwright test e2e/smoke-console.spec.ts"
+    "test:console": "playwright test e2e/smoke-console.spec.ts --project=chromium",
+    "spellcheck": "cspell --no-progress --config cspell.json"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",
@@ -45,13 +46,16 @@
     "lucide-react": "^0.575.0",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "web-vitals": "^4.2.4"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.9.2",
     "@docusaurus/tsconfig": "3.9.2",
     "@docusaurus/types": "3.9.2",
     "@eslint/js": "^9.39.3",
+    "cspell": "^8.17.5",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "@playwright/test": "^1.51.1",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",

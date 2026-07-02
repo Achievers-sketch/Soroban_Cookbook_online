@@ -25,6 +25,13 @@ export default defineConfig({
     ? [['github'], ['html', { open: 'never', outputFolder: 'playwright-report' }]]
     : [['list'], ['html', { open: 'on-failure', outputFolder: 'playwright-report' }]],
 
+  webServer: {
+    command: 'bun run serve -- --port 3000 --host 127.0.0.1',
+    url: 'http://127.0.0.1:3000',
+    reuseExistingServer: !process.env.CI,
+    timeout: 120_000,
+  },
+
   use: {
     /* Base URL – served by `bun run serve` or the CI serve step */
     baseURL: process.env.BASE_URL ?? 'http://localhost:3000',

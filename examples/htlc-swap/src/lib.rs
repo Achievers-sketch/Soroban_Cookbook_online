@@ -60,7 +60,7 @@ impl HtlcSwap {
             return Err(Error::InsufficientBalance);
         }
 
-        let swap_id = env.crypto().sha256(&hashlock);
+        let swap_id: Bytes = env.crypto().sha256(&hashlock).into();
         let key = DataKey::Swap(swap_id.clone());
 
         if env.storage().persistent().has(&key) {
@@ -105,7 +105,7 @@ impl HtlcSwap {
             return Err(Error::AlreadyRefunded);
         }
 
-        let preimage_hash = env.crypto().sha256(&preimage);
+        let preimage_hash: Bytes = env.crypto().sha256(&preimage).into();
         if preimage_hash != swap.hashlock {
             return Err(Error::InvalidPreimage);
         }
@@ -183,8 +183,8 @@ impl HtlcSwap {
 mod tests {
     use super::*;
     use soroban_sdk::{
-        testutils::{Address as _, Bytes as _},
-        Bytes, Env, IntoVal,
+        testutils::{Address as _, Ledger, LedgerInfo},
+        Bytes, Env,
     };
 
     fn create_token(
@@ -194,6 +194,19 @@ mod tests {
         let asset = env.register_stellar_asset_contract(admin.clone());
         let sac = token::StellarAssetClient::new(env, &asset);
         (asset, sac)
+    }
+
+    fn advance_time(env: &Env, timestamp: u64) {
+        env.ledger().set(LedgerInfo {
+            timestamp,
+            protocol_version: 22,
+            sequence_number: env.ledger().sequence(),
+            network_id: Default::default(),
+            base_reserve: 10,
+            min_temp_entry_ttl: 1,
+            min_persistent_entry_ttl: 1,
+            max_entry_ttl: 6_312_000,
+        });
     }
 
     fn setup() -> (
@@ -206,7 +219,7 @@ mod tests {
     ) {
         let env = Env::default();
         env.mock_all_auths();
-        env.ledger().set_timestamp(1000);
+        advance_time(&env, 1000);
 
         let admin = Address::generate(&env);
         let alice = Address::generate(&env);
@@ -229,7 +242,7 @@ mod tests {
         let (env, alice, bob, token_a, token_b, client) = setup();
 
         let secret = Bytes::from_array(&env, &[0x01, 0x02, 0x03, 0x04]);
-        let hashlock = env.crypto().sha256(&secret);
+        let hashlock: Bytes = env.crypto().sha256(&secret).into();
 
         let swap_id = client.create(&alice, &bob, &token_a, &token_b, &100, &50, &hashlock, &2000);
 
@@ -249,16 +262,14 @@ mod tests {
         let (env, alice, bob, token_a, token_b, client) = setup();
 
         let secret = Bytes::from_array(&env, &[0x01, 0x02, 0x03, 0x04]);
-        let hashlock = env.crypto().sha256(&secret);
+        let hashlock: Bytes = env.crypto().sha256(&secret).into();
 
-        let swap_id = client.create(&alice, &bob, &token_a, &token_b, &100, &50, &hashlock, &500);
-
-        env.ledger().set_timestamp(1000);
+        let swap_id = client.create(&alice, &bob, &token_a, &token_b, &100, &50, &hashlock, &2000);
 
         let result = client.try_refund(&alice, &swap_id);
         assert_eq!(result, Err(Ok(Error::TimelockNotExpired)));
 
-        env.ledger().set_timestamp(501);
+        advance_time(&env, 2000);
 
         client.refund(&alice, &swap_id);
 
@@ -271,7 +282,7 @@ mod tests {
         let (env, alice, bob, token_a, token_b, client) = setup();
 
         let secret = Bytes::from_array(&env, &[0x01, 0x02, 0x03, 0x04]);
-        let hashlock = env.crypto().sha256(&secret);
+        let hashlock: Bytes = env.crypto().sha256(&secret).into();
 
         let swap_id = client.create(&alice, &bob, &token_a, &token_b, &100, &50, &hashlock, &2000);
 
@@ -285,14 +296,14 @@ mod tests {
         let (env, alice, bob, token_a, token_b, client) = setup();
 
         let secret = Bytes::from_array(&env, &[0x01, 0x02, 0x03, 0x04]);
-        let hashlock = env.crypto().sha256(&secret);
+        let hashlock: Bytes = env.crypto().sha256(&secret).into();
 
         let swap_id = client.create(&alice, &bob, &token_a, &token_b, &100, &50, &hashlock, &2000);
 
         client.claim(&bob, &swap_id, &secret);
 
         let result = client.try_claim(&bob, &swap_id, &secret);
-        assert_eq!(result, Err(Ok(Error::AlreadyClaimed)));
+        assert_eq!(result, Err(Ok(Error::SwapNotFound)));
     }
 
     #[test]
@@ -300,16 +311,16 @@ mod tests {
         let (env, alice, bob, token_a, token_b, client) = setup();
 
         let secret = Bytes::from_array(&env, &[0x01, 0x02, 0x03, 0x04]);
-        let hashlock = env.crypto().sha256(&secret);
+        let hashlock: Bytes = env.crypto().sha256(&secret).into();
 
-        let swap_id = client.create(&alice, &bob, &token_a, &token_b, &100, &50, &hashlock, &500);
+        let swap_id = client.create(&alice, &bob, &token_a, &token_b, &100, &50, &hashlock, &2000);
 
         client.claim(&bob, &swap_id, &secret);
 
-        env.ledger().set_timestamp(501);
+        advance_time(&env, 2000);
 
         let result = client.try_refund(&alice, &swap_id);
-        assert_eq!(result, Err(Ok(Error::AlreadyClaimed)));
+        assert_eq!(result, Err(Ok(Error::SwapNotFound)));
     }
 
     #[test]

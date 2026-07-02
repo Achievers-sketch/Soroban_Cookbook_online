@@ -18,8 +18,7 @@
 import type { Metric } from 'web-vitals';
 
 /** POST target for beacon payloads. Falls through to console-only when blank. */
-const ANALYTICS_ENDPOINT =
-  (typeof process !== 'undefined' && process.env.ANALYTICS_ENDPOINT) || '';
+const ANALYTICS_ENDPOINT = (typeof process !== 'undefined' && process.env.ANALYTICS_ENDPOINT) || '';
 
 /** Shape of the payload we send to the analytics endpoint. */
 interface VitalPayload {

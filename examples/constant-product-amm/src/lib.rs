@@ -72,7 +72,7 @@ impl ConstantProductAmm {
         env.storage().persistent().get(&DataKey::TokenB).unwrap()
     }
 
-    fn get_lp_balance(env: &Env, address: &Address) -> i128 {
+    fn read_lp_balance(env: &Env, address: &Address) -> i128 {
         env.storage()
             .persistent()
             .get(&DataKey::Balance(address.clone()))
@@ -184,7 +184,7 @@ impl ConstantProductAmm {
 
         env.storage().persistent().set(&DataKey::Reserves, &reserves);
 
-        let caller_lp = Self::get_lp_balance(&env, &caller)
+        let caller_lp = Self::read_lp_balance(&env, &caller)
             .checked_add(lp_amount)
             .ok_or(Error::Overflow)?;
         Self::set_lp_balance(&env, &caller, caller_lp);
@@ -211,7 +211,7 @@ impl ConstantProductAmm {
         let token_a_client = token::Client::new(&env, &token_a);
         let token_b_client = token::Client::new(&env, &token_b);
 
-        let caller_lp = Self::get_lp_balance(&env, &caller);
+        let caller_lp = Self::read_lp_balance(&env, &caller);
         if caller_lp < lp_amount {
             return Err(Error::InsufficientLiquidity);
         }
@@ -393,7 +393,7 @@ impl ConstantProductAmm {
     }
 
     pub fn get_lp_balance(env: Env, address: Address) -> i128 {
-        Self::get_lp_balance(&env, &address)
+        Self::read_lp_balance(&env, &address)
     }
 
     pub fn get_tokens(env: Env) -> (Address, Address) {

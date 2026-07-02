@@ -117,10 +117,10 @@ mod tests {
     #[test]
     fn transfer_applies_fee_to_treasury() {
         let (_env, client, alice, bob, treasury) = setup();
-        client.init(&treasury, &100).unwrap();
-        client.mint(&alice, &1_000).unwrap();
+        client.init(&treasury, &100);
+        client.mint(&alice, &1_000);
 
-        client.transfer(&alice, &bob, &500).unwrap();
+        client.transfer(&alice, &bob, &500);
 
         assert_eq!(client.balance(&alice), 500);
         assert_eq!(client.balance(&bob), 495);

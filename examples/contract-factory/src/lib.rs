@@ -1,98 +1,101 @@
 #![no_std]
 
-use soroban_sdk::{contract, contractimpl, symbol_short, vec, Address, Env, Symbol, Vec};
+use soroban_sdk::{
+    contract, contractimpl, contracttype, symbol_short, Address, BytesN, Env, IntoVal, Symbol,
+    Vec,
+};
 
-/// A simple contract that will be deployed as child instances by the factory
-#[contract]
-pub struct ChildContract;
-
-#[contractimpl]
-impl ChildContract {
-    /// Initialize a child contract with a name
-    pub fn init(env: Env, name: Symbol) {
-        env.storage().instance().set(&symbol_short!("name"), &name);
-    }
-
-    /// Get the name of this child contract
-    pub fn get_name(env: Env) -> Symbol {
-        env.storage()
-            .instance()
-            .get(&symbol_short!("name"))
-            .unwrap_or(Symbol::new(&env, "unnamed"))
-    }
-
-    /// Get metadata about this child contract
-    pub fn get_info(env: Env) -> (Symbol, Address) {
-        let name = env
-            .storage()
-            .instance()
-            .get(&symbol_short!("name"))
-            .unwrap_or(Symbol::new(&env, "unnamed"));
-        let contract_id = env.current_contract_address();
-        (name, contract_id)
-    }
+#[contracttype]
+#[derive(Clone)]
+enum DataKey {
+    Deployed,
+    DeployCounter,
+    ChildWasmHash,
 }
 
-/// Factory contract that deploys multiple child contract instances
+/// Factory contract that deploys multiple child contract instances.
 #[contract]
 pub struct ContractFactory;
 
 #[contractimpl]
 impl ContractFactory {
-    /// Deploy a new child contract instance
-    ///
-    /// # Arguments
-    /// * `env` - The Soroban environment
-    /// * `name` - The name for the child contract instance
-    ///
-    /// # Returns
-    /// The address of the newly deployed child contract
-    pub fn deploy_child(env: Env, name: Symbol) -> Address {
-        // Get the child contract's WASM code
-        let child_code = env.deployer().get_programm_id(&symbol_short!("child"));
-
-        // Deploy a new instance with a unique salt based on the name
-        let salt = env.storage().temporary().get::<(), u64>(&()).unwrap_or(0);
+    /// Store the uploaded child contract Wasm hash used for deployments.
+    pub fn initialize(env: Env, child_wasm_hash: BytesN<32>) {
+        if env.storage().persistent().has(&DataKey::ChildWasmHash) {
+            panic!("already initialized");
+        }
         env.storage()
-            .temporary()
-            .set(&(), &(salt + 1));
+            .persistent()
+            .set(&DataKey::ChildWasmHash, &child_wasm_hash);
+        env.storage()
+            .persistent()
+            .set(&DataKey::Deployed, &Vec::<Address>::new(&env));
+        env.storage()
+            .persistent()
+            .set(&DataKey::DeployCounter, &0_u64);
+    }
 
-        let salt_bytes = salt.to_le_bytes().to_vec();
+    /// Deploy a new child contract instance.
+    pub fn deploy_child(env: Env, name: Symbol) -> Address {
+        let wasm_hash: BytesN<32> = env
+            .storage()
+            .persistent()
+            .get(&DataKey::ChildWasmHash)
+            .expect("factory not initialized");
+
+        let salt_index: u64 = env
+            .storage()
+            .persistent()
+            .get(&DataKey::DeployCounter)
+            .unwrap_or(0);
+        env.storage()
+            .persistent()
+            .set(&DataKey::DeployCounter, &(salt_index + 1));
+
+        let mut salt_bytes = [0u8; 32];
+        salt_bytes[..8].copy_from_slice(&salt_index.to_le_bytes());
+        let salt = BytesN::from_array(&env, &salt_bytes);
 
         let child_address = env
             .deployer()
-            .deploy_contract(&salt_bytes, &child_code, Address::from_contract_id(&env.current_contract_address()));
+            .with_current_contract(salt)
+            .deploy_v2(wasm_hash, ());
 
-        // Track deployed contracts
+        let _: () = env.invoke_contract(
+            &child_address,
+            &symbol_short!("init"),
+            soroban_sdk::vec![&env, name.into_val(&env)],
+        );
+
         let mut deployed: Vec<Address> = env
             .storage()
             .persistent()
-            .get(&symbol_short!("deployed"))
-            .unwrap_or_else(|| vec![&env]);
+            .get(&DataKey::Deployed)
+            .unwrap_or_else(|| Vec::<Address>::new(&env));
 
         deployed.push_back(child_address.clone());
         env.storage()
             .persistent()
-            .set(&symbol_short!("deployed"), &deployed);
+            .set(&DataKey::Deployed, &deployed);
 
         child_address
     }
 
-    /// Get the list of all deployed child contracts
+    /// Get the list of all deployed child contracts.
     pub fn get_deployed_children(env: Env) -> Vec<Address> {
         env.storage()
             .persistent()
-            .get(&symbol_short!("deployed"))
-            .unwrap_or_else(|| vec![&env])
+            .get(&DataKey::Deployed)
+            .unwrap_or_else(|| Vec::<Address>::new(&env))
     }
 
-    /// Get the count of deployed child contracts
+    /// Get the count of deployed child contracts.
     pub fn child_count(env: Env) -> u32 {
         let deployed: Vec<Address> = env
             .storage()
             .persistent()
-            .get(&symbol_short!("deployed"))
-            .unwrap_or_else(|| vec![&env]);
+            .get(&DataKey::Deployed)
+            .unwrap_or_else(|| Vec::<Address>::new(&env));
         deployed.len() as u32
     }
 }
@@ -100,64 +103,48 @@ impl ContractFactory {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use soroban_sdk::{Env, Symbol};
+    use soroban_sdk::Env;
 
-    #[test]
-    fn test_child_contract_init_and_get_name() {
-        let env = Env::default();
-        let child_contract_id = env.register_contract(None, ChildContract);
-        let client = ChildContractClient::new(&env, &child_contract_id);
-
-        let name = Symbol::new(&env, "test-child");
-        client.init(&name);
-
-        assert_eq!(client.get_name(), name);
+    mod child_wasm {
+        soroban_sdk::contractimport!(
+            file = "child/target/wasm32-unknown-unknown/release/contract_factory_child.wasm"
+        );
     }
 
-    #[test]
-    fn test_child_contract_get_info() {
-        let env = Env::default();
-        let child_contract_id = env.register_contract(None, ChildContract);
-        let client = ChildContractClient::new(&env, &child_contract_id);
-
-        let name = Symbol::new(&env, "info-test");
-        client.init(&name);
-
-        let (returned_name, returned_address) = client.get_info();
-        assert_eq!(returned_name, name);
-        assert_eq!(returned_address, child_contract_id);
+    fn setup_factory(env: &Env) -> (Address, ContractFactoryClient<'static>) {
+        env.mock_all_auths();
+        let wasm_hash = env
+            .deployer()
+            .upload_contract_wasm(child_wasm::WASM);
+        let factory_id = env.register(ContractFactory, ());
+        let factory = ContractFactoryClient::new(env, &factory_id);
+        factory.initialize(&wasm_hash);
+        (factory_id, factory)
     }
 
     #[test]
     fn test_factory_deploy_child() {
         let env = Env::default();
-        let factory_contract_id = env.register_contract(None, ContractFactory);
-        let factory_client = ContractFactoryClient::new(&env, &factory_contract_id);
+        let (factory_id, factory) = setup_factory(&env);
 
-        // Deploy first child
-        let name1 = Symbol::new(&env, "child-1");
-        let child1_address = factory_client.deploy_child(&name1);
-        assert_ne!(child1_address, factory_contract_id);
-
-        // Verify it was tracked
-        assert_eq!(factory_client.child_count(), 1);
+        let name1 = Symbol::new(&env, "child1");
+        let child1_address = factory.deploy_child(&name1);
+        assert_ne!(child1_address, factory_id);
+        assert_eq!(factory.child_count(), 1);
     }
 
     #[test]
     fn test_factory_deploy_multiple_children() {
         let env = Env::default();
-        let factory_contract_id = env.register_contract(None, ContractFactory);
-        let factory_client = ContractFactoryClient::new(&env, &factory_contract_id);
+        let (_, factory) = setup_factory(&env);
 
-        // Deploy multiple children
-        let child1_address = factory_client.deploy_child(&Symbol::new(&env, "child-1"));
-        let child2_address = factory_client.deploy_child(&Symbol::new(&env, "child-2"));
-        let child3_address = factory_client.deploy_child(&Symbol::new(&env, "child-3"));
+        let child1_address = factory.deploy_child(&Symbol::new(&env, "child1"));
+        let child2_address = factory.deploy_child(&Symbol::new(&env, "child2"));
+        let child3_address = factory.deploy_child(&Symbol::new(&env, "child3"));
 
-        // Verify all children are tracked
-        assert_eq!(factory_client.child_count(), 3);
+        assert_eq!(factory.child_count(), 3);
 
-        let deployed = factory_client.get_deployed_children();
+        let deployed = factory.get_deployed_children();
         assert_eq!(deployed.len(), 3);
         assert!(deployed.contains(&child1_address));
         assert!(deployed.contains(&child2_address));
@@ -167,32 +154,27 @@ mod tests {
     #[test]
     fn test_factory_children_are_unique() {
         let env = Env::default();
-        let factory_contract_id = env.register_contract(None, ContractFactory);
-        let factory_client = ContractFactoryClient::new(&env, &factory_contract_id);
+        let (_, factory) = setup_factory(&env);
 
-        // Deploy children with different names
-        let child1 = factory_client.deploy_child(&Symbol::new(&env, "alice"));
-        let child2 = factory_client.deploy_child(&Symbol::new(&env, "bob"));
-
-        // Verify they have different addresses
+        let child1 = factory.deploy_child(&Symbol::new(&env, "alice"));
+        let child2 = factory.deploy_child(&Symbol::new(&env, "bob"));
         assert_ne!(child1, child2);
     }
 
     #[test]
     fn test_factory_child_count_increments() {
         let env = Env::default();
-        let factory_contract_id = env.register_contract(None, ContractFactory);
-        let factory_client = ContractFactoryClient::new(&env, &factory_contract_id);
+        let (_, factory) = setup_factory(&env);
 
-        assert_eq!(factory_client.child_count(), 0);
+        assert_eq!(factory.child_count(), 0);
 
-        factory_client.deploy_child(&Symbol::new(&env, "child-1"));
-        assert_eq!(factory_client.child_count(), 1);
+        factory.deploy_child(&Symbol::new(&env, "child1"));
+        assert_eq!(factory.child_count(), 1);
 
-        factory_client.deploy_child(&Symbol::new(&env, "child-2"));
-        assert_eq!(factory_client.child_count(), 2);
+        factory.deploy_child(&Symbol::new(&env, "child2"));
+        assert_eq!(factory.child_count(), 2);
 
-        factory_client.deploy_child(&Symbol::new(&env, "child-3"));
-        assert_eq!(factory_client.child_count(), 3);
+        factory.deploy_child(&Symbol::new(&env, "child3"));
+        assert_eq!(factory.child_count(), 3);
     }
 }

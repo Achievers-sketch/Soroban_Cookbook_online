@@ -84,7 +84,7 @@ impl TimelockVault {
         // Prevent re-initialisation.
         if env
             .storage()
-            .persistent()
+            .instance()
             .has(&DataKey::Depositor)
         {
             return Err(Error::AlreadyInitialised);
@@ -100,19 +100,19 @@ impl TimelockVault {
         }
 
         env.storage()
-            .persistent()
+            .instance()
             .set(&DataKey::Depositor, &depositor);
         env.storage()
-            .persistent()
+            .instance()
             .set(&DataKey::Beneficiary, &beneficiary);
         env.storage()
-            .persistent()
+            .instance()
             .set(&DataKey::Amount, &amount);
         env.storage()
-            .persistent()
+            .instance()
             .set(&DataKey::UnlockTime, &unlock_time);
         env.storage()
-            .persistent()
+            .instance()
             .set(&DataKey::Claimed, &false);
 
         Ok(())
@@ -128,7 +128,7 @@ impl TimelockVault {
 
         let claimed: bool = env
             .storage()
-            .persistent()
+            .instance()
             .get(&DataKey::Claimed)
             .unwrap_or(false);
         if claimed {
@@ -137,7 +137,7 @@ impl TimelockVault {
 
         let unlock_time: u64 = env
             .storage()
-            .persistent()
+            .instance()
             .get(&DataKey::UnlockTime)
             .unwrap();
         let now = env.ledger().timestamp();
@@ -147,13 +147,13 @@ impl TimelockVault {
 
         let amount: i128 = env
             .storage()
-            .persistent()
+            .instance()
             .get(&DataKey::Amount)
             .unwrap();
 
         // Mark claimed before any external interaction (checks-effects pattern).
         env.storage()
-            .persistent()
+            .instance()
             .set(&DataKey::Claimed, &true);
 
         Ok(amount)
@@ -168,14 +168,14 @@ impl TimelockVault {
 
         let depositor: Address = env
             .storage()
-            .persistent()
+            .instance()
             .get(&DataKey::Depositor)
             .unwrap();
         depositor.require_auth();
 
         let claimed: bool = env
             .storage()
-            .persistent()
+            .instance()
             .get(&DataKey::Claimed)
             .unwrap_or(false);
         if claimed {
@@ -184,7 +184,7 @@ impl TimelockVault {
 
         let unlock_time: u64 = env
             .storage()
-            .persistent()
+            .instance()
             .get(&DataKey::UnlockTime)
             .unwrap();
         let now = env.ledger().timestamp();
@@ -196,12 +196,12 @@ impl TimelockVault {
 
         let amount: i128 = env
             .storage()
-            .persistent()
+            .instance()
             .get(&DataKey::Amount)
             .unwrap();
 
         env.storage()
-            .persistent()
+            .instance()
             .set(&DataKey::Claimed, &true);
 
         Ok(amount)
@@ -214,7 +214,7 @@ impl TimelockVault {
         Self::assert_initialised(&env)?;
         Ok(env
             .storage()
-            .persistent()
+            .instance()
             .get(&DataKey::UnlockTime)
             .unwrap())
     }
@@ -224,7 +224,7 @@ impl TimelockVault {
         Self::assert_initialised(&env)?;
         Ok(env
             .storage()
-            .persistent()
+            .instance()
             .get(&DataKey::Amount)
             .unwrap())
     }
@@ -232,7 +232,7 @@ impl TimelockVault {
     /// Return whether the vault has been claimed (or cancelled).
     pub fn is_claimed(env: Env) -> bool {
         env.storage()
-            .persistent()
+            .instance()
             .get(&DataKey::Claimed)
             .unwrap_or(false)
     }
@@ -242,7 +242,7 @@ impl TimelockVault {
         Self::assert_initialised(&env)?;
         Ok(env
             .storage()
-            .persistent()
+            .instance()
             .get(&DataKey::Beneficiary)
             .unwrap())
     }
@@ -252,7 +252,7 @@ impl TimelockVault {
         Self::assert_initialised(&env)?;
         let unlock_time: u64 = env
             .storage()
-            .persistent()
+            .instance()
             .get(&DataKey::UnlockTime)
             .unwrap();
         let now = env.ledger().timestamp();
@@ -266,7 +266,7 @@ impl TimelockVault {
     // ─── Internal helpers ─────────────────────────────────────────────────────
 
     fn assert_initialised(env: &Env) -> Result<(), Error> {
-        if !env.storage().persistent().has(&DataKey::Depositor) {
+        if !env.storage().instance().has(&DataKey::Depositor) {
             return Err(Error::NotInitialised);
         }
         Ok(())
@@ -279,7 +279,7 @@ impl TimelockVault {
 mod tests {
     use super::*;
     use soroban_sdk::{
-        testutils::{Address as _, Ledger, LedgerInfo},
+        testutils::{Address as _, Ledger},
         Env,
     };
 
@@ -291,16 +291,9 @@ mod tests {
     fn setup() -> (Env, Address, Address, TimelockVaultClient<'static>) {
         let env = Env::default();
         env.mock_all_auths();
-        // Set a deterministic starting timestamp.
-        env.ledger().set(LedgerInfo {
-            timestamp: BASE_TIME,
-            protocol_version: 22,
-            sequence_number: 1,
-            network_id: Default::default(),
-            base_reserve: 10,
-            min_temp_entry_ttl: 1,
-            min_persistent_entry_ttl: 1,
-            max_entry_ttl: 6_312_000,
+        env.ledger().with_mut(|li| {
+            li.timestamp = BASE_TIME;
+            li.sequence_number = 1;
         });
         let contract_id = env.register(TimelockVault, ());
         let client = TimelockVaultClient::new(&env, &contract_id);
@@ -310,16 +303,9 @@ mod tests {
     }
 
     fn advance_time(env: &Env, seconds: u64) {
-        let current = env.ledger().timestamp();
-        env.ledger().set(LedgerInfo {
-            timestamp: current + seconds,
-            protocol_version: 22,
-            sequence_number: env.ledger().sequence() + 1,
-            network_id: Default::default(),
-            base_reserve: 10,
-            min_temp_entry_ttl: 1,
-            min_persistent_entry_ttl: 1,
-            max_entry_ttl: 6_312_000,
+        env.ledger().with_mut(|li| {
+            li.timestamp += seconds;
+            li.sequence_number += 1;
         });
     }
 
@@ -330,11 +316,11 @@ mod tests {
         let (env, depositor, beneficiary, client) = setup();
         let unlock = BASE_TIME + ONE_DAY;
 
-        client.deposit(&depositor, &beneficiary, &1_000, &unlock).unwrap();
+        client.deposit(&depositor, &beneficiary, &1_000, &unlock);
 
-        assert_eq!(client.amount().unwrap(), 1_000);
-        assert_eq!(client.unlock_time().unwrap(), unlock);
-        assert_eq!(client.beneficiary().unwrap(), beneficiary);
+        assert_eq!(client.amount(), 1_000);
+        assert_eq!(client.unlock_time(), unlock);
+        assert_eq!(client.beneficiary(), beneficiary);
         assert!(!client.is_claimed());
     }
 
@@ -364,7 +350,7 @@ mod tests {
     fn test_deposit_rejects_double_init() {
         let (_, depositor, beneficiary, client) = setup();
         let unlock = BASE_TIME + ONE_DAY;
-        client.deposit(&depositor, &beneficiary, &500, &unlock).unwrap();
+        client.deposit(&depositor, &beneficiary, &500, &unlock);
 
         let result = client.try_deposit(&depositor, &beneficiary, &500, &unlock);
         assert_eq!(result, Err(Ok(Error::AlreadyInitialised)));
@@ -376,11 +362,11 @@ mod tests {
     fn test_withdraw_succeeds_after_unlock_time() {
         let (env, depositor, beneficiary, client) = setup();
         let unlock = BASE_TIME + ONE_DAY;
-        client.deposit(&depositor, &beneficiary, &1_000, &unlock).unwrap();
+        client.deposit(&depositor, &beneficiary, &1_000, &unlock);
 
         advance_time(&env, ONE_DAY); // now == unlock_time exactly
 
-        let released = client.withdraw().unwrap();
+        let released = client.withdraw();
         assert_eq!(released, 1_000);
         assert!(client.is_claimed());
     }
@@ -389,11 +375,11 @@ mod tests {
     fn test_withdraw_succeeds_well_after_unlock_time() {
         let (env, depositor, beneficiary, client) = setup();
         let unlock = BASE_TIME + ONE_DAY;
-        client.deposit(&depositor, &beneficiary, &500, &unlock).unwrap();
+        client.deposit(&depositor, &beneficiary, &500, &unlock);
 
         advance_time(&env, ONE_DAY * 7); // a week later
 
-        let released = client.withdraw().unwrap();
+        let released = client.withdraw();
         assert_eq!(released, 500);
     }
 
@@ -401,14 +387,14 @@ mod tests {
     fn test_withdraw_fails_before_unlock_time() {
         let (env, depositor, beneficiary, client) = setup();
         let unlock = BASE_TIME + ONE_DAY;
-        client.deposit(&depositor, &beneficiary, &1_000, &unlock).unwrap();
+        client.deposit(&depositor, &beneficiary, &1_000, &unlock);
 
         advance_time(&env, ONE_DAY - 1); // one second short
 
         let result = client.try_withdraw();
         assert_eq!(result, Err(Ok(Error::NotUnlockedYet)));
         // Funds must still be intact.
-        assert_eq!(client.amount().unwrap(), 1_000);
+        assert_eq!(client.amount(), 1_000);
         assert!(!client.is_claimed());
     }
 
@@ -423,11 +409,11 @@ mod tests {
     fn test_withdraw_fails_on_double_claim() {
         let (env, depositor, beneficiary, client) = setup();
         let unlock = BASE_TIME + ONE_DAY;
-        client.deposit(&depositor, &beneficiary, &1_000, &unlock).unwrap();
+        client.deposit(&depositor, &beneficiary, &1_000, &unlock);
 
         advance_time(&env, ONE_DAY);
 
-        client.withdraw().unwrap();
+        client.withdraw();
         let result = client.try_withdraw();
         assert_eq!(result, Err(Ok(Error::AlreadyClaimed)));
     }
@@ -438,9 +424,9 @@ mod tests {
     fn test_cancel_returns_funds_to_depositor() {
         let (_, depositor, beneficiary, client) = setup();
         let unlock = BASE_TIME + ONE_DAY;
-        client.deposit(&depositor, &beneficiary, &750, &unlock).unwrap();
+        client.deposit(&depositor, &beneficiary, &750, &unlock);
 
-        let returned = client.cancel().unwrap();
+        let returned = client.cancel();
         assert_eq!(returned, 750);
         assert!(client.is_claimed());
     }
@@ -449,7 +435,7 @@ mod tests {
     fn test_cancel_fails_after_unlock_time() {
         let (env, depositor, beneficiary, client) = setup();
         let unlock = BASE_TIME + ONE_DAY;
-        client.deposit(&depositor, &beneficiary, &750, &unlock).unwrap();
+        client.deposit(&depositor, &beneficiary, &750, &unlock);
 
         advance_time(&env, ONE_DAY); // now at unlock boundary
 
@@ -461,10 +447,10 @@ mod tests {
     fn test_cancel_fails_on_already_claimed() {
         let (env, depositor, beneficiary, client) = setup();
         let unlock = BASE_TIME + ONE_DAY;
-        client.deposit(&depositor, &beneficiary, &750, &unlock).unwrap();
+        client.deposit(&depositor, &beneficiary, &750, &unlock);
 
         advance_time(&env, ONE_DAY);
-        client.withdraw().unwrap();
+        client.withdraw();
 
         let result = client.try_cancel();
         assert_eq!(result, Err(Ok(Error::AlreadyClaimed)));
@@ -476,22 +462,22 @@ mod tests {
     fn test_time_remaining_decreases_over_time() {
         let (env, depositor, beneficiary, client) = setup();
         let unlock = BASE_TIME + ONE_DAY;
-        client.deposit(&depositor, &beneficiary, &500, &unlock).unwrap();
+        client.deposit(&depositor, &beneficiary, &500, &unlock);
 
-        assert_eq!(client.time_remaining().unwrap(), ONE_DAY);
+        assert_eq!(client.time_remaining(), ONE_DAY);
 
         advance_time(&env, ONE_DAY / 2);
-        assert_eq!(client.time_remaining().unwrap(), ONE_DAY / 2);
+        assert_eq!(client.time_remaining(), ONE_DAY / 2);
     }
 
     #[test]
     fn test_time_remaining_is_zero_after_unlock() {
         let (env, depositor, beneficiary, client) = setup();
         let unlock = BASE_TIME + ONE_DAY;
-        client.deposit(&depositor, &beneficiary, &500, &unlock).unwrap();
+        client.deposit(&depositor, &beneficiary, &500, &unlock);
 
         advance_time(&env, ONE_DAY * 2);
-        assert_eq!(client.time_remaining().unwrap(), 0);
+        assert_eq!(client.time_remaining(), 0);
     }
 
     #[test]

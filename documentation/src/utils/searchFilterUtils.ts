@@ -179,10 +179,7 @@ export function getDocumentMetadata(url: string): DocumentMetadata | null {
 /**
  * Check if a document matches the active filters
  */
-export function matchesFilters(
-  documentUrl: string,
-  filters: SearchFilterState
-): boolean {
+export function matchesFilters(documentUrl: string, filters: SearchFilterState): boolean {
   const metadata = getDocumentMetadata(documentUrl);
 
   if (!metadata) {
@@ -215,9 +212,7 @@ export function matchesFilters(
 
   // Tags filter: must match at least one tag if active
   if (filters.tags.length > 0) {
-    const hasMatchingTag = filters.tags.some((tag) =>
-      metadata.tags.includes(tag)
-    );
+    const hasMatchingTag = filters.tags.some((tag) => metadata.tags.includes(tag));
     if (!hasMatchingTag) {
       return false;
     }

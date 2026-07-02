@@ -164,9 +164,11 @@ export default function PatternPreview({
               <div
                 key={pattern.id}
                 className={styles.patternCardWrapper}
-                style={{
-                  '--animation-delay': `${index * 50}ms`,
-                } as React.CSSProperties}>
+                style={
+                  {
+                    '--animation-delay': `${index * 50}ms`,
+                  } as React.CSSProperties
+                }>
                 <PatternCard
                   contractName={pattern.contractName}
                   description={pattern.description}
@@ -179,9 +181,7 @@ export default function PatternPreview({
                 {/* Metadata */}
                 <div className={styles.metadata}>
                   <div className={styles.metadataRow}>
-                    <span
-                      className={styles.difficulty}
-                      data-difficulty={pattern.difficulty}>
+                    <span className={styles.difficulty} data-difficulty={pattern.difficulty}>
                       {pattern.difficulty}
                     </span>
                     <span className={styles.popularity}>

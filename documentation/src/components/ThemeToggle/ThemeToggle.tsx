@@ -163,9 +163,7 @@ export function ThemeToggle({
 
       {/* Label (optional) */}
       {showLabel && (
-        <span className={styles.label}>
-          {theme === 'dark' ? darkLabel : lightLabel}
-        </span>
+        <span className={styles.label}>{theme === 'dark' ? darkLabel : lightLabel}</span>
       )}
     </button>
   );

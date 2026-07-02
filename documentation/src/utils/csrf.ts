@@ -78,7 +78,13 @@ export function getCSRFProtectedRequestInit(
   // Convert Headers object to Record if needed
   const headersRecord: Record<string, string> =
     existingHeaders instanceof Headers
-      ? Object.fromEntries(existingHeaders.entries())
+      ? (() => {
+          const record: Record<string, string> = {};
+          existingHeaders.forEach((value, key) => {
+            record[key] = value;
+          });
+          return record;
+        })()
       : (existingHeaders as Record<string, string>);
 
   return {

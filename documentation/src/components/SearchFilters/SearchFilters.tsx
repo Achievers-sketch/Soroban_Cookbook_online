@@ -62,7 +62,7 @@ export default function SearchFilters({ onFilterChange }: SearchFiltersProps) {
         return updated;
       });
     },
-    [onFilterChange]
+    [onFilterChange],
   );
 
   const handleDifficultyChange = useCallback(
@@ -78,7 +78,7 @@ export default function SearchFilters({ onFilterChange }: SearchFiltersProps) {
         return updated;
       });
     },
-    [onFilterChange]
+    [onFilterChange],
   );
 
   const handleTagChange = useCallback(
@@ -94,7 +94,7 @@ export default function SearchFilters({ onFilterChange }: SearchFiltersProps) {
         return updated;
       });
     },
-    [onFilterChange]
+    [onFilterChange],
   );
 
   const handleClearAll = useCallback(() => {
@@ -120,12 +120,9 @@ export default function SearchFilters({ onFilterChange }: SearchFiltersProps) {
           isExpanded
             ? `Hide search filters${activeFilterCount > 0 ? ` (${activeFilterCount} active)` : ''}`
             : `Show search filters${activeFilterCount > 0 ? ` (${activeFilterCount} active)` : ''}`
-        }
-      >
+        }>
         <span className={styles.filterLabel}>Filters</span>
-        {activeFilterCount > 0 && (
-          <span className={styles.badge}>{activeFilterCount}</span>
-        )}
+        {activeFilterCount > 0 && <span className={styles.badge}>{activeFilterCount}</span>}
         <span className={styles.chevron}>▼</span>
       </button>
 
@@ -190,8 +187,7 @@ export default function SearchFilters({ onFilterChange }: SearchFiltersProps) {
             <button
               className={styles.clearButton}
               onClick={handleClearAll}
-              aria-label="Clear all filters"
-            >
+              aria-label="Clear all filters">
               Clear All
             </button>
           )}

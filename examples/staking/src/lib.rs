@@ -332,7 +332,7 @@ impl Staking {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use soroban_sdk::{testutils::Address as _, Env};
+    use soroban_sdk::{testutils::{Address as _, Ledger, LedgerInfo}, Env};
 
     /// Helper: register the contract, mock auths, and initialize with sensible defaults.
     /// epoch_len = 10 ledgers, reward = 1000 tokens/epoch.
@@ -346,13 +346,26 @@ mod tests {
         (env, admin, client)
     }
 
+    fn set_ledger_sequence(env: &Env, sequence: u32) {
+        env.ledger().set(LedgerInfo {
+            timestamp: env.ledger().timestamp(),
+            protocol_version: 22,
+            sequence_number: sequence,
+            network_id: Default::default(),
+            base_reserve: 10,
+            min_temp_entry_ttl: 1,
+            min_persistent_entry_ttl: 1,
+            max_entry_ttl: 6_312_000,
+        });
+    }
+
     // ── initialization ──────────────────────────────────────────────────
 
     #[test]
     fn test_initialize_sets_state() {
         let (env, _, client) = setup();
         assert_eq!(client.total_staked(), 0);
-        assert_eq!(client.current_epoch(&env), 0);
+        assert_eq!(client.current_epoch(), 0);
     }
 
     #[test]
@@ -484,7 +497,7 @@ mod tests {
 
         client.stake(&alice, &1000);
         // Advance ledger by one full epoch (10 ledgers)
-        env.ledger().set_sequence_number(10);
+        set_ledger_sequence(&env, 10);
         // Alice is the only staker so she earns 100% of reward_per_epoch (1000)
         assert_eq!(client.pending_reward(&alice), 1000);
     }
@@ -495,7 +508,7 @@ mod tests {
         let alice = Address::generate(&env);
 
         client.stake(&alice, &1000);
-        env.ledger().set_sequence_number(30); // 3 epochs
+        set_ledger_sequence(&env, 30); // 3 epochs
         assert_eq!(client.pending_reward(&alice), 3000);
     }
 
@@ -509,7 +522,7 @@ mod tests {
         client.stake(&alice, &750);
         client.stake(&bob, &250);
 
-        env.ledger().set_sequence_number(10); // 1 epoch
+        set_ledger_sequence(&env, 10); // 1 epoch
         // reward_per_epoch = 1000; total = 1000
         assert_eq!(client.pending_reward(&alice), 750);
         assert_eq!(client.pending_reward(&bob), 250);
@@ -521,7 +534,7 @@ mod tests {
         let alice = Address::generate(&env);
 
         client.stake(&alice, &1000);
-        env.ledger().set_sequence_number(10);
+        set_ledger_sequence(&env, 10);
         let claimed = client.claim(&alice);
         assert_eq!(claimed, 1000);
 
@@ -543,7 +556,7 @@ mod tests {
         let alice = Address::generate(&env);
 
         client.stake(&alice, &1000);
-        env.ledger().set_sequence_number(20); // 2 epochs
+        set_ledger_sequence(&env, 20); // 2 epochs
         let reward = client.unstake(&alice, &1000);
         assert_eq!(reward, 2000);
         assert_eq!(client.staked_balance(&alice), 0);
@@ -558,15 +571,15 @@ mod tests {
 
         client.stake(&alice, &1000);
         // Change reward before first epoch elapses — new rate applies
-        client.set_reward(&admin, &2000);
-        env.ledger().set_sequence_number(10);
+        client.set_reward(&2000);
+        set_ledger_sequence(&env, 10);
         assert_eq!(client.pending_reward(&alice), 2000);
     }
 
     #[test]
     fn test_set_reward_zero_is_rejected() {
         let (_, admin, client) = setup();
-        let result = client.try_set_reward(&admin, &0);
+        let result = client.try_set_reward(&0);
         assert_eq!(result, Err(Ok(Error::InvalidReward)));
     }
 }
