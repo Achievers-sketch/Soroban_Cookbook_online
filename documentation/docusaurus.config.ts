@@ -1,5 +1,5 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
@@ -41,11 +41,44 @@ const config: Config = {
 
   // Meta tags for theme color + social previews (see CONTRIBUTING — SEO & social metadata)
   headTags: [
+    // Content Security Policy
+    {
+      tagName: 'meta',
+      attributes: {
+        'http-equiv': 'Content-Security-Policy',
+        content: [
+          "default-src 'self'",
+          "script-src 'self' 'unsafe-inline'",
+          "style-src 'self' 'unsafe-inline'",
+          "img-src 'self' data: https:",
+          "font-src 'self' data:",
+          "connect-src 'self' https:",
+          "frame-src 'none'",
+          "object-src 'none'",
+          "base-uri 'self'",
+          "form-action 'self' https:",
+        ].join('; '),
+      },
+    },
     {
       tagName: 'meta',
       attributes: {
         name: 'theme-color',
         content: '#1e1e2e',
+      },
+    },
+    // Content-Security-Policy fallback for hosts that cannot set custom HTTP
+    // response headers (e.g. GitHub Pages). Hosts that can set real headers
+    // (Vercel via vercel.json, Netlify/Cloudflare Pages via static/_headers)
+    // should rely on those instead — a header-based CSP also covers
+    // `frame-ancestors`, which browsers ignore when delivered via <meta>.
+    // See DEPLOYMENT.md → Security Headers for the full policy rationale.
+    {
+      tagName: 'meta',
+      attributes: {
+        'http-equiv': 'Content-Security-Policy',
+        content:
+          "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.dicebear.com; font-src 'self' data:; connect-src 'self' https:; form-action 'self' https:; object-src 'none'; base-uri 'self'",
       },
     },
     // Preload the Inter variable font (latin woff2) — critical for above-the-fold text.
@@ -144,18 +177,20 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/docs',
-          editUrl: 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/documentation/',
+          editUrl:
+            'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/documentation/',
         },
         blog: false,
         theme: {
           customCss: [
             './src/css/fonts.css',
             './src/css/design-tokens.css',
+            './src/css/mobile-first.css',
             './src/css/breakpoints.css',
             './src/css/badges-tags.css',
             './src/css/custom.css',
             './src/css/search-experience.css',
-          ]
+          ],
         },
       } satisfies Preset.Options,
     ],
