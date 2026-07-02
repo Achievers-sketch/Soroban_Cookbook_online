@@ -169,6 +169,107 @@ const config: Config = {
         indexBlog: false,
       },
     ],
+    // ─── 301 Redirects ────────────────────────────────────────────────────────
+    // Maps old/removed paths → current canonical paths so bookmarks and
+    // external links continue to resolve after pages are renamed or moved.
+    // Add new entries here whenever a doc is renamed or relocated.
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          // website/ → documentation/ directory rename (legacy root paths)
+          {
+            from: '/docs/intro',
+            to: '/docs/concepts/introduction',
+          },
+          // Getting Started renames
+          {
+            from: '/docs/setup',
+            to: '/docs/getting-started/setup',
+          },
+          {
+            from: '/docs/getting-started/installation',
+            to: '/docs/getting-started/setup',
+          },
+          {
+            from: '/docs/getting-started/setup-macos',
+            to: '/docs/getting-started/setup',
+          },
+          {
+            from: '/docs/first-contract',
+            to: '/docs/getting-started/first-contract',
+          },
+          {
+            from: '/docs/getting-started/build',
+            to: '/docs/getting-started/building-and-compilation',
+          },
+          {
+            from: '/docs/getting-started/deploy',
+            to: '/docs/getting-started/deploy-testnet',
+          },
+          {
+            from: '/docs/getting-started/interaction',
+            to: '/docs/getting-started/contract-interaction',
+          },
+          // Concepts renames
+          {
+            from: '/docs/concepts',
+            to: '/docs/concepts/introduction',
+          },
+          {
+            from: '/docs/concepts/intro',
+            to: '/docs/concepts/introduction',
+          },
+          {
+            from: '/docs/concepts/gas',
+            to: '/docs/concepts/gas-and-resources',
+          },
+          {
+            from: '/docs/concepts/cross-contract',
+            to: '/docs/concepts/cross-contract-invocation',
+          },
+          // Patterns renames
+          {
+            from: '/docs/patterns',
+            to: '/docs/patterns/overview',
+          },
+          {
+            from: '/docs/patterns/types',
+            to: '/docs/patterns/custom-types',
+          },
+          {
+            from: '/docs/patterns/auth',
+            to: '/docs/patterns/authorization',
+          },
+          {
+            from: '/docs/patterns/upgrades',
+            to: '/docs/patterns/lifecycle-upgrades',
+          },
+          {
+            from: '/docs/patterns/optimization',
+            to: '/docs/patterns/optimization-playbook',
+          },
+          // Contributing renames
+          {
+            from: '/docs/contributing/guide',
+            to: '/docs/contributing',
+          },
+          {
+            from: '/docs/contributing/tested-example',
+            to: '/docs/contributing/add-tested-example',
+          },
+          // Legacy tutorial paths from initial Docusaurus scaffold
+          {
+            from: '/docs/tutorial-basics/create-a-document',
+            to: '/docs/getting-started/first-contract',
+          },
+          {
+            from: '/docs/tutorial-basics/deploy-your-site',
+            to: '/docs/getting-started/deploy-testnet',
+          },
+        ],
+      },
+    ],
   ],
 
   presets: [
