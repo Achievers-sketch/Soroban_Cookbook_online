@@ -13,10 +13,10 @@ const sidebars: SidebarsConfig = {
         'getting-started/setup',
         'getting-started/setup-linux',
         'getting-started/setup-windows',
+        'getting-started/setup-macos',
         'getting-started/first-contract',
         'getting-started/building-and-compilation',
         'getting-started/local-testing-and-simulation',
-        'getting-started/local-testing',
         'getting-started/deploy-testnet',
         'getting-started/deploy-mainnet',
         'getting-started/contract-interaction',
@@ -36,8 +36,6 @@ const sidebars: SidebarsConfig = {
         'concepts/events',
         'concepts/gas-and-resources',
         'concepts/cross-contract-invocation',
-        'concepts/testing-strategies',
-        'concepts/token-standards',
       ],
     },
     {
@@ -47,6 +45,7 @@ const sidebars: SidebarsConfig = {
         'patterns/overview',
         'patterns/hello-world',
         'patterns/custom-types',
+        'patterns/token-standards',
         'patterns/authorization',
         'patterns/optimization-playbook',
         'patterns/lifecycle-upgrades',
@@ -56,7 +55,11 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Security',
-      items: ['security/fundamentals'],
+      items: [
+        'security/fundamentals',
+        'security/governance',
+        'security/defi-patterns',
+      ],
     },
     {
       type: 'category',
@@ -71,12 +74,24 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Components',
-      items: ['components/buttons', 'components/testimonials'],
+      items: [
+        'components/buttons',
+        'components/testimonials',
+      ],
     },
     {
       type: 'category',
       label: 'Responsive',
-      items: ['responsive/breakpoints'],
+      items: [
+        'responsive/breakpoints',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Security Audit',
+      items: [
+        'security/code-audit',
+      ],
     },
   ],
 };

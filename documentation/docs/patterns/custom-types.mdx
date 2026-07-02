@@ -35,7 +35,7 @@ When translating domain concepts (like "User Account" or "Liquidity Pool") into 
 
 Use the "Newtype" pattern to wrap primitive types. This prevents accidental confusion between different units or IDs that share the same underlying type.
 
-```rust
+```rust illustrative
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct OrderId(pub u32);
@@ -58,7 +58,7 @@ Soroban uses a highly optimized serialization format (XDR). To make a custom typ
 - **Enums:** For representing state or mutually exclusive options.
 - **Prims:** `i128`, `u32`, `Address`, `Bytes`, `Symbol`, etc.
 
-```rust
+```rust illustrative
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ContractState {
@@ -99,7 +99,7 @@ Every byte stored in the ledger costs gas. Serialization size directly impacts t
 
 Use enums to manage the lifecycle of a contract or entity. This makes illegal transitions impossible at the type level.
 
-```rust
+```rust illustrative
 #[contracttype]
 pub enum ProposalStatus {
     Pending,
@@ -129,7 +129,7 @@ pub fn cast_vote(env: Env, id: u32) -> Result<(), Error> {
 
 Group global contract settings into a single struct. This is more efficient than storing 10 separate configuration variables in 10 different storage keys.
 
-```rust
+```rust illustrative
 #[contracttype]
 pub struct Config {
     pub admin: Address,
@@ -154,7 +154,7 @@ Never trust data coming into the contract. Validate types at the entry point (`c
 - **Sanitization:** Check that `Address` types aren't the null address if applicable.
 - **State Invariants:** Verify that the internal state of a struct is consistent (e.g., `start_time < end_time`).
 
-```rust
+```rust illustrative
 pub fn create_order(env: Env, amount: i128) -> Result<(), Error> {
     if amount <= 0 {
         return Err(Error::InvalidAmount);
@@ -171,7 +171,7 @@ As your project grows, you may need to add fields to your structs. Because stora
 
 Instead of storing a raw struct, store an enum that wraps different versions of the data.
 
-```rust
+```rust illustrative
 #[contracttype]
 pub enum AccountState {
     V1(AccountV1),
