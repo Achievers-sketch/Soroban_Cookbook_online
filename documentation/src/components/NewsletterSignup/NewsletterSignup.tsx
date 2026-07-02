@@ -1,6 +1,11 @@
 import React, { useCallback, useId, useMemo, useState } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import clsx from 'clsx';
+import {
+  getOrCreateCSRFToken,
+  clearCSRFToken,
+  updateCSRFTokenFromResponse,
+} from '../../utils/csrf';
 import styles from './NewsletterSignup.module.css';
 import { isHttpsUrl } from '@site/src/utils/sanitizeUrl';
 
@@ -70,17 +75,30 @@ export default function NewsletterSignup({ className }: NewsletterSignupProps) {
       }
 
       try {
+        // Get CSRF token for protection against CSRF attacks
+        const csrfToken = getOrCreateCSRFToken();
+
         const res = await fetch(endpoint, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken,
+          },
           body: JSON.stringify({ email: email.trim() }),
+          // SameSite cookie protection (enforced by browser)
+          credentials: 'same-origin',
         });
+
+        // Update CSRF token if backend rotates it
+        updateCSRFTokenFromResponse(res);
+
         if (!res.ok) {
           throw new Error(`HTTP ${res.status}`);
         }
         setStatus('success');
         setMessage('Thanks — check your inbox to confirm your subscription.');
         setEmail('');
+        clearCSRFToken();
       } catch {
         setStatus('error');
         setMessage('Something went wrong. Try again in a moment.');
