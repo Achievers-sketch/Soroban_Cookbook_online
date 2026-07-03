@@ -1,20 +1,24 @@
 /**
  * Lighthouse CI Configuration
- * ROADMAP-122 / Issue #189: Mobile-First Indexing Verification
- * 
- * Runs Lighthouse audits on mobile viewport to verify:
- * - SEO score >= 90
- * - Accessibility score >= 90
- * - Best Practices score >= 90
- * - No mobile usability issues
+ *
+ * Issue #134: Page Speed Optimization
+ * Issue #122 / #189: Mobile-First Indexing Verification
+ *
+ * Enforces Core Web Vitals budgets:
+ *   - LCP  < 2.5 s  (Good threshold per web.dev/vitals)
+ *   - FCP  < 1.5 s
+ *   - CLS  < 0.1
+ *   - TBT  < 200 ms (proxy for INP/FID on mobile)
+ *
+ * Lazy-loading below-fold components (Testimonials, NewsletterSignup)
+ * removes them from the critical bundle and reduces TTI.
  */
 
 module.exports = {
   ci: {
     collect: {
-      // Mobile viewport settings
       settings: {
-        preset: 'desktop', // We'll override with mobile emulation
+        preset: 'desktop',
         emulatedFormFactor: 'mobile',
         screenEmulation: {
           mobile: true,
@@ -23,7 +27,9 @@ module.exports = {
           deviceScaleFactor: 3,
           disabled: false,
         },
-        // Categories to audit
+        throttling: {
+          cpuSlowdownMultiplier: 4,
+        },
         onlyCategories: [
           'performance',
           'accessibility',
@@ -31,7 +37,6 @@ module.exports = {
           'seo',
         ],
       },
-      // URLs to test (update after deployment)
       url: [
         'http://localhost:3000/',
         'http://localhost:3000/docs/',
@@ -42,20 +47,32 @@ module.exports = {
     },
     assert: {
       assertions: {
-        // SEO must pass for mobile-first indexing
-        'categories:seo': ['error', { minScore: 0.9 }],
-        // Accessibility ensures touch targets are readable
-        'categories:accessibility': ['error', { minScore: 0.9 }],
-        // Best practices checks viewport, font-size, etc.
-        'categories:best-practices': ['error', { minScore: 0.9 }],
-        // Performance impacts mobile ranking
-        'categories:performance': ['warn', { minScore: 0.8 }],
+        // ── Category scores ──────────────────────────────────────────────────
+        'categories:performance':    ['warn', { minScore: 0.85 }],
+        'categories:seo':            ['error', { minScore: 0.90 }],
+        'categories:accessibility':  ['error', { minScore: 0.90 }],
+        'categories:best-practices': ['error', { minScore: 0.90 }],
 
-        // Specific mobile audits
-        'viewport': 'error',
-        'font-size': 'error',
-        'tap-targets': 'error',
-        'content-width': 'error',
+        // ── Core Web Vitals ───────────────────────────────────────────────────
+        // LCP < 2.5 s — "Good" threshold (issue #134 success criterion)
+        'largest-contentful-paint':  ['error', { maxNumericValue: 2500 }],
+        // FCP < 1.5 s — "Good" threshold
+        'first-contentful-paint':    ['error', { maxNumericValue: 1500 }],
+        // CLS < 0.1 — "Good" threshold
+        'cumulative-layout-shift':   ['error', { maxNumericValue: 0.1 }],
+        // TBT < 200 ms — strong proxy for responsiveness
+        'total-blocking-time':       ['warn',  { maxNumericValue: 200 }],
+
+        // ── Mobile-specific audits ────────────────────────────────────────────
+        'viewport':       'error',
+        'font-size':      'error',
+        'tap-targets':    'error',
+        'content-width':  'error',
+
+        // ── Resource hints ───────────────────────────────────────────────────
+        'uses-text-compression':    ['warn', { minScore: 1 }],
+        'render-blocking-resources': ['warn', { maxLength: 0 }],
+        'uses-optimized-images':    ['warn', { minScore: 1 }],
       },
     },
     upload: {
