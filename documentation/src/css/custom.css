@@ -10,6 +10,9 @@
 /* Issue #40: Mobile menu polish */
 @import './mobile-menu.css';
 
+/* Issue #135: Mobile responsiveness audit fixes */
+@import './mobile-audit.css';
+
 /* ── Light Mode (Default) ───────────────────────────────────────────────────── */
 
 :root {
