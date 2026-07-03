@@ -23,6 +23,12 @@ const config: Config = {
     newsletterEndpoint: process.env.NEWSLETTER_ENDPOINT ?? '',
     /** Soroban Cookbook Discord invite link. Set DISCORD_INVITE_URL at build time once the server is created. */
     discordInviteUrl: process.env.DISCORD_INVITE_URL ?? '',
+    /**
+     * Sentry DSN for error monitoring (issue #136).
+     * Set SENTRY_DSN in your CI/CD environment or .env.local.
+     * When absent, Sentry is not initialised (safe for local dev).
+     */
+    sentryDsn: process.env.SENTRY_DSN ?? '',
   },
 
   onBrokenLinks: 'throw',
