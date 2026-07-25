@@ -16,6 +16,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/setup-macos',
         'getting-started/first-contract',
         'getting-started/building-and-compilation',
+        'getting-started/browser-server-compilation',
         'getting-started/contract-testing',
         'getting-started/local-testing-and-simulation',
         'getting-started/deploy-testnet',
