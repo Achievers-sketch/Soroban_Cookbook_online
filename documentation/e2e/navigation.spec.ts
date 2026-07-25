@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 const GITHUB_URL = 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online';
 
 test.describe('desktop navigation', () => {
-  test('home → Docs → pattern page', async ({ page }) => {
+  test('home to Docs to pattern page', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/Soroban Cookbook/);
 
@@ -33,17 +33,32 @@ test.describe('desktop navigation', () => {
 test.describe('mobile menu', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
-  test('hamburger opens nav and Docs link is reachable', async ({ page }) => {
+  async function openMobileSidebar(page: import('@playwright/test').Page) {
     await page.goto('/');
+    await page.waitForLoadState('domcontentloaded');
 
-    // Docusaurus mobile toggle
-    const toggle = page.locator('.navbar__toggle, [aria-label="Toggle navigation bar"]').first();
+    const toggle = page.locator('button.navbar__toggle').first();
     await expect(toggle).toBeVisible();
-    await toggle.click();
 
-    // Wait for the mobile sidebar/drawer before interacting
-    const sidebar = page.locator('.navbar-sidebar, .navbar-sidebar__items').first();
-    await expect(sidebar).toBeVisible({ timeout: 10_000 });
+    // Docusaurus 3.x sets navbar-sidebar--show on the parent <nav>, and
+    // hydration must complete before the toggle handler is live.
+    await expect(async () => {
+      if ((await toggle.getAttribute('aria-expanded')) !== 'true') {
+        await toggle.click();
+      }
+      await expect(page.locator('nav.navbar.navbar-sidebar--show')).toBeVisible({
+        timeout: 2_000,
+      });
+      await expect(page.locator('.navbar-sidebar--show .navbar-sidebar')).toBeVisible({
+        timeout: 2_000,
+      });
+    }).toPass({ timeout: 15_000 });
+
+    return page.locator('.navbar-sidebar--show .navbar-sidebar');
+  }
+
+  test('hamburger opens nav and Docs link is reachable', async ({ page }) => {
+    const sidebar = await openMobileSidebar(page);
 
     const docsLink = sidebar.getByRole('link', { name: 'Docs' }).first();
     await expect(docsLink).toBeVisible();
@@ -52,13 +67,7 @@ test.describe('mobile menu', () => {
   });
 
   test('mobile menu contains GitHub link', async ({ page }) => {
-    await page.goto('/');
-
-    const toggle = page.locator('.navbar__toggle, [aria-label="Toggle navigation bar"]').first();
-    await toggle.click();
-
-    const sidebar = page.locator('.navbar-sidebar, .navbar-sidebar__items').first();
-    await expect(sidebar).toBeVisible({ timeout: 10_000 });
+    const sidebar = await openMobileSidebar(page);
 
     const githubLink = sidebar.getByRole('link', { name: 'GitHub' }).first();
     await expect(githubLink).toBeVisible();
