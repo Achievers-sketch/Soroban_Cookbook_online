@@ -19,8 +19,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   /* No retries locally; 1 retry in CI to absorb flakiness */
   retries: process.env.CI ? 1 : 0,
-  /* Parallelise across workers */
-  workers: process.env.CI ? 2 : undefined,
+  /* Parallelise across workers — keep CI serial to avoid flaky mobile nav */
+  workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI
     ? [['github'], ['html', { open: 'never', outputFolder: 'playwright-report' }]]
     : [['list'], ['html', { open: 'on-failure', outputFolder: 'playwright-report' }]],
@@ -28,7 +28,8 @@ export default defineConfig({
   webServer: {
     command: 'bun run serve -- --port 3000 --host 127.0.0.1',
     url: 'http://127.0.0.1:3000',
-    reuseExistingServer: !process.env.CI,
+    // CI workflows pre-start `docusaurus serve` on :3000; always reuse when present.
+    reuseExistingServer: true,
     timeout: 120_000,
   },
 

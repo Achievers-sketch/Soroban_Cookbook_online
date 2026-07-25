@@ -19,21 +19,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: '20'
+          bun-version: "1.2.0"
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Build documentation
-        run: npm run build
+        run: bun run build
 
       - name: Serve & Audit with Lighthouse CI
         run: |
           npm install -g @lhci/cli@0.14.x
-          lhci autorun
+          # Prefer JSON config (staticDistDir) over lighthouserc.js server mode
+          lhci autorun --config=lighthouserc.json
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
@@ -49,15 +50,28 @@ jobs:
     name: Mobile-Friendly Verification
     runs-on: ubuntu-latest
     needs: mobile-seo-audit
+    defaults:
+      run:
+        working-directory: ./documentation
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: "1.2.0"
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build documentation
+        run: bun run build
+
       - name: Check viewport meta tag
         run: |
-          # Verify viewport meta tag exists in built HTML
-          if grep -r 'name="viewport"' documentation/build/; then
+          if grep -r 'name="viewport"' build/; then
             echo "✅ Viewport meta tag found"
           else
             echo "❌ Viewport meta tag missing"
@@ -71,9 +85,10 @@ jobs:
           echo "✅ Font size check delegated to Lighthouse audit"
 
       - name: Check tap target sizes
+        working-directory: .
         run: |
-          # Verify CSS has touch target utilities
-          if grep -q 'min-height: 48px' documentation/src/css/mobile-first.css; then
+          # Utilities live at repo-root src/css (ROADMAP-122 / Issue #189)
+          if grep -q 'min-height: 48px' src/css/mobile-first.css; then
             echo "✅ Touch target CSS utilities found"
           else
             echo "❌ Touch target CSS utilities missing"

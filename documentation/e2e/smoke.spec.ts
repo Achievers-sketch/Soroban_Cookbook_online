@@ -68,10 +68,11 @@ test.describe('Accessibility – basic', () => {
 
   test('all images on homepage have alt text', async ({ page }) => {
     await page.goto('/');
+    await page.waitForLoadState('domcontentloaded');
     const images = page.locator('img');
     const count = await images.count();
     for (let i = 0; i < count; i++) {
-      const alt = await images.nth(i).getAttribute('alt');
+      const alt = await images.nth(i).getAttribute('alt', { timeout: 5_000 });
       expect(alt, `Image at index ${i} is missing alt text`).not.toBeNull();
     }
   });

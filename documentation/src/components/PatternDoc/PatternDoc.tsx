@@ -82,8 +82,7 @@ export function EstimatedTime({ time, className }: EstimatedTimeProps) {
       className={clsx(styles.estimatedTime, className)}
       data-estimated-time={label}
       role="status"
-      aria-label={`Estimated time: ${label}`}
-    >
+      aria-label={`Estimated time: ${label}`}>
       <span className={styles.estimatedTimePrefix} aria-hidden="true">
         Est.
       </span>

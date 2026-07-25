@@ -21,11 +21,13 @@ test.describe('desktop navigation', () => {
     await expect(page).toHaveURL(/\/docs\/patterns/);
   });
 
-  test('GitHub navbar link points to correct repo', async ({ page, context }) => {
+  test('GitHub navbar link points to correct repo', async ({ page }) => {
     await page.goto('/');
 
-    // The GitHub link opens in a new tab — intercept and assert href without navigating
-    const githubLink = page.getByRole('link', { name: 'GitHub' });
+    // Prefer the primary navbar GitHub link (footer/community also say "GitHub")
+    const githubLink = page
+      .locator('nav.navbar a.navbar__link[href*="github.com"]')
+      .first();
     await expect(githubLink).toHaveAttribute('href', GITHUB_URL);
   });
 });
@@ -36,13 +38,15 @@ test.describe('mobile menu', () => {
   test('hamburger opens nav and Docs link is reachable', async ({ page }) => {
     await page.goto('/');
 
-    // Docusaurus mobile toggle
-    const toggle = page.locator('.navbar__toggle, [aria-label="Toggle navigation bar"]').first();
+    const toggle = page.locator('.navbar__toggle').first();
     await expect(toggle).toBeVisible();
     await toggle.click();
 
-    // Sidebar/drawer should now contain the Docs link
-    const docsLink = page.getByRole('link', { name: 'Docs' }).first();
+    // Docusaurus marks the open drawer with navbar-sidebar--show
+    const openSidebar = page.locator('.navbar-sidebar--show');
+    await expect(openSidebar).toBeVisible({ timeout: 10_000 });
+
+    const docsLink = openSidebar.getByRole('link', { name: 'Docs' }).first();
     await expect(docsLink).toBeVisible();
     await docsLink.click();
     await expect(page).toHaveURL(/\/docs\//);
@@ -51,10 +55,14 @@ test.describe('mobile menu', () => {
   test('mobile menu contains GitHub link', async ({ page }) => {
     await page.goto('/');
 
-    const toggle = page.locator('.navbar__toggle, [aria-label="Toggle navigation bar"]').first();
+    const toggle = page.locator('.navbar__toggle').first();
     await toggle.click();
 
-    const githubLink = page.getByRole('link', { name: 'GitHub' });
-    await expect(githubLink.first()).toBeVisible();
+    const openSidebar = page.locator('.navbar-sidebar--show');
+    await expect(openSidebar).toBeVisible({ timeout: 10_000 });
+
+    const githubLink = openSidebar.getByRole('link', { name: /GitHub/i }).first();
+    await expect(githubLink).toBeVisible();
+    await expect(githubLink).toHaveAttribute('href', GITHUB_URL);
   });
 });
