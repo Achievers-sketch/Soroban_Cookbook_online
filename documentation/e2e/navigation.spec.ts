@@ -38,10 +38,10 @@ test.describe('mobile menu', () => {
     // Infima adds navbar-sidebar--show on the navbar when the drawer is open
     await expect(page.locator('.navbar-sidebar--show')).toBeAttached({ timeout: 10_000 });
 
-    // Backdrop intercepts normal clicks; force-click the Docs item in the drawer
     const docsLink = page.locator('.navbar-sidebar a[href*="/docs"]').first();
     await expect(docsLink).toBeAttached();
-    await docsLink.click({ force: true });
+    // DOM click avoids Playwright viewport checks if CSS transform is mid-transition
+    await docsLink.evaluate((el: HTMLAnchorElement) => el.click());
     await expect(page).toHaveURL(/\/docs\//);
   });
 
