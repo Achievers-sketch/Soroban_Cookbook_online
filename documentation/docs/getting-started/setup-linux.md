@@ -1,4 +1,5 @@
 ---
+time: 20
 sidebar_position: 1
 title: Setup on Linux
 description: Set up your Soroban development environment on Linux — complete guide for Ubuntu, Debian, and other distributions.

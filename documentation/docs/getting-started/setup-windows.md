@@ -1,4 +1,5 @@
 ---
+time: 30
 sidebar_position: 2
 title: Setup on Windows
 description: Set up your Soroban development environment on Windows — guides for both WSL 2 and native Windows installation.
