@@ -10,6 +10,7 @@ Thank you for your interest in contributing! To ensure a smooth experience for b
 - **[PR Conventions](https://soroban-cookbook.com/docs/contributing#branching--pr-conventions)** - Branch naming and commit message standards.
 - **[Validation Checklist](https://soroban-cookbook.com/docs/contributing#pre-pr-checklist)** - What to check before submitting your PR, including accessibility (a11y) standards.
 - **[Code of Conduct](CODE_OF_CONDUCT.md)** - Community standards and behavioral expectations.
+- **[Community Moderation Plan](COMMUNITY.md)** - Moderator guidelines, reporting, and escalation path.
 
 ---
 
@@ -18,6 +19,8 @@ We want to enable you to submit high-quality PRs with minimal back-and-forth. Th
 
 ### 📞 Getting Help
 If you have questions, please use [GitHub Discussions](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/discussions) or join the [Stellar Dev Discord](https://discord.gg/stellardev).
+
+For Code of Conduct concerns or how community channels are moderated, see the [Community Moderation Plan](COMMUNITY.md).
 
 ---
 *By contributing, you agree that your contributions will be licensed under the [MIT License](LICENSE).*
