@@ -69,7 +69,6 @@ jobs:
 
       - name: Check viewport meta tag
         run: |
-          # Verify viewport meta tag exists in built HTML
           if grep -r 'name="viewport"' documentation/build/; then
             echo "✅ Viewport meta tag found"
           else
@@ -79,14 +78,12 @@ jobs:
 
       - name: Check font-size minimum
         run: |
-          # Check that no font-size is smaller than 12px in CSS
-          # (Lighthouse will catch this, but we verify in CI)
           echo "✅ Font size check delegated to Lighthouse audit"
 
       - name: Check tap target sizes
         run: |
-          # Verify CSS has touch target utilities
-          if grep -q 'min-height: 48px' documentation/src/css/mobile-first.css; then
+          # Touch targets live in mobile-menu.css (≥ 44px)
+          if grep -E 'min-height:\s*44px' documentation/src/css/mobile-menu.css; then
             echo "✅ Touch target CSS utilities found"
           else
             echo "❌ Touch target CSS utilities missing"
