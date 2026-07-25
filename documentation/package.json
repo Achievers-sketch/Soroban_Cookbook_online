@@ -32,6 +32,7 @@
     "check:external-links": "node scripts/check-external-links.mjs",
     "test:e2e": "playwright test",
     "test:console": "playwright test e2e/smoke-console.spec.ts --project=chromium",
+    "test:a11y": "playwright test e2e/accessibility.spec.ts --project=chromium",
     "spellcheck": "cspell --no-progress --config cspell.json"
   },
   "dependencies": {
@@ -50,6 +51,7 @@
     "web-vitals": "^4.2.4"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
     "@docusaurus/module-type-aliases": "3.9.2",
     "@docusaurus/tsconfig": "3.9.2",
     "@docusaurus/types": "3.9.2",
