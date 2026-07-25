@@ -19,8 +19,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   /* No retries locally; 1 retry in CI to absorb flakiness */
   retries: process.env.CI ? 1 : 0,
-  /* Parallelise across workers — keep CI serial to avoid flaky mobile nav */
-  workers: process.env.CI ? 1 : undefined,
+  /* Parallelise across workers */
+  workers: process.env.CI ? 2 : undefined,
   reporter: process.env.CI
     ? [['github'], ['html', { open: 'never', outputFolder: 'playwright-report' }]]
     : [['list'], ['html', { open: 'on-failure', outputFolder: 'playwright-report' }]],

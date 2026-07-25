@@ -70,13 +70,13 @@ test.describe('Accessibility – basic', () => {
     await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
 
-    // Snapshot alts in one evaluate to avoid flaky nth() detachment on lazy images
-    const alts = await page.locator('img').evaluateAll((imgs) =>
-      imgs.map((img) => img.getAttribute('alt')),
+    // Single evaluate avoids flaky per-image locator timeouts on lazy/detached nodes.
+    const missingAlts = await page.evaluate(() =>
+      Array.from(document.querySelectorAll('img'))
+        .filter((img) => !img.hasAttribute('alt'))
+        .map((img) => img.getAttribute('src') || img.outerHTML.slice(0, 120)),
     );
-    expect(alts.length).toBeGreaterThan(0);
-    for (let i = 0; i < alts.length; i++) {
-      expect(alts[i], `Image at index ${i} is missing alt text`).not.toBeNull();
-    }
+
+    expect(missingAlts, `Images missing alt: ${missingAlts.join(', ')}`).toEqual([]);
   });
 });
