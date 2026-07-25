@@ -28,7 +28,8 @@ export default defineConfig({
   webServer: {
     command: 'bun run serve -- --port 3000 --host 127.0.0.1',
     url: 'http://127.0.0.1:3000',
-    reuseExistingServer: !process.env.CI,
+    // CI workflow starts `bun run serve` before Playwright; always reuse when present.
+    reuseExistingServer: true,
     timeout: 120_000,
   },
 

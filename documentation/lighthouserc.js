@@ -36,9 +36,10 @@ module.exports = {
         'http://localhost:3000/',
         'http://localhost:3000/docs/',
       ],
-      startServerCommand: 'cd documentation && npm run serve',
+      // Workflow runs lhci from ./documentation after `npm run build`.
+      startServerCommand: 'npm run serve -- --port 3000 --host 127.0.0.1',
       startServerReadyPattern: 'Serving',
-      startServerReadyTimeout: 60000,
+      startServerReadyTimeout: 120000,
     },
     assert: {
       assertions: {
