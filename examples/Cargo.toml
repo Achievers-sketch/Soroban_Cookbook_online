@@ -10,6 +10,7 @@ members = [
     "hello-world",
     "htlc-swap",
     "oracle-consumer",
+    "reentrancy-guard",
     "simple-dao",
     "simple-voting",
     "staking",

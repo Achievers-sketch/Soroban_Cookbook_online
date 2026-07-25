@@ -54,6 +54,7 @@ const sidebars: SidebarsConfig = {
         'patterns/optimization-playbook',
         'patterns/lifecycle-upgrades',
         'patterns/proposal-lifecycle',
+        'patterns/reentrancy-guard',
       ],
     },
     {
