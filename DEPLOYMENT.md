@@ -364,7 +364,27 @@ If you want to set up a formal PagerDuty integration, replace the `slackapi/slac
 | Channel | Purpose | Configured via |
 |---|---|---|
 | Slack `#soroban-alerts` | CI failures, recoveries, downtime | `SLACK_WEBHOOK_URL` secret |
+| Slack / Discord (deploy) | Deploy success and failure from `deploy.yml` | `SLACK_WEBHOOK_URL`, `DISCORD_WEBHOOK_URL` secrets |
 | GitHub Actions email | Default GitHub notification for workflow failures | GitHub account notification settings |
+
+## Deploy Status Notifications
+
+Deployment success and failure alerts are sent directly from `.github/workflows/deploy.yml` (in addition to the broader CI/CD coverage in `alerts.yml`).
+
+| Event | Where | Channels |
+|---|---|---|
+| Deploy succeeds | `deploy` job steps after the summary | Slack + Discord (when secrets are set) |
+| Build or deploy fails / is cancelled | `notify-failure` job | Slack + Discord (when secrets are set) |
+
+Messages include the deployment URL (on success), failed stage (on failure), branch, actor, commit SHA, and Actions run URL.
+
+### Optional Discord webhook
+
+1. In Discord: Server Settings → Integrations → Webhooks → **New Webhook** (or channel → Edit Channel → Integrations).
+2. Copy the webhook URL.
+3. Add a repository secret named `DISCORD_WEBHOOK_URL` with that value.
+
+Slack reuses the same `SLACK_WEBHOOK_URL` secret documented in [Alert System](#alert-system) above. Both secrets are optional — notification steps are skipped when unset so deploys still succeed without them.
 
 ---
 
@@ -374,7 +394,7 @@ If you want to set up a formal PagerDuty integration, replace the `slackapi/slac
 - [ ] Add performance metrics collection
 - [ ] Implement preview deployments for pull requests
 - [ ] Add automated lighthouse audits
-- [ ] Set up deployment notifications
+- [x] Set up deployment notifications
 
 ## Support
 
