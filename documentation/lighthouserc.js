@@ -36,8 +36,8 @@ module.exports = {
         'http://localhost:3000/',
         'http://localhost:3000/docs/',
       ],
-      // Workflow runs lhci from ./documentation after `npm run build`.
-      startServerCommand: 'npm run serve -- --port 3000 --host 127.0.0.1',
+      // Workflow runs lhci from ./documentation after `bun run build`.
+      startServerCommand: 'bun run serve -- --port 3000 --host 127.0.0.1',
       startServerReadyPattern: 'Serving',
       startServerReadyTimeout: 120000,
     },
