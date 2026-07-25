@@ -1,8 +1,12 @@
 import { expect, test } from '@playwright/test';
 
 test('copy button copies the visible code block content', async ({ page, browserName }) => {
-  // Chromium/WebKit support clipboard permissions; Firefox is flaky in CI headless.
-  test.skip(browserName === 'firefox', 'Clipboard permissions unreliable in Firefox CI');
+  // Playwright only supports clipboard permissions reliably on Chromium.
+  // WebKit throws: Unknown permission: clipboard-write
+  test.skip(
+    browserName !== 'chromium',
+    'Clipboard permissions are Chromium-only in Playwright',
+  );
 
   await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto('/docs/getting-started/setup');
