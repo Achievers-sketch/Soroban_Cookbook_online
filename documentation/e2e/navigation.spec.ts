@@ -1,9 +1,9 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 const GITHUB_URL = 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online';
 
 test.describe('desktop navigation', () => {
-  test('home → Docs → pattern page', async ({ page }) => {
+  test('home to Docs to pattern page', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/Soroban Cookbook/);
 
@@ -24,8 +24,8 @@ test.describe('desktop navigation', () => {
   test('GitHub navbar link points to correct repo', async ({ page }) => {
     await page.goto('/');
 
-    // Scope to the primary navbar — homepage also has community + footer GitHub links.
-    const githubLink = page.locator('.navbar').getByRole('link', { name: /GitHub/i }).first();
+    // Multiple "GitHub" links can exist (navbar + footer); assert the first matching href.
+    const githubLink = page.getByRole('link', { name: 'GitHub' }).first();
     await expect(githubLink).toHaveAttribute('href', GITHUB_URL);
   });
 });
@@ -33,38 +33,43 @@ test.describe('desktop navigation', () => {
 test.describe('mobile menu', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
-  async function openMobileNav(page: Page) {
+  async function openMobileSidebar(page: import('@playwright/test').Page) {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
-    const toggle = page.locator('button.navbar__toggle');
+    await page.waitForLoadState('domcontentloaded');
+
+    const toggle = page.locator('button.navbar__toggle').first();
     await expect(toggle).toBeVisible();
 
-    await page.waitForFunction(() => {
-      const btn = document.querySelector('button.navbar__toggle');
-      return !!btn && getComputedStyle(btn).display !== 'none';
-    });
+    // Docusaurus 3.x sets navbar-sidebar--show on the parent <nav>, and
+    // hydration must complete before the toggle handler is live.
+    await expect(async () => {
+      if ((await toggle.getAttribute('aria-expanded')) !== 'true') {
+        await toggle.click();
+      }
+      await expect(page.locator('nav.navbar.navbar-sidebar--show')).toBeVisible({
+        timeout: 2_000,
+      });
+      await expect(page.locator('.navbar-sidebar--show .navbar-sidebar')).toBeVisible({
+        timeout: 2_000,
+      });
+    }).toPass({ timeout: 15_000 });
 
-    await toggle.click();
-    const openSidebar = page.locator('.navbar-sidebar--show');
-    if (!(await openSidebar.isVisible().catch(() => false))) {
-      await toggle.click();
-    }
-    await expect(openSidebar).toBeVisible({ timeout: 15000 });
-    return openSidebar;
+    return page.locator('.navbar-sidebar--show .navbar-sidebar');
   }
 
   test('hamburger opens nav and Docs link is reachable', async ({ page }) => {
-    const sidebar = await openMobileNav(page);
-    // Match by href — mobile panel markup varies across Docusaurus versions.
-    const docsLink = sidebar.locator('a[href*="/docs"]').first();
+    const sidebar = await openMobileSidebar(page);
+
+    const docsLink = sidebar.getByRole('link', { name: 'Docs' }).first();
     await expect(docsLink).toBeVisible();
     await docsLink.click();
-    await expect(page).toHaveURL(/\/docs/);
+    await expect(page).toHaveURL(/\/docs\//);
   });
 
   test('mobile menu contains GitHub link', async ({ page }) => {
-    const sidebar = await openMobileNav(page);
-    const githubLink = sidebar.locator(`a[href="${GITHUB_URL}"]`).first();
+    const sidebar = await openMobileSidebar(page);
+
+    const githubLink = sidebar.getByRole('link', { name: 'GitHub' }).first();
     await expect(githubLink).toBeVisible();
   });
 });
