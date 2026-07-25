@@ -29,7 +29,14 @@ jobs:
         run: bun run format:check && bun run lint && bun run typecheck && bun run build
 
       - name: Deploy PR Preview
+        if: github.event.pull_request.head.repo.full_name == github.repository
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: ./documentation/build
           action: auto
+
+      - name: Skip preview deploy for fork PRs
+        if: github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          echo "Build succeeded."
+          echo "Skipping gh-pages preview deploy for fork PR (GITHUB_TOKEN cannot push to upstream)."
