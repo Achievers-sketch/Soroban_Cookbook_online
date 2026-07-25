@@ -61,17 +61,24 @@
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: var(--z-modal-backdrop, 400);
+    /* Keep below panel content so nav links remain clickable */
+    z-index: 0;
     opacity: 0;
     transition: opacity var(--sb-motion-duration-slow, 320ms)
       var(--sb-motion-ease-out, cubic-bezier(0, 0, 0.2, 1));
     pointer-events: none;
   }
 
-  .navbar-sidebar--show ~ .navbar-sidebar__backdrop,
-  .navbar-sidebar--show .navbar-sidebar__backdrop {
+  .navbar-sidebar--show > .navbar-sidebar__backdrop {
     opacity: 1;
+    /* Backdrop closes the menu on tap, but must not cover brand/items. */
     pointer-events: auto;
+  }
+
+  .navbar-sidebar__brand,
+  .navbar-sidebar__items {
+    position: relative;
+    z-index: 1;
   }
 
   /* ── 4. Touch targets — nav items ≥ 44 px tall ──────────────────────────── */

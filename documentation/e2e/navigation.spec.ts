@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 const GITHUB_URL = 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online';
 
@@ -33,33 +33,41 @@ test.describe('desktop navigation', () => {
 test.describe('mobile menu', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
-  test('hamburger opens nav and Docs link is reachable', async ({ page }) => {
+  async function openMobileNav(page: Page) {
     await page.goto('/');
-
-    // Docusaurus mobile toggle
-    const toggle = page.locator('.navbar__toggle, [aria-label="Toggle navigation bar"]').first();
+    await page.waitForLoadState('networkidle');
+    const toggle = page.locator('button.navbar__toggle');
     await expect(toggle).toBeVisible();
+
+    // Ensure client JS hydrated before toggling.
+    await page.waitForFunction(() => {
+      const btn = document.querySelector('button.navbar__toggle');
+      return !!btn && getComputedStyle(btn).display !== 'none';
+    });
+
     await toggle.click();
 
-    // Click the Docs link inside the open sidebar (not the hidden desktop navbar link
-    // behind navbar-sidebar__backdrop).
-    const sidebar = page.locator('.navbar-sidebar');
-    await expect(sidebar).toBeVisible();
-    const docsLink = sidebar.getByRole('link', { name: 'Docs' }).first();
+    const openSidebar = page.locator('.navbar-sidebar--show');
+    // Retry once if the first click raced hydration.
+    if (!(await openSidebar.isVisible().catch(() => false))) {
+      await toggle.click();
+    }
+    await expect(openSidebar).toBeVisible({ timeout: 15000 });
+    return openSidebar;
+  }
+
+  test('hamburger opens nav and Docs link is reachable', async ({ page }) => {
+    const sidebar = await openMobileNav(page);
+    const docsLink = sidebar.locator('.navbar-sidebar__items').getByRole('link', { name: 'Docs' }).first();
     await expect(docsLink).toBeVisible();
     await docsLink.click();
     await expect(page).toHaveURL(/\/docs\//);
   });
 
   test('mobile menu contains GitHub link', async ({ page }) => {
-    await page.goto('/');
-
-    const toggle = page.locator('.navbar__toggle, [aria-label="Toggle navigation bar"]').first();
-    await toggle.click();
-
-    const sidebar = page.locator('.navbar-sidebar');
-    await expect(sidebar).toBeVisible();
-    const githubLink = sidebar.getByRole('link', { name: /GitHub/i });
+    const sidebar = await openMobileNav(page);
+    const githubLink = sidebar.locator('.navbar-sidebar__items').getByRole('link', { name: /GitHub/i });
     await expect(githubLink.first()).toBeVisible();
+    await expect(githubLink.first()).toHaveAttribute('href', GITHUB_URL);
   });
 });
