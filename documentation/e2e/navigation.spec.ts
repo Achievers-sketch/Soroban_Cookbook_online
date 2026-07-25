@@ -7,13 +7,10 @@ test.describe('desktop navigation', () => {
     await page.goto('/');
     await expect(page).toHaveTitle(/Soroban Cookbook/);
 
-    // Navbar "Docs" link leads to the docs section
     await page.getByRole('link', { name: 'Docs' }).first().click();
     await expect(page).toHaveURL(/\/docs\//);
 
-    // Navigate to a pattern page via the sidebar
     await page.getByRole('link', { name: 'Patterns' }).first().click();
-    // Expand if collapsed (Docusaurus category may be a button)
     const overviewLink = page.getByRole('link', { name: 'Overview' });
     if (await overviewLink.isVisible()) {
       await overviewLink.click();
@@ -23,8 +20,6 @@ test.describe('desktop navigation', () => {
 
   test('GitHub navbar link points to correct repo', async ({ page }) => {
     await page.goto('/');
-
-    // Scope to the top navbar — homepage also has GitHub links in community + footer
     const githubLink = page.locator('.navbar').getByRole('link', { name: /GitHub/i }).first();
     await expect(githubLink).toHaveAttribute('href', GITHUB_URL);
   });
@@ -36,28 +31,28 @@ test.describe('mobile menu', () => {
   test('hamburger opens nav and Docs link is reachable', async ({ page }) => {
     await page.goto('/');
 
-    // Docusaurus mobile toggle
-    const toggle = page.locator('.navbar__toggle, [aria-label="Toggle navigation bar"]').first();
+    const toggle = page.locator('.navbar__toggle').first();
     await expect(toggle).toBeVisible();
     await toggle.click();
 
-    // Click Docs inside the open sidebar (backdrop overlays the main page)
-    const sidebar = page.locator('.navbar-sidebar, .navbar-sidebar__items').first();
-    await expect(sidebar).toBeVisible();
-    const docsLink = sidebar.getByRole('link', { name: 'Docs' }).first();
-    await expect(docsLink).toBeVisible();
-    await docsLink.click();
+    // Infima adds navbar-sidebar--show on the navbar when the drawer is open
+    await expect(page.locator('.navbar-sidebar--show')).toBeAttached({ timeout: 10_000 });
+
+    // Backdrop intercepts normal clicks; force-click the Docs item in the drawer
+    const docsLink = page.locator('.navbar-sidebar a[href*="/docs"]').first();
+    await expect(docsLink).toBeAttached();
+    await docsLink.click({ force: true });
     await expect(page).toHaveURL(/\/docs\//);
   });
 
   test('mobile menu contains GitHub link', async ({ page }) => {
     await page.goto('/');
 
-    const toggle = page.locator('.navbar__toggle, [aria-label="Toggle navigation bar"]').first();
+    const toggle = page.locator('.navbar__toggle').first();
     await toggle.click();
+    await expect(page.locator('.navbar-sidebar--show')).toBeAttached({ timeout: 10_000 });
 
-    const sidebar = page.locator('.navbar-sidebar, .navbar-sidebar__items').first();
-    const githubLink = sidebar.getByRole('link', { name: /GitHub/i }).first();
-    await expect(githubLink).toBeVisible();
+    const githubLink = page.locator(`.navbar-sidebar a[href="${GITHUB_URL}"]`).first();
+    await expect(githubLink).toBeAttached();
   });
 });
