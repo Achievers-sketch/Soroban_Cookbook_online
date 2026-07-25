@@ -210,6 +210,18 @@ jobs:
             echo "❌ Missing actions/deploy-pages in deploy workflow"
             exit 1
           fi
+          if ! grep -q "Deploy Status Notification" ../.github/workflows/deploy.yml; then
+            echo "❌ Missing Deploy Status Notification job in deploy workflow"
+            exit 1
+          fi
+          if ! grep -q "slackapi/slack-github-action" ../.github/workflows/deploy.yml; then
+            echo "❌ Missing Slack notification step in deploy workflow"
+            exit 1
+          fi
+          if ! grep -q "DISCORD_WEBHOOK_URL" ../.github/workflows/deploy.yml; then
+            echo "❌ Missing Discord notification step in deploy workflow"
+            exit 1
+          fi
           echo "✅ Workflow syntax validated"
 
   test-examples:
