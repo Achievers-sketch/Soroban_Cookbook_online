@@ -27,10 +27,8 @@
     padding: 0.5rem;
     border-radius: var(--radius-md, 8px);
     transition:
-      background-color var(--sb-motion-duration-fast, 120ms)
-        var(--sb-motion-ease-standard, ease),
-      color var(--sb-motion-duration-fast, 120ms)
-        var(--sb-motion-ease-standard, ease);
+      background-color var(--sb-motion-duration-fast, 120ms) var(--sb-motion-ease-standard, ease),
+      color var(--sb-motion-duration-fast, 120ms) var(--sb-motion-ease-standard, ease);
   }
 
   .navbar__toggle:hover {
@@ -102,8 +100,7 @@
 
   /* ── 5. Smooth caret rotation on expand/collapse ────────────────────────── */
   .menu__caret::before {
-    transition: transform var(--sb-motion-duration-fast, 120ms)
-      var(--sb-motion-ease-standard, ease);
+    transition: transform var(--sb-motion-duration-fast, 120ms) var(--sb-motion-ease-standard, ease);
   }
 
   /* ── 6. Search bar inside sidebar ──────────────────────────────────────── */
