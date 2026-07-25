@@ -21,11 +21,11 @@ test.describe('desktop navigation', () => {
     await expect(page).toHaveURL(/\/docs\/patterns/);
   });
 
-  test('GitHub navbar link points to correct repo', async ({ page, context }) => {
+  test('GitHub navbar link points to correct repo', async ({ page }) => {
     await page.goto('/');
 
-    // The GitHub link opens in a new tab — intercept and assert href without navigating
-    const githubLink = page.getByRole('link', { name: 'GitHub' });
+    // Scope to the primary navbar — homepage also has community + footer GitHub links.
+    const githubLink = page.locator('.navbar').getByRole('link', { name: /GitHub/i }).first();
     await expect(githubLink).toHaveAttribute('href', GITHUB_URL);
   });
 });
@@ -41,8 +41,11 @@ test.describe('mobile menu', () => {
     await expect(toggle).toBeVisible();
     await toggle.click();
 
-    // Sidebar/drawer should now contain the Docs link
-    const docsLink = page.getByRole('link', { name: 'Docs' }).first();
+    // Click the Docs link inside the open sidebar (not the hidden desktop navbar link
+    // behind navbar-sidebar__backdrop).
+    const sidebar = page.locator('.navbar-sidebar');
+    await expect(sidebar).toBeVisible();
+    const docsLink = sidebar.getByRole('link', { name: 'Docs' }).first();
     await expect(docsLink).toBeVisible();
     await docsLink.click();
     await expect(page).toHaveURL(/\/docs\//);
@@ -54,7 +57,9 @@ test.describe('mobile menu', () => {
     const toggle = page.locator('.navbar__toggle, [aria-label="Toggle navigation bar"]').first();
     await toggle.click();
 
-    const githubLink = page.getByRole('link', { name: 'GitHub' });
+    const sidebar = page.locator('.navbar-sidebar');
+    await expect(sidebar).toBeVisible();
+    const githubLink = sidebar.getByRole('link', { name: /GitHub/i });
     await expect(githubLink.first()).toBeVisible();
   });
 });
