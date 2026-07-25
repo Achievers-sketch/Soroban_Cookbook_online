@@ -135,14 +135,23 @@ Deploys the built documentation to GitHub Pages.
 - Configure GitHub Pages environment
 - Deploy artifact to GitHub Pages
 - Output deployment summary with URL
-- Notify Slack / Discord on success (optional secrets)
 
 **Environment:** `github-pages`
 
-**Output:** Deployment URL available in workflow run details
+**Output:** Deployment URL available in workflow run details (`page_url` job output)
 
-#### 3. Notify on failure (`notify-failure`)
-Runs when `build` or `deploy` fails or is cancelled. Sends Slack and/or Discord alerts with the failed stage, branch, actor, commit, and run URL. Requires optional secrets `SLACK_WEBHOOK_URL` and/or `DISCORD_WEBHOOK_URL` (see [DEPLOYMENT.md](DEPLOYMENT.md) → Deploy Status Notifications).
+#### 3. Deploy Status Notification (`notify`)
+Notifies the team of deploy success or failure via Slack and/or Discord.
+
+**Runs After:** `build` and `deploy` (always runs, including when either job fails)
+
+**Steps:**
+- Determine overall outcome from `needs.build.result` / `needs.deploy.result`
+- Send Slack notification when `SLACK_WEBHOOK_URL` is configured
+- Send Discord notification when `DISCORD_WEBHOOK_URL` is configured
+- Log a setup hint when neither webhook secret is present
+
+**Secrets (optional):** `SLACK_WEBHOOK_URL`, `DISCORD_WEBHOOK_URL` — see [DEPLOYMENT.md](DEPLOYMENT.md) → Deploy Status Notifications
 
 ## Caching Strategy
 
