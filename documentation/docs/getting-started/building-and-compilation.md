@@ -1,4 +1,5 @@
 ---
+time: 20
 title: Building and Compilation
 description: A complete guide to compiling Soroban smart contracts — from source to WebAssembly artifact, including flags, optimization strategies, and common build error remediation.
 sidebar_position: 4

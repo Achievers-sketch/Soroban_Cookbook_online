@@ -1,3 +1,8 @@
+---
+time: 25
+title: setup-macos
+---
+
 # macOS Environment Setup
 
 Set up your Soroban development environment on macOS. This guide covers Intel and Apple Silicon (M1/M2/M3) Macs running macOS 11 (Big Sur) or later.

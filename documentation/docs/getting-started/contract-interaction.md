@@ -1,4 +1,5 @@
 ---
+time: 20
 sidebar_position: 6
 title: Contract Interaction Tutorial
 description: How to interact with deployed Soroban contracts from CLI and app contexts.

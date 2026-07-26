@@ -28,8 +28,16 @@ jobs:
       - name: Format, Lint, Typecheck, and Build
         run: bun run format:check && bun run lint && bun run typecheck && bun run build
 
+      # Fork PRs cannot push to upstream gh-pages (403 for github-actions[bot]).
       - name: Deploy PR Preview
+        if: github.event.pull_request.head.repo.full_name == github.repository
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: ./documentation/dist
+          source-dir: ./documentation/build
           action: auto
+
+      - name: Verify build (fork PRs)
+        if: github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          test -d build
+          echo "✅ Preview build OK at documentation/build (deploy skipped for fork PR — no gh-pages write access)"

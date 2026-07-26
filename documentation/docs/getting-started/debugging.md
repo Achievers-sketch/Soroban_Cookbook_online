@@ -1,4 +1,5 @@
 ---
+time: 25
 title: Debugging Guide
 description: Systematic debugging workflows and practical troubleshooting techniques for Soroban smart contract development
 ---
