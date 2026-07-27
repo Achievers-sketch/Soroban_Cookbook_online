@@ -78,7 +78,7 @@ export function initAnalytics({ gaMeasurementId, clarityProjectId }: AnalyticsId
  * Fires a GA4 event for funnel analysis (issue #362). Safe to call even when
  * analytics hasn't loaded (consent denied, or IDs unset) — it's just a no-op.
  */
-export function trackEvent(name: string, params: Record<string, string> = {}): void {
+export function trackEvent(name: string, params: Record<string, string | number> = {}): void {
   if (typeof window === 'undefined' || !window.gtag) return;
   window.gtag('event', name, params);
 }
@@ -98,4 +98,61 @@ export const FUNNEL_STEPS = {
 /** Records a homepage CTA click, labelled so GA4 can break the step down by button. */
 export function trackCtaClick(ctaId: string, destination: string): void {
   trackEvent(FUNNEL_STEPS.ctaClick, { cta_id: ctaId, destination });
+}
+
+// ─── Search analytics (issue #358) ──────────────────────────────────────────
+
+/**
+ * `search` is GA4's reserved event name for site search — using it means the
+ * query shows up in the built-in Search Terms report without extra config.
+ * `search_no_results` is a custom companion so zero-result queries (the ones
+ * worth writing docs for) can be reported on directly.
+ */
+export const SEARCH_EVENTS = {
+  search: 'search',
+  noResults: 'search_no_results',
+} as const;
+
+/** Records a completed search and how many hits it returned. */
+export function trackSearch(term: string, resultCount: number): void {
+  trackEvent(SEARCH_EVENTS.search, { search_term: term, search_results: resultCount });
+  if (resultCount === 0) {
+    trackEvent(SEARCH_EVENTS.noResults, { search_term: term });
+  }
+}
+
+// ─── Documentation feedback (issue #359) ────────────────────────────────────
+
+export const FEEDBACK_EVENTS = {
+  submitted: 'doc_feedback',
+  detailOpened: 'doc_feedback_detail',
+} as const;
+
+/** Records a thumbs up/down on a docs page. */
+export function trackFeedback(pagePath: string, helpful: boolean): void {
+  trackEvent(FEEDBACK_EVENTS.submitted, {
+    page_path: pagePath,
+    // A string keeps this readable as a GA4 dimension; booleans stringify to
+    // "true"/"false" inconsistently across gtag versions.
+    helpful: helpful ? 'yes' : 'no',
+  });
+}
+
+/** Records that a reader clicked through to leave detailed written feedback. */
+export function trackFeedbackDetail(pagePath: string): void {
+  trackEvent(FEEDBACK_EVENTS.detailOpened, { page_path: pagePath });
+}
+
+// ─── Experiments (issue #360) ───────────────────────────────────────────────
+
+export const EXPERIMENT_EVENTS = {
+  exposure: 'experiment_exposure',
+} as const;
+
+/**
+ * Records that a visitor was shown a given variant. GA4 needs one exposure
+ * event per assignment to attribute downstream conversions to a variant.
+ */
+export function trackExperimentExposure(experimentId: string, variant: string): void {
+  trackEvent(EXPERIMENT_EVENTS.exposure, { experiment_id: experimentId, variant });
 }

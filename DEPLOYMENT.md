@@ -289,6 +289,29 @@ these, in this order:
 In GA4: **Explore → Funnel exploration**, add each event as a step in order,
 then apply `cta_id` or `page_path` as a breakdown dimension.
 
+### Other tracked events
+
+Beyond the funnel, the site emits:
+
+| Event | Parameters | Purpose |
+| --- | --- | --- |
+| `search` | `search_term`, `search_results` | Site search. GA4's reserved name, so terms appear in the built-in Search Terms report. |
+| `search_no_results` | `search_term` | Zero-result queries — each is a documentation gap. |
+| `doc_feedback` | `page_path`, `helpful` (`yes`/`no`) | "Was this page helpful?" vote. |
+| `doc_feedback_detail` | `page_path` | Reader clicked through to write detailed feedback. |
+| `experiment_exposure` | `experiment_id`, `variant` | A/B variant was rendered. |
+
+Custom parameters need registering as GA4 custom dimensions before they can be
+reported on, and registration is not retroactive — see
+[ANALYTICS_DASHBOARD.md → Required custom dimensions](./ANALYTICS_DASHBOARD.md#required-custom-dimensions).
+
+### Dashboard and experiments
+
+- **[ANALYTICS_DASHBOARD.md](./ANALYTICS_DASHBOARD.md)** — the metric catalog,
+  how to build the Looker Studio dashboard, and the weekly popular-pages report.
+- **[A/B testing plan](./documentation/docs/planning/ab-testing.md)** — the
+  approval process and plan template required before enabling any experiment.
+
 **Verifying:** open the site with the browser devtools Network tab filtered to
 `google-analytics` or `clarity`, accept the consent banner, and click a hero
 CTA. You should see the collect request fire. In GA4, **Reports → Realtime**
