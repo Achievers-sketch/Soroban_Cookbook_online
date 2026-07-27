@@ -1,12 +1,10 @@
-/**
- * Docusaurus theme swizzle — Root wrapper (Issue #179: Web Vitals)
- *
- * This component wraps the entire Docusaurus app. We use it to initialise
- * Web Vitals reporting once on the client side without modifying the core
- * layout. See: https://docusaurus.io/docs/swizzling#wrapper-your-site-with-root
- */
-
 import React, { useEffect, type ReactNode } from 'react';
+import CookieConsent from '@site/src/components/CookieConsent/CookieConsent';
+import { hasAnalyticsConsent } from '@site/src/utils/cookieConsent';
+
+/**
+ * Root wrapper: Web Vitals + cookie consent (Issue #352).
+ */
 
 interface RootProps {
   children: ReactNode;
@@ -14,13 +12,22 @@ interface RootProps {
 
 export default function Root({ children }: RootProps): React.JSX.Element {
   useEffect(() => {
-    // Dynamic import keeps web-vitals out of the critical bundle path.
     import('../utils/webVitals').then(({ reportWebVitals }) => {
-      reportWebVitals().catch(() => {
-        // Silently swallow errors — vitals reporting must never break the page.
-      });
+      // Remote vitals beacons are non-essential; only start collectors when
+      // analytics consent is present. Console-only logging still helps locally
+      // when consent was accepted or during development without a remote sink.
+      if (hasAnalyticsConsent() || process.env.NODE_ENV !== 'production') {
+        reportWebVitals().catch(() => {
+          // Vitals reporting must never break the page.
+        });
+      }
     });
-  }, []); // Run once on mount
+  }, []);
 
-  return <>{children}</>;
+  return (
+    <>
+      <CookieConsent />
+      {children}
+    </>
+  );
 }

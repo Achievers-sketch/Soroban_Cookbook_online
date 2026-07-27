@@ -5,16 +5,10 @@ import { useCodeBlockContext } from '@docusaurus/theme-common/internal';
 import Button from '@theme/CodeBlock/Buttons/Button';
 import IconCopy from '@theme/Icon/Copy';
 import IconSuccess from '@theme/Icon/Success';
+import { trackEvent } from '@site/src/utils/analytics';
 import styles from './styles.module.css';
 
 type CopyState = 'idle' | 'success' | 'error';
-
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void;
-    dataLayer?: unknown[];
-  }
-}
 
 function title() {
   return translate({
@@ -59,22 +53,10 @@ function labelFor(state: CopyState) {
 }
 
 function trackCopy(language: string | undefined) {
-  if (typeof window === 'undefined') {
-    return;
-  }
-
-  const eventData = {
-    event_category: 'CodeBlock',
-    event_label: language ?? 'unknown',
-  };
-
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', 'copy_code_block', eventData);
-  }
-
-  if (Array.isArray(window.dataLayer)) {
-    window.dataLayer.push({ event: 'copy_code_block', ...eventData });
-  }
+  trackEvent('copy_code', {
+    code_language: language ?? 'unknown',
+    code_section: 'code_block',
+  });
 }
 
 function useCopyButton() {
