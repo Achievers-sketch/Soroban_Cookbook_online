@@ -41,9 +41,11 @@ Friendbot
 frontmatter
 Frontmatter
 functools
+GA4
 GBBD
 geolocation
 GitHub
+gtag
 GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 hashlock
 Hashlock
@@ -84,6 +86,7 @@ Optimising
 Overlines
 pacman
 performancebudget
+PII
 preimage
 Prettier
 println

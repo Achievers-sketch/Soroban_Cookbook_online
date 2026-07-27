@@ -1,12 +1,12 @@
 /**
- * Docusaurus theme swizzle — Root wrapper (Issue #179: Web Vitals)
+ * Docusaurus theme swizzle — Root wrapper
  *
- * This component wraps the entire Docusaurus app. We use it to initialise
- * Web Vitals reporting once on the client side without modifying the core
- * layout. See: https://docusaurus.io/docs/swizzling#wrapper-your-site-with-root
+ * - Issue #179: Web Vitals reporting
+ * - Issue #356: Search analytics listener
  */
 
 import React, { useEffect, type ReactNode } from 'react';
+import SearchAnalytics from '@site/src/components/SearchAnalytics/SearchAnalytics';
 
 interface RootProps {
   children: ReactNode;
@@ -22,5 +22,10 @@ export default function Root({ children }: RootProps): React.JSX.Element {
     });
   }, []); // Run once on mount
 
-  return <>{children}</>;
+  return (
+    <>
+      <SearchAnalytics />
+      {children}
+    </>
+  );
 }

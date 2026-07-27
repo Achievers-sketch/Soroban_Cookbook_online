@@ -23,6 +23,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/contract-interaction',
         'contributing',
         'contributing/add-tested-example',
+        'contributing/analytics-events',
       ],
     },
     {
@@ -59,11 +60,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Security',
-      items: [
-        'security/fundamentals',
-        'security/governance',
-        'security/defi-patterns',
-      ],
+      items: ['security/fundamentals', 'security/governance', 'security/defi-patterns'],
     },
     {
       type: 'category',
@@ -78,24 +75,17 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Components',
-      items: [
-        'components/buttons',
-        'components/testimonials',
-      ],
+      items: ['components/buttons', 'components/testimonials'],
     },
     {
       type: 'category',
       label: 'Responsive',
-      items: [
-        'responsive/breakpoints',
-      ],
+      items: ['responsive/breakpoints'],
     },
     {
       type: 'category',
       label: 'Security Audit',
-      items: [
-        'security/code-audit',
-      ],
+      items: ['security/code-audit'],
     },
   ],
 };

@@ -6,6 +6,7 @@ import {
   clearCSRFToken,
   updateCSRFTokenFromResponse,
 } from '../../utils/csrf';
+import { trackNewsletterSubmit } from '@site/src/utils/analytics';
 import styles from './NewsletterSignup.module.css';
 import { isHttpsUrl } from '@site/src/utils/sanitizeUrl';
 
@@ -71,6 +72,7 @@ export default function NewsletterSignup({ className }: NewsletterSignupProps) {
         setStatus('success');
         setMessage('Thanks — you are on the list. We will share Soroban Cookbook updates here.');
         setEmail('');
+        trackNewsletterSubmit({ method: 'demo' });
         return;
       }
 
@@ -99,6 +101,7 @@ export default function NewsletterSignup({ className }: NewsletterSignupProps) {
         setMessage('Thanks — check your inbox to confirm your subscription.');
         setEmail('');
         clearCSRFToken();
+        trackNewsletterSubmit({ method: 'endpoint' });
       } catch {
         setStatus('error');
         setMessage('Something went wrong. Try again in a moment.');
