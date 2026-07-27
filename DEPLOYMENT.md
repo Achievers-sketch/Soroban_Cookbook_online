@@ -203,6 +203,8 @@ Deployment does not require any environment variables to succeed — the build f
 |---|---|---|
 | `NEWSLETTER_ENDPOINT` | `documentation/docusaurus.config.ts` → `customFields.newsletterEndpoint` | POST endpoint the newsletter signup form submits `{ "email": string }` to. |
 | `DISCORD_INVITE_URL` | `documentation/docusaurus.config.ts` → `customFields.discordInviteUrl` | Discord invite link surfaced in the UI once the server exists. |
+| `GA_MEASUREMENT_ID` | `documentation/docusaurus.config.ts` → `customFields.gaMeasurementId` | GA4 measurement ID (`G-XXXXXXX`) for conversion funnel tracking. See [Analytics](#analytics). |
+| `CLARITY_PROJECT_ID` | `documentation/docusaurus.config.ts` → `customFields.clarityProjectId` | Microsoft Clarity project ID for heatmaps. See [Analytics](#analytics). |
 
 **These values are never hardcoded in source.** They are read from `process.env` at build time (see the `customFields` block in `docusaurus.config.ts`) and are wired into the production build via `.github/workflows/deploy.yml`, which sources them from **GitHub Repository Secrets**:
 
@@ -226,6 +228,94 @@ Deployment does not require any environment variables to succeed — the build f
 Because this is a fully static site, any value baked in via `customFields` ends up readable in the published JavaScript bundle — a visitor's browser has to receive it to use it. Storing them as GitHub Secrets controls **who can set or change the value** (write access to repo secrets) and **keeps it out of git history and pull request diffs**; it does not make the value secret from website visitors. Treat these as build-time configuration, not authentication credentials — never put real API keys, passwords, or signing keys into `customFields` or any other value that reaches the client bundle.
 
 This repo follows the same secrets-only pattern for actual credentials: `.github/workflows/alerts.yml` reads `SLACK_WEBHOOK_URL` exclusively via `${{ secrets.SLACK_WEBHOOK_URL }}` (see [Alert System](#alert-system) below) and never hardcodes it. There are no `.env` files committed to this repository — `.gitignore` excludes `.env*` so local secrets never reach version control.
+
+## Analytics
+
+Two optional, **consent-gated** analytics integrations ship with the site:
+
+| Tool | Purpose | Enabled by |
+| --- | --- | --- |
+| Google Analytics 4 | Conversion funnel: landing → docs → GitHub | `GA_MEASUREMENT_ID` |
+| Microsoft Clarity | Heatmaps and session replay (click/scroll behavior) | `CLARITY_PROJECT_ID` |
+
+Both are **off by default**. With neither variable set, no third-party script is
+ever requested and the consent banner does not render.
+
+### Privacy model
+
+No analytics script loads until the visitor explicitly clicks **Accept** on the
+consent banner. Specifically:
+
+- The banner renders only when at least one of the two IDs is configured.
+- The choice is stored in `localStorage` under `sc-analytics-consent`.
+- Declining stores `denied` and loads nothing; the banner does not reappear.
+- GA4 is configured with `anonymize_ip: true`.
+- Consent is checked again on every page load — nothing is injected on the
+  strength of a build-time flag alone.
+
+Implementation: [`src/utils/analyticsConsent.ts`](./documentation/src/utils/analyticsConsent.ts)
+(consent state), [`src/utils/analytics.ts`](./documentation/src/utils/analytics.ts)
+(script loaders and event helpers),
+[`src/components/ConsentBanner/`](./documentation/src/components/ConsentBanner/) (UI),
+[`src/components/FunnelTracker/`](./documentation/src/components/FunnelTracker/)
+(route and outbound-click steps), all mounted from
+[`src/theme/Root.tsx`](./documentation/src/theme/Root.tsx).
+
+### Setup
+
+1. Create a GA4 property (**Admin → Data Streams → Web**) and copy its
+   measurement ID (`G-XXXXXXX`), and/or create a Clarity project and copy its
+   project ID.
+2. Add them as **repository secrets** named `GA_MEASUREMENT_ID` and
+   `CLARITY_PROJECT_ID` (**Settings → Secrets and variables → Actions**).
+3. Add them to the `env:` block of the "Build website" step in
+   `.github/workflows/deploy.yml` — as with the other build-time values, these
+   end up readable in the client bundle, so treat them as configuration, not
+   credentials (see [the note above](#important-these-are-not-confidential-at-runtime)).
+4. Redeploy.
+
+### Conversion funnel (GA4)
+
+The site emits four ordered events. Build the funnel exploration in GA4 from
+these, in this order:
+
+| Step | Event name | Fired when |
+| --- | --- | --- |
+| 1 | `funnel_landing_view` | Homepage viewed |
+| 2 | `funnel_cta_click` | A homepage hero CTA is clicked (`cta_id`: `hero_get_started`, `hero_view_patterns`) |
+| 3 | `funnel_docs_view` | Any `/docs` page viewed |
+| 4 | `funnel_github_click` | Any outbound `github.com` link clicked |
+
+In GA4: **Explore → Funnel exploration**, add each event as a step in order,
+then apply `cta_id` or `page_path` as a breakdown dimension.
+
+**Verifying:** open the site with the browser devtools Network tab filtered to
+`google-analytics` or `clarity`, accept the consent banner, and click a hero
+CTA. You should see the collect request fire. In GA4, **Reports → Realtime**
+shows the events within ~30 seconds. Note that ad blockers suppress both tools —
+test in a clean profile.
+
+### CSP
+
+Both scripts require their origins in `script-src`. This is already applied, and
+must stay in sync across all three places the policy is defined (see
+[Security Headers](#security-headers)):
+
+```
+script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms
+```
+
+## Logging
+
+CI/CD logs are archived and optionally forwarded to a central platform by
+`.github/workflows/log-aggregation.yml`. Retention policy, search recipes, and
+Datadog/CloudWatch setup live in **[LOGGING.md](./LOGGING.md)**.
+
+## Press Kit
+
+Brand assets, boilerplate copy, fast facts, and screenshots for media and
+ecosystem partners live in **[PRESS_KIT.md](./PRESS_KIT.md)**. Screenshots are
+regenerated from a real build with `bun run press:screenshots`.
 
 ## Performance Considerations
 
@@ -274,7 +364,7 @@ The site ships a production-grade HTTP security baseline:
 
 ```
 default-src 'self';
-script-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms;
 style-src 'self' 'unsafe-inline';
 img-src 'self' data: https://api.dicebear.com;
 font-src 'self' data:;
@@ -285,7 +375,7 @@ base-uri 'self';
 frame-ancestors 'none';
 ```
 
-`script-src`/`style-src` need `'unsafe-inline'` because Docusaurus emits a few inline boilerplate scripts (theme detection, base-URL warning banner) and inline `style="..."` attributes that vary per build and can't be pinned to a static hash. `img-src` allowlists `api.dicebear.com`, which generates the testimonial avatar images on the homepage. `connect-src`/`form-action` allow `https:` generally because the newsletter form posts to an operator-configured endpoint (`NEWSLETTER_ENDPOINT`, see [Environment Variables](#environment-variables)) that isn't known at policy-authoring time.
+`script-src`/`style-src` need `'unsafe-inline'` because Docusaurus emits a few inline boilerplate scripts (theme detection, base-URL warning banner) and inline `style="..."` attributes that vary per build and can't be pinned to a static hash. `script-src` also allowlists `www.googletagmanager.com` and `www.clarity.ms` for the optional, consent-gated analytics described under [Analytics](#analytics) — neither host is contacted unless an operator configures the IDs *and* the visitor accepts the consent banner. `img-src` allowlists `api.dicebear.com`, which generates the testimonial avatar images on the homepage. `connect-src`/`form-action` allow `https:` generally because the newsletter form posts to an operator-configured endpoint (`NEWSLETTER_ENDPOINT`, see [Environment Variables](#environment-variables)) that isn't known at policy-authoring time.
 
 **Where this is defined (three places, kept in sync):**
 
