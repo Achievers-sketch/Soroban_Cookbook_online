@@ -1,4 +1,5 @@
 ---
+time: 15
 sidebar_position: 5.6
 title: Soroban Local Testing with Simulation and Snapshots
 description: Run Soroban contracts locally with soroban contract invoke, use --simulate for preflight validation, and capture ledger snapshots for reproducible debugging loops.

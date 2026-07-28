@@ -1,4 +1,5 @@
 ---
+time: 25
 sidebar_position: 5.5
 title: Local Testing and Simulation
 description: Test and simulate your Soroban contracts locally before deploying to testnet. Covers sandbox invocation, unit testing, state inspection, and iterative development workflows.

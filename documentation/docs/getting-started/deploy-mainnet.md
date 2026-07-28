@@ -1,4 +1,5 @@
 ---
+time: 30
 title: Deploy to Mainnet
 description: A risk-aware guide to deploying Soroban smart contracts to Stellar mainnet — pre-deploy checklist, release gating, security controls, and post-deploy monitoring.
 sidebar_position: 6
