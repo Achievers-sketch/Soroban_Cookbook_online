@@ -109,6 +109,35 @@ jobs:
       - name: Run TypeScript check
         run: bun run typecheck
 
+  test-unit-integration:
+    name: Run Unit & Integration Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./documentation
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: "1.2.0"
+
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ hashFiles('documentation/bun.lock') }}
+          restore-keys: |
+            bun-
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Run unit & integration tests
+        run: bun run test
+
   build-docs:
     name: Build Documentation
     runs-on: ubuntu-latest
@@ -280,7 +309,7 @@ jobs:
   summary:
     name: CI Summary
     runs-on: ubuntu-latest
-    needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, e2e-console]
+    needs: [lint-format, spellcheck, typecheck, test-unit-integration, build-docs, validate-deployment, test-examples, e2e-console]
     if: always()
     steps:
       - name: Check job statuses
@@ -295,6 +324,10 @@ jobs:
           fi
           if [ "${{ needs.typecheck.result }}" != "success" ]; then
             echo "❌ TypeScript check failed"
+            exit 1
+          fi
+          if [ "${{ needs.test-unit-integration.result }}" != "success" ]; then
+            echo "❌ Unit & Integration tests failed"
             exit 1
           fi
           if [ "${{ needs.build-docs.result }}" != "success" ]; then
