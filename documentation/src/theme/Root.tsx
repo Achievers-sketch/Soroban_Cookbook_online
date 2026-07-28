@@ -13,6 +13,7 @@ import React, { useEffect, type ReactNode } from 'react';
 import ConsentBanner from '@site/src/components/ConsentBanner';
 import FunnelTracker from '@site/src/components/FunnelTracker';
 import SearchAnalytics from '@site/src/components/SearchAnalytics';
+import SearchLoading from '@site/src/components/SearchLoading';
 
 interface RootProps {
   children: ReactNode;
@@ -33,6 +34,7 @@ export default function Root({ children }: RootProps): React.JSX.Element {
       {children}
       <FunnelTracker />
       <SearchAnalytics />
+      <SearchLoading />
       <ConsentBanner />
     </>
   );

@@ -9,10 +9,13 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     css: true,
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['node_modules/**', 'e2e/**', 'build/**', 'src/utils/__tests__/sanitizeUrl.test.ts'],
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@site': path.resolve(__dirname, '.'),
     },
   },
 });
