@@ -23,6 +23,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/contract-interaction',
         'contributing',
         'contributing/add-tested-example',
+        'contributing/offline-behavior',
       ],
     },
     {
