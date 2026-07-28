@@ -277,10 +277,28 @@ jobs:
         env:
           CI: true
 
+  security-scan:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./documentation
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "latest"
+
+      - name: Audit dependencies
+        run: bun audit --audit-level=critical
+
   summary:
     name: CI Summary
     runs-on: ubuntu-latest
-    needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, e2e-console]
+    needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, e2e-console, security-scan]
     if: always()
     steps:
       - name: Check job statuses
@@ -307,6 +325,10 @@ jobs:
           fi
           if [ "${{ needs.e2e-console.result }}" != "success" ]; then
             echo "❌ Browser console audit failed"
+            exit 1
+          fi
+          if [ "${{ needs.security-scan.result }}" != "success" ]; then
+            echo "❌ Dependency Audit failed"
             exit 1
           fi
           if [ "${{ needs.test-examples.result }}" != "success" ]; then

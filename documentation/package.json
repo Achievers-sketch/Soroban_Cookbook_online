@@ -26,7 +26,6 @@
     "test": "vitest run",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
-
     "audit:headings": "node scripts/audit-heading-hierarchy.mjs",
     "press:screenshots": "node scripts/capture-press-screenshots.mjs",
     "audit:links": "node scripts/audit-internal-links.mjs",
@@ -63,7 +62,7 @@
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@vitejs/plugin-react": "^4.2.1",
     "@typescript-eslint/parser": "^8.56.1",
-    "@vitest/ui": "^1.0.4",
+    "@vitest/ui": "^3.2.6",
     "eslint": "^9.39.3",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
@@ -75,7 +74,7 @@
     "sharp": "^0.34.5",
     "wait-on": "8.0.2",
     "typescript": "~5.6.2",
-    "vitest": "^1.0.4"
+    "vitest": "^3.2.6"
   },
   "browserslist": {
     "production": [
@@ -93,6 +92,8 @@
     "node": ">=20.0"
   },
   "overrides": {
-    "eslint-scope": "5.1.1"
+    "eslint-scope": "5.1.1",
+    "websocket-driver": "0.7.5",
+    "shell-quote": "1.8.4"
   }
 }
