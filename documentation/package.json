@@ -28,6 +28,7 @@
     "test:coverage": "vitest run --coverage",
 
     "audit:headings": "node scripts/audit-heading-hierarchy.mjs",
+    "press:screenshots": "node scripts/capture-press-screenshots.mjs",
     "audit:links": "node scripts/audit-internal-links.mjs",
     "check:external-links": "node scripts/check-external-links.mjs",
     "test:e2e": "playwright test",
