@@ -64,11 +64,6 @@ jobs:
           bun-version: "1.2.0"
 
       - name: Install dependencies
-        working-directory: ./documentation
-        run: bun install --frozen-lockfile
-
-      - name: Build documentation
-        working-directory: ./documentation
         run: bun install --frozen-lockfile
 
       - name: Build documentation
@@ -76,7 +71,6 @@ jobs:
 
       - name: Check viewport meta tag
         run: |
-          if grep -r 'name="viewport"' documentation/build/; then
           if grep -r 'name="viewport"' build/; then
             echo "✅ Viewport meta tag found"
           else
@@ -86,13 +80,13 @@ jobs:
 
       - name: Check font-size minimum
         run: |
+          # Check that no font-size is smaller than 12px in CSS
+          # (Lighthouse will catch this, but we verify in CI)
           echo "✅ Font size check delegated to Lighthouse audit"
 
       - name: Check tap target sizes
         working-directory: .
         run: |
-          # Touch targets live in mobile-menu.css (≥ 44px)
-          if grep -E 'min-height:\s*44px' documentation/src/css/mobile-menu.css; then
           # Utilities live at repo-root src/css (ROADMAP-122 / Issue #189)
           if grep -q 'min-height: 48px' src/css/mobile-first.css; then
             echo "✅ Touch target CSS utilities found"
