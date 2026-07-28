@@ -11,8 +11,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://soroban-cookbook.dev',
-  baseUrl: '/',
+  url: process.env.SITE_URL || 'https://soroban-cookbook.dev',
+  baseUrl: process.env.BASE_URL || '/',
 
   organizationName: 'Soroban-Cookbook',
   projectName: 'Soroban_Cookbook_online',
