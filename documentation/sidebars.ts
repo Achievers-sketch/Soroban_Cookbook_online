@@ -97,6 +97,13 @@ const sidebars: SidebarsConfig = {
         'security/code-audit',
       ],
     },
+    {
+      type: 'category',
+      label: 'Planning',
+      items: [
+        'planning/ab-testing',
+      ],
+    },
   ],
 };
 

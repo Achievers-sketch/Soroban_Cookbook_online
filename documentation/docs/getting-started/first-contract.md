@@ -1,4 +1,5 @@
 ---
+time: 15
 sidebar_position: 3
 title: Your First Contract
 description: Create, build, and test your first Soroban smart contract from scratch — a beginner-friendly introduction to contract development.

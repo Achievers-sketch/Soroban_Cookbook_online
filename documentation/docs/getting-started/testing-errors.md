@@ -1,4 +1,5 @@
 ---
+time: 20
 title: Testing Error Scenarios
 description: Guide to testing error handling in Soroban contracts
 sidebar_position: 6

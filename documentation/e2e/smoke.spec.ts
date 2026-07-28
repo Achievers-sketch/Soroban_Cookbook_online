@@ -80,5 +80,14 @@ test.describe('Accessibility – basic', () => {
     for (const { src, alt } of images) {
       expect(alt, `Image ${src || '(no src)'} is missing alt text`).not.toBeNull();
     }
+
+    // Single evaluate avoids flaky per-image locator timeouts on lazy/detached nodes.
+    const missingAlts = await page.evaluate(() =>
+      Array.from(document.querySelectorAll('img'))
+        .filter((img) => !img.hasAttribute('alt'))
+        .map((img) => img.getAttribute('src') || img.outerHTML.slice(0, 120)),
+    );
+
+    expect(missingAlts, `Images missing alt: ${missingAlts.join(', ')}`).toEqual([]);
   });
 });

@@ -5,6 +5,7 @@ import Stats from '@site/src/components/Stats';
 import QuickStartSection from '@site/src/components/QuickStartSection';
 import NewsletterSignup from '@site/src/components/NewsletterSignup';
 import Testimonials from '@site/src/components/UI/Testimonials';
+import { trackCtaClick } from '@site/src/utils/analytics';
 import styles from './index.module.css';
 import React from 'react';
 
@@ -146,11 +147,17 @@ export default function Home() {
           </p>
 
           <div className={styles.buttons}>
-            <Link to="/docs" className={styles.primaryBtn}>
+            <Link
+              to="/docs"
+              className={styles.primaryBtn}
+              onClick={() => trackCtaClick('hero_get_started', '/docs')}>
               Get Started
             </Link>
 
-            <Link to="/docs/patterns/overview" className={styles.secondaryBtn}>
+            <Link
+              to="/docs/patterns/overview"
+              className={styles.secondaryBtn}
+              onClick={() => trackCtaClick('hero_view_patterns', '/docs/patterns/overview')}>
               View Patterns
             </Link>
           </div>

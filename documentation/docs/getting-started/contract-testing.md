@@ -1,4 +1,5 @@
 ---
+time: 25
 sidebar_position: 5
 title: Contract Testing Guide
 description: Comprehensive guide to writing, structuring, and running tests for Soroban smart contracts. Learn unit testing patterns, helpers, mocking, and best practices.

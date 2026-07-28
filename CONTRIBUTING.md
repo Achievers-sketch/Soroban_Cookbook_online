@@ -13,6 +13,12 @@ Thank you for your interest in contributing! To ensure a smooth experience for b
 
 ---
 
+### 📊 For Docs Maintainers
+- **[Analytics Dashboard](ANALYTICS_DASHBOARD.md)** - Key metrics, the weekly popular-pages report, and how to turn zero-result searches into documentation issues.
+- **[A/B Testing Plan](documentation/docs/planning/ab-testing.md)** - Required process and plan template before enabling any experiment.
+
+---
+
 ### Why the Guide?
 We want to enable you to submit high-quality PRs with minimal back-and-forth. The guide provides clear expectations, automated check commands, and standardized practices.
 

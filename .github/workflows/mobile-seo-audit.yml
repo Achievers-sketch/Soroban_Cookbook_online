@@ -33,7 +33,8 @@ jobs:
       - name: Serve & Audit with Lighthouse CI
         run: |
           npm install -g @lhci/cli@0.14.x
-          lhci autorun
+          # Prefer JSON config (staticDistDir) over lighthouserc.js server mode
+          lhci autorun --config=lighthouserc.json
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
@@ -49,6 +50,9 @@ jobs:
     name: Mobile-Friendly Verification
     runs-on: ubuntu-latest
     needs: mobile-seo-audit
+    defaults:
+      run:
+        working-directory: ./documentation
 
     steps:
       - name: Checkout
@@ -65,11 +69,15 @@ jobs:
 
       - name: Build documentation
         working-directory: ./documentation
+        run: bun install --frozen-lockfile
+
+      - name: Build documentation
         run: bun run build
 
       - name: Check viewport meta tag
         run: |
           if grep -r 'name="viewport"' documentation/build/; then
+          if grep -r 'name="viewport"' build/; then
             echo "✅ Viewport meta tag found"
           else
             echo "❌ Viewport meta tag missing"
@@ -81,9 +89,12 @@ jobs:
           echo "✅ Font size check delegated to Lighthouse audit"
 
       - name: Check tap target sizes
+        working-directory: .
         run: |
           # Touch targets live in mobile-menu.css (≥ 44px)
           if grep -E 'min-height:\s*44px' documentation/src/css/mobile-menu.css; then
+          # Utilities live at repo-root src/css (ROADMAP-122 / Issue #189)
+          if grep -q 'min-height: 48px' src/css/mobile-first.css; then
             echo "✅ Touch target CSS utilities found"
           else
             echo "❌ Touch target CSS utilities missing"

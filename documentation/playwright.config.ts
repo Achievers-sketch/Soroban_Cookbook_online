@@ -29,6 +29,7 @@ export default defineConfig({
     command: 'bun run serve -- --port 3000 --host 127.0.0.1',
     url: 'http://127.0.0.1:3000',
     // CI workflow pre-serves the build; reuse that server instead of failing on port 3000.
+    // CI workflows pre-start `docusaurus serve` on :3000; always reuse when present.
     reuseExistingServer: true,
     timeout: 120_000,
   },
