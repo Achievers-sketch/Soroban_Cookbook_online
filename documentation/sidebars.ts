@@ -104,6 +104,13 @@ const sidebars: SidebarsConfig = {
         'planning/ab-testing',
       ],
     },
+    {
+      type: 'category',
+      label: 'Legal',
+      items: [
+        'legal/privacy',
+      ],
+    },
   ],
 };
 

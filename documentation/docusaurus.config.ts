@@ -379,6 +379,10 @@ const config: Config = {
               label: 'GitHub',
               href: 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online',
             },
+            {
+              label: 'Privacy Policy',
+              to: '/docs/legal/privacy',
+            },
           ],
         },
       ],

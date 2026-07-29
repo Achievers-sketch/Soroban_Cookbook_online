@@ -261,6 +261,10 @@ Implementation: [`src/utils/analyticsConsent.ts`](./documentation/src/utils/anal
 (route and outbound-click steps), all mounted from
 [`src/theme/Root.tsx`](./documentation/src/theme/Root.tsx).
 
+Full data-handling practices are documented in the
+[Privacy Policy](/docs/legal/privacy) (GDPR-compliant), linked from the consent
+banner and footer.
+
 ### Setup
 
 1. Create a GA4 property (**Admin → Data Streams → Web**) and copy its
