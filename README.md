@@ -6,7 +6,7 @@
 
 A user-friendly documentation website for the [Soroban Cookbook](https://github.com/Soroban-Cookbook/Soroban-Cookbook-), transforming how developers learn Soroban smart contract development through interactive examples and progressive learning paths.
 
-## 🌟 Features
+## Features
 
 - 📚 **Progressive Learning Paths** - Beginner to Advanced tutorials
 - 🎨 **Beautiful UI** - Modern design with dark mode support

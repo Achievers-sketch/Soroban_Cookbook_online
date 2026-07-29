@@ -1,13 +1,11 @@
 ---
-title: Buttons
+title: Button Component
 description: Soroban Cookbook button system with variants, sizes, states, icon support, and accessibility guidance.
 ---
 
 import React from 'react';
 import Button from '@site/src/components/UI/Button';
 import ButtonGroup from '@site/src/components/UI/Button/ButtonGroup';
-
-# Button Component
 
 This button system includes:
 
@@ -31,7 +29,7 @@ export default function Example() {
 
 ## Variants
 
-<div style={{display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem'}}>
+<div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
   <Button variant="primary">Primary</Button>
   <Button variant="secondary">Secondary</Button>
   <Button variant="tertiary">Tertiary</Button>
@@ -41,7 +39,14 @@ export default function Example() {
 
 ## Sizes
 
-<div style={{display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap', marginBottom: '1rem'}}>
+<div
+  style={{
+    display: 'flex',
+    gap: '0.75rem',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    marginBottom: '1rem',
+  }}>
   <Button size="sm">Small</Button>
   <Button size="md">Medium</Button>
   <Button size="lg">Large</Button>
@@ -50,7 +55,7 @@ export default function Example() {
 
 ## States
 
-<div style={{display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem'}}>
+<div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
   <Button>Default</Button>
   <Button disabled>Disabled</Button>
   <Button loading>Loading</Button>
@@ -60,7 +65,7 @@ Use keyboard `Tab` navigation to verify visible focus states (`:focus-visible`).
 
 ## Icons
 
-<div style={{display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem'}}>
+<div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
   <Button iconLeft={<span aria-hidden="true">+</span>}>Create</Button>
   <Button iconRight={<span aria-hidden="true">→</span>}>Continue</Button>
   <Button iconOnly aria-label="Settings" iconLeft={<span aria-hidden="true">⚙</span>} />
@@ -89,3 +94,10 @@ Defined in `src/css/custom.css`:
 - Durations: `--sb-motion-duration-fast`, `--sb-motion-duration-normal`, `--sb-motion-duration-slow`
 - Easing: `--sb-motion-ease-standard`, `--sb-motion-ease-in`, `--sb-motion-ease-out`
 - Utilities: `.sb-transition-none`, `.sb-transition-fast`, `.sb-transition-normal`, `.sb-transition-slow`
+
+---
+
+## Related links
+
+- [Button System](/docs/design-system/buttons) — design tokens and variants
+- [Typography System](/docs/design-system/typography) — type scale for labels

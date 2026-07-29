@@ -1,11 +1,11 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Soroban Cookbook',
   tagline: 'A comprehensive guide to building smart contracts on Stellar with Soroban',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/logo.svg',
 
   future: {
     v4: true,
@@ -15,11 +15,21 @@ const config: Config = {
   baseUrl: '/',
 
   organizationName: 'Soroban-Cookbook',
-  projectName: 'Soroban-Cookbook-',
+  projectName: 'Soroban_Cookbook_online',
 
   customFields: {
-    /** POST endpoint accepting JSON `{ "email": string }`. Set via env at build time for real integrations. */
+    // POST endpoint accepting JSON `{ "email": string }`.
+    // Set via env at build time for real integrations.
     newsletterEndpoint: process.env.NEWSLETTER_ENDPOINT ?? '',
+    /** Soroban Cookbook Discord invite link. Set DISCORD_INVITE_URL at build time once the server is created. */
+    discordInviteUrl: process.env.DISCORD_INVITE_URL ?? '',
+    // Both are consent-gated — see ConsentBanner / src/utils/analytics.ts.
+    // Unset by default, so no analytics script ever loads until an operator
+    // opts in by setting the secret. See DEPLOYMENT.md → Analytics.
+    /** GA4 measurement ID (e.g. "G-XXXXXXX") for conversion funnel tracking. */
+    gaMeasurementId: process.env.GA_MEASUREMENT_ID ?? '',
+    /** Microsoft Clarity project ID for heatmaps/session replay. */
+    clarityProjectId: process.env.CLARITY_PROJECT_ID ?? '',
   },
 
   onBrokenLinks: 'throw',
@@ -39,11 +49,44 @@ const config: Config = {
 
   // Meta tags for theme color + social previews (see CONTRIBUTING — SEO & social metadata)
   headTags: [
+    // Content Security Policy
+    {
+      tagName: 'meta',
+      attributes: {
+        'http-equiv': 'Content-Security-Policy',
+        content: [
+          "default-src 'self'",
+          "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms",
+          "style-src 'self' 'unsafe-inline'",
+          "img-src 'self' data: https:",
+          "font-src 'self' data:",
+          "connect-src 'self' https:",
+          "frame-src 'none'",
+          "object-src 'none'",
+          "base-uri 'self'",
+          "form-action 'self' https:",
+        ].join('; '),
+      },
+    },
     {
       tagName: 'meta',
       attributes: {
         name: 'theme-color',
         content: '#1e1e2e',
+      },
+    },
+    // Content-Security-Policy fallback for hosts that cannot set custom HTTP
+    // response headers (e.g. GitHub Pages). Hosts that can set real headers
+    // (Vercel via vercel.json, Netlify/Cloudflare Pages via static/_headers)
+    // should rely on those instead — a header-based CSP also covers
+    // `frame-ancestors`, which browsers ignore when delivered via <meta>.
+    // See DEPLOYMENT.md → Security Headers for the full policy rationale.
+    {
+      tagName: 'meta',
+      attributes: {
+        'http-equiv': 'Content-Security-Policy',
+        content:
+          "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.dicebear.com; font-src 'self' data:; connect-src 'self' https:; form-action 'self' https:; object-src 'none'; base-uri 'self'",
       },
     },
     // Preload the Inter variable font (latin woff2) — critical for above-the-fold text.
@@ -133,6 +176,107 @@ const config: Config = {
         indexBlog: false,
       },
     ],
+    // ─── 301 Redirects ────────────────────────────────────────────────────────
+    // Maps old/removed paths → current canonical paths so bookmarks and
+    // external links continue to resolve after pages are renamed or moved.
+    // Add new entries here whenever a doc is renamed or relocated.
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          // website/ → documentation/ directory rename (legacy root paths)
+          {
+            from: '/docs/intro',
+            to: '/docs/concepts/introduction',
+          },
+          // Getting Started renames
+          {
+            from: '/docs/setup',
+            to: '/docs/getting-started/setup',
+          },
+          {
+            from: '/docs/getting-started/installation',
+            to: '/docs/getting-started/setup',
+          },
+          {
+            from: '/docs/getting-started/setup-macos',
+            to: '/docs/getting-started/setup',
+          },
+          {
+            from: '/docs/first-contract',
+            to: '/docs/getting-started/first-contract',
+          },
+          {
+            from: '/docs/getting-started/build',
+            to: '/docs/getting-started/building-and-compilation',
+          },
+          {
+            from: '/docs/getting-started/deploy',
+            to: '/docs/getting-started/deploy-testnet',
+          },
+          {
+            from: '/docs/getting-started/interaction',
+            to: '/docs/getting-started/contract-interaction',
+          },
+          // Concepts renames
+          {
+            from: '/docs/concepts',
+            to: '/docs/concepts/introduction',
+          },
+          {
+            from: '/docs/concepts/intro',
+            to: '/docs/concepts/introduction',
+          },
+          {
+            from: '/docs/concepts/gas',
+            to: '/docs/concepts/gas-and-resources',
+          },
+          {
+            from: '/docs/concepts/cross-contract',
+            to: '/docs/concepts/cross-contract-invocation',
+          },
+          // Patterns renames
+          {
+            from: '/docs/patterns',
+            to: '/docs/patterns/overview',
+          },
+          {
+            from: '/docs/patterns/types',
+            to: '/docs/patterns/custom-types',
+          },
+          {
+            from: '/docs/patterns/auth',
+            to: '/docs/patterns/authorization',
+          },
+          {
+            from: '/docs/patterns/upgrades',
+            to: '/docs/patterns/lifecycle-upgrades',
+          },
+          {
+            from: '/docs/patterns/optimization',
+            to: '/docs/patterns/optimization-playbook',
+          },
+          // Contributing renames
+          {
+            from: '/docs/contributing/guide',
+            to: '/docs/contributing',
+          },
+          {
+            from: '/docs/contributing/tested-example',
+            to: '/docs/contributing/add-tested-example',
+          },
+          // Legacy tutorial paths from initial Docusaurus scaffold
+          {
+            from: '/docs/tutorial-basics/create-a-document',
+            to: '/docs/getting-started/first-contract',
+          },
+          {
+            from: '/docs/tutorial-basics/deploy-your-site',
+            to: '/docs/getting-started/deploy-testnet',
+          },
+        ],
+      },
+    ],
   ],
 
   presets: [
@@ -142,12 +286,19 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/docs',
-          editUrl: 'https://github.com/Soroban-Cookbook/Soroban-Cookbook-/tree/main/documentation/',
+          editUrl:
+            'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/documentation/',
         },
         blog: false,
         theme: {
-          customCss: ['./src/css/fonts.css', './src/css/custom.css', './src/css/breakpoints.css', './src/css/design-tokens.css','./src/css/design-tokens.css',
-            './src/css/search-experience.css',]
+          customCss: [
+            './src/css/fonts.css',
+            './src/css/design-tokens.css',
+            './src/css/breakpoints.css',
+            './src/css/badges-tags.css',
+            './src/css/custom.css',
+            './src/css/search-experience.css',
+          ],
         },
       } satisfies Preset.Options,
     ],
@@ -173,7 +324,12 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          href: 'https://github.com/Soroban-Cookbook/Soroban-Cookbook-',
+          href: process.env.DISCORD_INVITE_URL ?? 'https://discord.gg/YNBu3jKEF',
+          label: 'Discord',
+          position: 'right',
+        },
+        {
+          href: 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online',
           label: 'GitHub',
           position: 'right',
         },
@@ -195,12 +351,20 @@ const config: Config = {
           title: 'Community',
           items: [
             {
+              label: 'Soroban Cookbook Discord',
+              href: process.env.DISCORD_INVITE_URL ?? 'https://discord.gg/YNBu3jKEF',
+            },
+            {
               label: 'Stellar Discord',
-              href: 'https://discord.gg/stellardev',
+              href: 'https://discord.gg/YNBu3jKEF',
             },
             {
               label: 'Stack Overflow',
               href: 'https://stackoverflow.com/questions/tagged/soroban',
+            },
+            {
+              label: 'Code of Conduct',
+              href: 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/CODE_OF_CONDUCT.md',
             },
           ],
         },
@@ -209,11 +373,11 @@ const config: Config = {
           items: [
             {
               label: 'Soroban Docs',
-              href: 'https://developers.stellar.org/docs/smart-contracts',
+              href: 'https://developers.stellar.org/docs/build/smart-contracts',
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/Soroban-Cookbook/Soroban-Cookbook-',
+              href: 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online',
             },
           ],
         },

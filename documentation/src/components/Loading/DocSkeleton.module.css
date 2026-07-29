@@ -1,0 +1,17 @@
+.container {
+  padding: 2rem;
+  border: 2px dashed #ccc;
+  margin-top: 1rem;
+}
+
+.previewLabel {
+  font-weight: bold;
+  color: red;
+}
+
+.skeletonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
