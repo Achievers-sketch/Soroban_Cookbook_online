@@ -16,6 +16,7 @@
   /* Typography — wire Infima to our design-token font stacks */
   --ifm-font-family-base: var(--font-family-sans);
   --ifm-font-family-monospace: var(--font-family-mono);
+  --ifm-font-size-base: var(--font-size-base);
 
   /* Primary Colors */
   --ifm-color-primary: #2e8555;
