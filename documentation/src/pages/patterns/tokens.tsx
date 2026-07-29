@@ -5,7 +5,6 @@ import styles from '../index.module.css';
 import React from 'react';
 import { tokenPatterns } from '@site/src/fixtures/patterns';
 
-
 export default function TokensPage() {
   return (
     <Layout

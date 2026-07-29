@@ -5,7 +5,6 @@ import styles from '../index.module.css';
 import React from 'react';
 import { governancePatterns } from '@site/src/fixtures/patterns';
 
-
 export default function GovernancePage() {
   return (
     <Layout

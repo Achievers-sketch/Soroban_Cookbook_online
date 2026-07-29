@@ -69,7 +69,9 @@
   background: #1e1e1e;
   color: #d4d4d4;
   overflow: hidden;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
 }
 
 .testOutputHeader {
@@ -92,9 +94,9 @@
 }
 
 .textGreen {
-  color: #4CAF50;
+  color: #4caf50;
 }
 
 .textRed {
-  color: #F44336;
+  color: #f44336;
 }

@@ -43,7 +43,10 @@ export default function PlaygroundPage(): React.ReactElement {
   const editorRef = useRef<MonacoEditorLike | null>(null);
   const [status, setStatus] = useState('Loading Monaco editor…');
   const [isTesting, setIsTesting] = useState(false);
-  const [testOutput, setTestOutput] = useState<{status: 'idle' | 'running' | 'success' | 'error', message: React.ReactNode}>({ status: 'idle', message: '' });
+  const [testOutput, setTestOutput] = useState<{
+    status: 'idle' | 'running' | 'success' | 'error';
+    message: React.ReactNode;
+  }>({ status: 'idle', message: '' });
 
   const runMockTests = () => {
     if (!editorRef.current) return;
@@ -53,38 +56,49 @@ export default function PlaygroundPage(): React.ReactElement {
     setTimeout(() => {
       const code = editorRef.current?.getValue() || '';
       const isPass = code.includes('#[contractimpl]');
-      
+
       setIsTesting(false);
       if (isPass) {
         setTestOutput({
           status: 'success',
           message: (
             <>
-              running 1 test<br />
-              test test::test_hello ... <span className={styles.textGreen}>ok</span><br />
+              running 1 test
               <br />
-              test result: <span className={styles.textGreen}>ok</span>. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+              test test::test_hello ... <span className={styles.textGreen}>ok</span>
+              <br />
+              <br />
+              test result: <span className={styles.textGreen}>ok</span>. 1 passed; 0 failed; 0
+              ignored; 0 measured; 0 filtered out
             </>
-          )
+          ),
         });
       } else {
         setTestOutput({
           status: 'error',
           message: (
             <>
-              running 1 test<br />
-              test test::test_hello ... <span className={styles.textRed}>FAILED</span><br />
+              running 1 test
               <br />
-              failures:<br />
-              ---- test::test_hello stdout ----<br />
-              thread 'test::test_hello' panicked at 'assertion failed'<br />
+              test test::test_hello ... <span className={styles.textRed}>FAILED</span>
               <br />
-              failures:<br />
-              &nbsp;&nbsp;&nbsp;&nbsp;test::test_hello<br />
               <br />
-              test result: <span className={styles.textRed}>FAILED</span>. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+              failures:
+              <br />
+              ---- test::test_hello stdout ----
+              <br />
+              thread 'test::test_hello' panicked at 'assertion failed'
+              <br />
+              <br />
+              failures:
+              <br />
+              &nbsp;&nbsp;&nbsp;&nbsp;test::test_hello
+              <br />
+              <br />
+              test result: <span className={styles.textRed}>FAILED</span>. 0 passed; 1 failed; 0
+              ignored; 0 measured; 0 filtered out
             </>
-          )
+          ),
         });
       }
     }, 1500);
@@ -180,9 +194,7 @@ export default function PlaygroundPage(): React.ReactElement {
               {testOutput.status === 'error' && <span className={styles.textRed}>Failed</span>}
               {testOutput.status === 'running' && <span>Running...</span>}
             </div>
-            <div className={styles.testOutputBody}>
-              {testOutput.message}
-            </div>
+            <div className={styles.testOutputBody}>{testOutput.message}</div>
           </div>
         )}
       </main>

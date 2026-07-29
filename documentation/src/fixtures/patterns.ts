@@ -4,7 +4,8 @@ export const samplePatterns: Pattern[] = [
   {
     id: '1',
     contractName: 'hello_world',
-    description: 'A minimal contract demonstrating persistent storage and basic contract structure.',
+    description:
+      'A minimal contract demonstrating persistent storage and basic contract structure.',
     tag: '#storage',
     category: 'storage',
     difficulty: 'beginner',
@@ -16,7 +17,8 @@ export const samplePatterns: Pattern[] = [
   {
     id: '2',
     contractName: 'token_contract',
-    description: 'Implementation of a fungible token with mint, transfer, and balance functionality.',
+    description:
+      'Implementation of a fungible token with mint, transfer, and balance functionality.',
     tag: '#tokens',
     category: 'tokens',
     difficulty: 'intermediate',
@@ -154,7 +156,8 @@ export const tokenPatterns: Pattern[] = [
   {
     id: '1',
     contractName: 'token_contract',
-    description: 'Implementation of a fungible token with mint, transfer, and balance functionality.',
+    description:
+      'Implementation of a fungible token with mint, transfer, and balance functionality.',
     tag: '#tokens',
     category: 'tokens',
     difficulty: 'intermediate',
