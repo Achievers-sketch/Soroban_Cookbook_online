@@ -6,6 +6,7 @@ import {
   EstimatedTime,
 } from '@site/src/components/PatternDoc';
 import CodeSnippet from '@site/src/components/CodeSnippet';
+import { Quiz } from '@site/src/components/Quiz';
 
 export default {
   ...MDXComponents,
@@ -14,4 +15,5 @@ export default {
   PatternCallout,
   EstimatedTime,
   CodeSnippet,
+  Quiz,
 };
