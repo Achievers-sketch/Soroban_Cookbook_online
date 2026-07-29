@@ -174,6 +174,8 @@ const config: Config = {
         indexDocs: true,
         indexPages: true,
         indexBlog: false,
+        searchResultLimits: 8,
+        searchResultContextMaxLength: 50,
       },
     ],
     // ─── 301 Redirects ────────────────────────────────────────────────────────
