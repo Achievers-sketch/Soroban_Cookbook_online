@@ -1,6 +1,6 @@
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
-import PatternPreview, { Pattern } from '@site/src/components/PatternPreview';
+import PatternPreview from '@site/src/components/PatternPreview';
 import styles from '../index.module.css';
 import React from 'react';
 import { governancePatterns } from '@site/src/fixtures/patterns';

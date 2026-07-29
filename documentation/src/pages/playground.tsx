@@ -87,7 +87,7 @@ export default function PlaygroundPage(): React.ReactElement {
               <br />
               ---- test::test_hello stdout ----
               <br />
-              thread 'test::test_hello' panicked at 'assertion failed'
+              thread &apos;test::test_hello&apos; panicked at &apos;assertion failed&apos;
               <br />
               <br />
               failures:

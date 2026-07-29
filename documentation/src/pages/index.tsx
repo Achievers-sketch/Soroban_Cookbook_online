@@ -1,5 +1,5 @@
 import Link from '@docusaurus/Link';
-import PatternPreview, { Pattern } from '@site/src/components/PatternPreview';
+import PatternPreview from '@site/src/components/PatternPreview';
 import Layout from '@theme/Layout';
 import Stats from '@site/src/components/Stats';
 import QuickStartSection from '@site/src/components/QuickStartSection';
