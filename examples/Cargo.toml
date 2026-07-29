@@ -6,5 +6,6 @@ members = [
     "simple-voting",
     "simple-dao",
     "upgradeable",
+    "multisig-wallet",
 ]
 resolver = "2"
