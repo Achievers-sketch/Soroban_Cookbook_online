@@ -13,6 +13,7 @@ import React, { useEffect, type ReactNode } from 'react';
 import ConsentBanner from '@site/src/components/ConsentBanner';
 import FunnelTracker from '@site/src/components/FunnelTracker';
 import SearchAnalytics from '@site/src/components/SearchAnalytics';
+import { ProgressProvider } from '@site/src/contexts/ProgressContext';
 
 interface RootProps {
   children: ReactNode;
@@ -29,11 +30,11 @@ export default function Root({ children }: RootProps): React.JSX.Element {
   }, []); // Run once on mount
 
   return (
-    <>
+    <ProgressProvider>
       {children}
       <FunnelTracker />
       <SearchAnalytics />
       <ConsentBanner />
-    </>
+    </ProgressProvider>
   );
 }

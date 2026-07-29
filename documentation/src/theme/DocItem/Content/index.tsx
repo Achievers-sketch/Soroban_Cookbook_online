@@ -8,12 +8,13 @@ import Content from '@theme-original/DocItem/Content';
 import { useDoc } from '@docusaurus/plugin-content-docs/client';
 import { EstimatedTime, parseEstimatedTime } from '@site/src/components/PatternDoc';
 import DocFeedback from '@site/src/components/DocFeedback';
+import ProgressToggleButton from '@site/src/components/ProgressToggleButton/ProgressToggleButton';
 import styles from './styles.module.css';
 
 type Props = React.ComponentProps<typeof Content>;
 
 export default function DocItemContentWrapper(props: Props): ReactNode {
-  const { frontMatter } = useDoc();
+  const { frontMatter, metadata } = useDoc();
   const rawTime = (frontMatter as { time?: string | number }).time;
   const label = parseEstimatedTime(rawTime);
 
@@ -25,6 +26,7 @@ export default function DocItemContentWrapper(props: Props): ReactNode {
         </div>
       ) : null}
       <Content {...props} />
+      <ProgressToggleButton path={metadata.permalink} />
       <DocFeedback />
     </>
   );
