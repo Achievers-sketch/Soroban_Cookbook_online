@@ -37,6 +37,7 @@ const sidebars: SidebarsConfig = {
         'concepts/events',
         'concepts/gas-and-resources',
         'concepts/cross-contract-invocation',
+        'concepts/randomness',
       ],
     },
     {
