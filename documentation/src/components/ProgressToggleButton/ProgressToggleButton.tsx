@@ -6,7 +6,9 @@ interface ProgressToggleButtonProps {
   path: string;
 }
 
-export default function ProgressToggleButton({ path }: ProgressToggleButtonProps): React.JSX.Element | null {
+export default function ProgressToggleButton({
+  path,
+}: ProgressToggleButtonProps): React.JSX.Element | null {
   const { isCompleted, toggleComplete } = useProgress();
   const completed = isCompleted(path);
 
@@ -17,8 +19,7 @@ export default function ProgressToggleButton({ path }: ProgressToggleButtonProps
         className={styles.button}
         data-completed={completed}
         onClick={() => toggleComplete(path)}
-        aria-pressed={completed}
-      >
+        aria-pressed={completed}>
         {completed ? (
           <>
             <span aria-hidden="true">✅</span> Marked as Completed

@@ -86,7 +86,7 @@ Monitoring your contracts post-deployment is crucial. Use network explorers to t
 |------|-------------|----------|
 | [Stellar Expert](https://stellar.expert/) | A comprehensive block explorer and analytics platform for Stellar and Soroban. | Tracking transaction status and contract balances. |
 | [Soroban Explorer](https://soroban.stellar.org/) | Official block explorer tailored specifically for smart contract deployments and invocations. | Viewing contract interactions and deployed code. |
-| [Stellar RPC](https://developers.stellar.org/docs/data/rpc/api-reference) | Query network data programmatically via standard RPC endpoints. | Building dApp frontends and automated monitoring. |
+| [Stellar RPC](https://developers.stellar.org/docs/data/rpc/api-reference) | Query network data programmatically via standard RPC endpoints. | Building dApp front-ends and automated monitoring. |
 
 ## Quick Recommendations Table
 

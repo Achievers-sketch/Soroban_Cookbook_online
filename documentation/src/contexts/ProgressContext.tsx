@@ -38,13 +38,13 @@ export function ProgressProvider({ children }: { children: ReactNode }): React.J
       } else {
         next.add(path);
       }
-      
+
       try {
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(next)));
       } catch {
         // Ignore storage errors
       }
-      
+
       return next;
     });
   };
@@ -58,11 +58,7 @@ export function ProgressProvider({ children }: { children: ReactNode }): React.J
     isCompleted: isMounted ? isCompleted : () => false,
   };
 
-  return (
-    <ProgressContext.Provider value={value}>
-      {children}
-    </ProgressContext.Provider>
-  );
+  return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;
 }
 
 export function useProgress(): ProgressContextType {

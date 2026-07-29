@@ -23,13 +23,13 @@
   background-color: var(--ifm-color-emphasis-200);
 }
 
-.button[data-completed="true"] {
+.button[data-completed='true'] {
   background-color: var(--ifm-color-success-contrast-background);
   border-color: var(--ifm-color-success);
   color: var(--ifm-color-success-dark);
 }
 
-.button[data-completed="true"]:hover {
+.button[data-completed='true']:hover {
   background-color: var(--ifm-color-success-contrast-background);
   opacity: 0.9;
 }
