@@ -21,6 +21,7 @@ type MonacoLike = {
 type MonacoEditorLike = {
   dispose: () => void;
   setValue: (value: string) => void;
+  getValue: () => string;
 };
 
 const TEMPLATE = `#![no_std]
@@ -41,6 +42,53 @@ export default function PlaygroundPage(): React.ReactElement {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const editorRef = useRef<MonacoEditorLike | null>(null);
   const [status, setStatus] = useState('Loading Monaco editor…');
+  const [isTesting, setIsTesting] = useState(false);
+  const [testOutput, setTestOutput] = useState<{status: 'idle' | 'running' | 'success' | 'error', message: React.ReactNode}>({ status: 'idle', message: '' });
+
+  const runMockTests = () => {
+    if (!editorRef.current) return;
+    setIsTesting(true);
+    setTestOutput({ status: 'running', message: 'Compiling project...\nRunning 1 test...' });
+
+    setTimeout(() => {
+      const code = editorRef.current?.getValue() || '';
+      const isPass = code.includes('#[contractimpl]');
+      
+      setIsTesting(false);
+      if (isPass) {
+        setTestOutput({
+          status: 'success',
+          message: (
+            <>
+              running 1 test<br />
+              test test::test_hello ... <span className={styles.textGreen}>ok</span><br />
+              <br />
+              test result: <span className={styles.textGreen}>ok</span>. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+            </>
+          )
+        });
+      } else {
+        setTestOutput({
+          status: 'error',
+          message: (
+            <>
+              running 1 test<br />
+              test test::test_hello ... <span className={styles.textRed}>FAILED</span><br />
+              <br />
+              failures:<br />
+              ---- test::test_hello stdout ----<br />
+              thread 'test::test_hello' panicked at 'assertion failed'<br />
+              <br />
+              failures:<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;test::test_hello<br />
+              <br />
+              test result: <span className={styles.textRed}>FAILED</span>. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+            </>
+          )
+        });
+      }
+    }, 1500);
+  };
 
   useEffect(() => {
     let disposed = false;
@@ -104,17 +152,39 @@ export default function PlaygroundPage(): React.ReactElement {
         </p>
         <div className={styles.toolbar}>
           <span className={styles.status}>{status}</span>
-          <button
-            className={styles.button}
-            onClick={() => {
-              editorRef.current?.setValue(TEMPLATE);
-            }}>
-            Reset Template
-          </button>
+          <div className={styles.buttonGroup}>
+            <button
+              className={styles.button}
+              onClick={() => {
+                editorRef.current?.setValue(TEMPLATE);
+                setTestOutput({ status: 'idle', message: '' });
+              }}>
+              Reset Template
+            </button>
+            <button
+              className={`${styles.button} ${styles.buttonPrimary}`}
+              disabled={isTesting || status !== 'Ready'}
+              onClick={runMockTests}>
+              {isTesting ? 'Running...' : 'Run Tests'}
+            </button>
+          </div>
         </div>
         <div className={styles.editorHost}>
           <div ref={hostRef} className={styles.editorInner} />
         </div>
+        {testOutput.status !== 'idle' && (
+          <div className={styles.testOutput}>
+            <div className={styles.testOutputHeader}>
+              <span>Terminal</span>
+              {testOutput.status === 'success' && <span className={styles.textGreen}>Success</span>}
+              {testOutput.status === 'error' && <span className={styles.textRed}>Failed</span>}
+              {testOutput.status === 'running' && <span>Running...</span>}
+            </div>
+            <div className={styles.testOutputBody}>
+              {testOutput.message}
+            </div>
+          </div>
+        )}
       </main>
     </Layout>
   );
