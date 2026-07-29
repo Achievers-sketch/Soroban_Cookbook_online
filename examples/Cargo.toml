@@ -15,6 +15,7 @@ members = [
     "staking",
     "timelock-vault",
     "token-transfer",
+    "token-vesting",
     "token-wrapper",
     "upgradeable",
 ]
