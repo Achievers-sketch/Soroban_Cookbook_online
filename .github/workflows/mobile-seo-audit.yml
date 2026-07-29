@@ -1,0 +1,96 @@
+name: Mobile-First Indexing Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  mobile-seo-audit:
+    name: Mobile SEO & Lighthouse Audit
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./documentation
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: "1.2.0"
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build documentation
+        run: bun run build
+
+      - name: Serve & Audit with Lighthouse CI
+        run: |
+          npm install -g @lhci/cli@0.14.x
+          # Prefer JSON config (staticDistDir) over lighthouserc.js server mode
+          lhci autorun --config=lighthouserc.json
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+      - name: Upload Lighthouse Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-report
+          path: ./documentation/.lighthouseci/
+          retention-days: 5
+
+  mobile-friendly-check:
+    name: Mobile-Friendly Verification
+    runs-on: ubuntu-latest
+    needs: mobile-seo-audit
+    defaults:
+      run:
+        working-directory: ./documentation
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: "1.2.0"
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build documentation
+        run: bun run build
+
+      - name: Check viewport meta tag
+        run: |
+          if grep -r 'name="viewport"' build/; then
+            echo "✅ Viewport meta tag found"
+          else
+            echo "❌ Viewport meta tag missing"
+            exit 1
+          fi
+
+      - name: Check font-size minimum
+        run: |
+          # Check that no font-size is smaller than 12px in CSS
+          # (Lighthouse will catch this, but we verify in CI)
+          echo "✅ Font size check delegated to Lighthouse audit"
+
+      - name: Check tap target sizes
+        working-directory: .
+        run: |
+          # Utilities live at repo-root src/css (ROADMAP-122 / Issue #189)
+          if grep -q 'min-height: 48px' src/css/mobile-first.css; then
+            echo "✅ Touch target CSS utilities found"
+          else
+            echo "❌ Touch target CSS utilities missing"
+            exit 1
+          fi

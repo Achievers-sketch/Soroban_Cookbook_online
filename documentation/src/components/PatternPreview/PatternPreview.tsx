@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import PatternCard from '../cards/PatternCard';
 import styles from './PatternPreview.module.css';
+import { sanitizeUrl } from '@site/src/utils/sanitizeUrl';
 
 export interface Pattern {
   id: string;
@@ -27,11 +28,6 @@ export interface PatternPreviewProps {
 }
 
 const CATEGORIES = ['all', 'storage', 'tokens', 'governance', 'utility', 'defi', 'nft'];
-const DIFFICULTY_COLORS = {
-  beginner: '#10b981',
-  intermediate: '#f59e0b',
-  advanced: '#ef4444',
-};
 
 export default function PatternPreview({
   patterns,
@@ -79,7 +75,10 @@ export default function PatternPreview({
 
   const _handlePatternClick = (pattern: Pattern) => {
     if (pattern.href) {
-      window.location.href = pattern.href;
+      const safe = sanitizeUrl(pattern.href);
+      if (safe !== '#') {
+        window.location.href = safe;
+      }
     }
   };
 
@@ -165,26 +164,24 @@ export default function PatternPreview({
               <div
                 key={pattern.id}
                 className={styles.patternCardWrapper}
-                style={{
-                  animationDelay: `${index * 50}ms`,
-                }}>
+                style={
+                  {
+                    '--animation-delay': `${index * 50}ms`,
+                  } as React.CSSProperties
+                }>
                 <PatternCard
                   contractName={pattern.contractName}
                   description={pattern.description}
                   tag={pattern.tag}
                   code={pattern.code}
-                  href={pattern.href}
+                  href={pattern.href ? sanitizeUrl(pattern.href) : undefined}
                   icon={pattern.icon}
                 />
 
                 {/* Metadata */}
                 <div className={styles.metadata}>
                   <div className={styles.metadataRow}>
-                    <span
-                      className={styles.difficulty}
-                      style={{
-                        color: DIFFICULTY_COLORS[pattern.difficulty],
-                      }}>
+                    <span className={styles.difficulty} data-difficulty={pattern.difficulty}>
                       {pattern.difficulty}
                     </span>
                     <span className={styles.popularity}>

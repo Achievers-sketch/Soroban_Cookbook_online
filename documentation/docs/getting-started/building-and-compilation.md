@@ -1,10 +1,9 @@
 ---
+time: 20
 title: Building and Compilation
 description: A complete guide to compiling Soroban smart contracts — from source to WebAssembly artifact, including flags, optimization strategies, and common build error remediation.
 sidebar_position: 4
 ---
-
-# Building and Compilation
 
 This guide walks through the complete compilation pipeline for Soroban contracts: from Rust source code to a deployable WebAssembly (WASM) artifact. You will learn how each build step works, how to control build flags for debug versus release output, and how to diagnose common compilation errors.
 
@@ -215,16 +214,16 @@ Functions:
 
 If your contract is larger than expected, try these techniques in order:
 
-| Technique | How |
-|---|---|
-| `opt-level = "z"` | Set in `[profile.release]` |
-| `lto = true` | Set in `[profile.release]` |
-| `codegen-units = 1` | Set in `[profile.release]` |
-| `strip = "symbols"` | Set in `[profile.release]` |
-| `panic = "abort"` | Removes formatting from panics |
-| Remove unused dependencies | Audit `Cargo.toml` with `cargo tree` |
-| Minimise `std` / use `#![no_std]` | Reduces runtime overhead |
-| Run `stellar contract optimize` | Applies wasm-opt passes |
+| Technique                         | How                                  |
+| --------------------------------- | ------------------------------------ |
+| `opt-level = "z"`                 | Set in `[profile.release]`           |
+| `lto = true`                      | Set in `[profile.release]`           |
+| `codegen-units = 1`               | Set in `[profile.release]`           |
+| `strip = "symbols"`               | Set in `[profile.release]`           |
+| `panic = "abort"`                 | Removes formatting from panics       |
+| Remove unused dependencies        | Audit `Cargo.toml` with `cargo tree` |
+| Minimise `std` / use `#![no_std]` | Reduces runtime overhead             |
+| Run `stellar contract optimize`   | Applies wasm-opt passes              |
 
 ## Common build errors and remediation
 
@@ -378,14 +377,15 @@ stellar contract deploy \
 
 ## Next steps
 
-- [Deploy to Testnet](./deploy-testnet.md) — put your compiled contract on the network
-- [Contract Interaction](./contract-interaction.md) — invoke functions on a deployed contract
-- [Gas and Resource Management](../concepts/gas-and-resources.md) — understand and optimise on-chain costs
-- [Optimization Playbook](../patterns/optimization-playbook.mdx) — advanced size and performance patterns
+- [Local Testing and Simulation](/docs/getting-started/local-testing-and-simulation) — test before deploying
+- [Deploy to Testnet](/docs/getting-started/deploy-testnet) — put your compiled contract on the network
+- [Contract Interaction](/docs/getting-started/contract-interaction) — invoke functions on a deployed contract
+- [Gas and Resource Management](/docs/concepts/gas-and-resources) — understand and optimise on-chain costs
+- [Optimization Playbook](/docs/patterns/optimization-playbook) — advanced size and performance patterns
 
 ## Additional resources
 
-- [Soroban CLI reference](https://developers.stellar.org/docs/smart-contracts/soroban-cli)
+- [Soroban CLI reference](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup#install-the-stellar-cli)
 - [Cargo profiles](https://doc.rust-lang.org/cargo/reference/profiles.html)
 - [wasm-opt — Binaryen](https://github.com/WebAssembly/binaryen)
-- [Soroban SDK on crates.io](https://crates.io/crates/soroban-sdk)
+- [Soroban SDK on docs.rs](https://docs.rs/soroban-sdk/latest)

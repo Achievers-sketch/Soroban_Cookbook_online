@@ -1,11 +1,10 @@
 ---
+time: 25
 sidebar_position: 5.5
 title: Local Testing and Simulation
 description: Test and simulate your Soroban contracts locally before deploying to testnet. Covers sandbox invocation, unit testing, state inspection, and iterative development workflows.
 image: /img/soroban-social-card.png
 ---
-
-# Local Testing and Simulation
 
 Test your Soroban contracts in a local sandbox environment before deploying to testnet. This guide covers the complete local development workflow — from unit tests and CLI sandbox invocation to state inspection and debugging loops.
 
@@ -117,6 +116,7 @@ stellar contract invoke \
 ```
 
 Expected output:
+
 ```
 1
 ```
@@ -125,13 +125,13 @@ Each `--local` invocation starts with a fresh sandbox. State is not persisted be
 
 ### Sandbox vs Testnet Invocation
 
-| Aspect | `--local` sandbox | `--network testnet` |
-|---|---|---|
-| Network required | No | Yes |
-| Fees charged | No | Yes (testnet XLM) |
-| State persists | Per invocation | Indefinitely |
-| Speed | Instant | ~3-5 seconds per ledger |
-| Ideal for | Iterative development | Final validation |
+| Aspect           | `--local` sandbox     | `--network testnet`     |
+| ---------------- | --------------------- | ----------------------- |
+| Network required | No                    | Yes                     |
+| Fees charged     | No                    | Yes (testnet XLM)       |
+| State persists   | Per invocation        | Indefinitely            |
+| Speed            | Instant               | ~3-5 seconds per ledger |
+| Ideal for        | Iterative development | Final validation        |
 
 ### Multi-step Local Simulation
 
@@ -166,6 +166,7 @@ stellar contract inspect \
 ```
 
 Expected output:
+
 ```
 Functions:
   increment() -> u32
@@ -570,6 +571,7 @@ cargo test
 ```
 
 Expected output:
+
 ```
 running 4 tests
 test tests::test_events ... ok
@@ -646,14 +648,14 @@ stellar contract invoke --wasm ... --local -- increment  # sandbox check
 
 Once local tests pass consistently, the transition to testnet is straightforward. The main differences are:
 
-| Local | Testnet |
-|---|---|
-| `Env::default()` sandbox | Live Stellar testnet |
-| `--local` flag | `--network testnet --source <account>` |
-| Zero fees | Testnet XLM required |
-| No account needed | Funded account required |
-| Instant execution | ~3-5 second ledger closes |
-| Isolated per run | Persistent state |
+| Local                    | Testnet                                |
+| ------------------------ | -------------------------------------- |
+| `Env::default()` sandbox | Live Stellar testnet                   |
+| `--local` flag           | `--network testnet --source <account>` |
+| Zero fees                | Testnet XLM required                   |
+| No account needed        | Funded account required                |
+| Instant execution        | ~3-5 second ledger closes              |
+| Isolated per run         | Persistent state                       |
 
 ### Progression Checklist
 
@@ -674,7 +676,7 @@ When you are ready, proceed to:
 ## Additional Resources
 
 - [Soroban SDK Testutils](https://docs.rs/soroban-sdk/latest/soroban_sdk/testutils/index.html)
-- [Soroban CLI Reference](https://developers.stellar.org/docs/smart-contracts/soroban-cli)
+- [Soroban CLI Reference](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup#install-the-stellar-cli)
 - [Rust Testing Documentation](https://doc.rust-lang.org/book/ch11-00-testing.html)
 - [Debugging Guide](./debugging.md)
 - [Testing Error Scenarios](./testing-errors.md)

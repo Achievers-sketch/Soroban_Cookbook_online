@@ -17,7 +17,7 @@ const recoveryLinks = [
     description: 'Explore production-ready contract patterns',
   },
   {
-    href: 'https://github.com/Soroban-Cookbook/Soroban-Cookbook-',
+    href: 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online',
     icon: '⭐',
     label: 'GitHub',
     description: 'View source and contribute',

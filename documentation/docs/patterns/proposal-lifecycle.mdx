@@ -1,4 +1,5 @@
 ---
+time: 25
 sidebar_position: 7
 title: Proposal Lifecycle (DAO State Machine)
 description: Model a DAO proposal as an explicit state machine — Pending → Active → Succeeded/Defeated → Executed.
@@ -44,7 +45,7 @@ Encode every invalid state as a compile-time impossibility or a guarded `assert!
 <Tabs>
   <TabItem value="contract" label="Contract" default>
 
-```rust
+```rust illustrative
 #![no_std]
 use soroban_sdk::{contract, contractimpl, contracttype, Env};
 
@@ -128,7 +129,7 @@ impl SimpleDao {
   </TabItem>
   <TabItem value="tests" label="Tests">
 
-```rust
+```rust illustrative
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -251,6 +252,7 @@ Add `require_auth()` guards on every privileged transition before deploying to m
 <PatternSection id="related" title="Related patterns">
 
 - [Authorization & Access Control](/docs/patterns/authorization) — guard transitions with `require_auth`
+- [Governance Security](/docs/security/governance) — voting and timelock hardening
 - [Lifecycle & Upgrades](/docs/patterns/lifecycle-upgrades) — contract upgrade patterns
 - [Pattern library overview](/docs/patterns/overview)
 
