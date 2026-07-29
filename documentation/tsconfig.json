@@ -5,5 +5,12 @@
     "jsx": "react",
     "baseUrl": "."
   },
-  "exclude": [".docusaurus", "build"]
+  "exclude": [
+    ".docusaurus",
+    "build",
+    "e2e",
+    "node_modules",
+    "playwright.config.ts",
+    "**/__tests__/**"
+  ]
 }

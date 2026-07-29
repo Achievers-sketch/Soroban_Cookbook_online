@@ -1,0 +1,21 @@
+[workspace]
+members = [
+    "access-control",
+    "authorization",
+    "constant-product-amm",
+    "contract-factory",
+    "counter",
+    "emergency-stop",
+    "error-handling",
+    "hello-world",
+    "htlc-swap",
+    "oracle-consumer",
+    "simple-dao",
+    "simple-voting",
+    "staking",
+    "timelock-vault",
+    "token-transfer",
+    "token-wrapper",
+    "upgradeable",
+]
+resolver = "2"

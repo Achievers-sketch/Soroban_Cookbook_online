@@ -1,4 +1,5 @@
 ---
+time: 10
 sidebar_position: 2
 title: Hello World Storage
 description: Minimal Soroban contract with instance storage — pattern template example.
@@ -39,11 +40,15 @@ Use this pattern to verify tooling, ledger integration, and storage before layer
 
 </PatternCallout>
 
-<Tabs>
-  <TabItem value="contract" label="Contract" default>
-
-```rust
-#![no_std]
+<CodeSnippet
+  collapseAt={12}
+  tabs={[
+    {
+      label: 'Contract',
+      fileName: 'hello-world/src/lib.rs',
+      language: 'rust',
+      highlightLines: [1, 7, 8],
+      code: `#![no_std]
 use soroban_sdk::{contract, contractimpl, Env, String};
 
 #[contract]
@@ -56,14 +61,14 @@ impl HelloWorld {
             String::from_str(&env, "Hello, Soroban!"),
         )
     }
-}
-```
-
-  </TabItem>
-  <TabItem value="test" label="Test">
-
-```rust
-use soroban_sdk::{testutils::Storage, Env, String};
+}`,
+    },
+    {
+      label: 'Test',
+      fileName: 'hello-world/src/test.rs',
+      language: 'rust',
+      highlightLines: [1, 5, 7],
+      code: `use soroban_sdk::{testutils::Storage, Env, String};
 
 #[test]
 fn hello_default() {
@@ -71,11 +76,10 @@ fn hello_default() {
     let contract_id = env.register(HelloWorld, ());
     let client = HelloWorldClient::new(&env, &contract_id);
     assert_eq!(client.hello(), String::from_str(&env, "Hello, Soroban!"));
-}
-```
-
-  </TabItem>
-</Tabs>
+}`,
+    },
+  ]}
+/>
 
 <PatternCallout variant="info" title="Code with Comments">
 

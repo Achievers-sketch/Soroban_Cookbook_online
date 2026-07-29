@@ -18,38 +18,93 @@ Browse battle-tested contract patterns for various use cases.
 
 ### [Hello World Storage](/docs/patterns/hello-world)
 
-**Difficulty**: Beginner | **Category**: Storage | **Status**: Stable
+<span class="sb-badge sb-badge--beginner">Beginner</span> <span class="sb-tag sb-tag--storage">Storage</span> <span class="sb-badge sb-badge--stable">Stable</span>
 
 Minimal Soroban contract demonstrating instance storage. Perfect starting point for understanding contract structure and basic storage operations.
 
+### [Basic Token Implementation](/docs/patterns/basic-token)
+
+<span class="sb-badge sb-badge--beginner">Beginner</span> <span class="sb-tag sb-tag--token">Token</span> <span class="sb-badge sb-badge--stable">Stable</span>
+
+Complete token contract with mint, transfer, and balance functions. Learn core token mechanics and authorization patterns before advancing to standardized interfaces like SAC.
+
+### [Error Handling](/docs/patterns/error-handling)
+
+**Difficulty**: Intermediate | **Category**: Architecture | **Status**: Stable
+
+Error taxonomy, custom error patterns, error propagation strategies, and user-facing clarity recommendations for robust contract behavior.
+
 ### [Error Recovery](/docs/patterns/error-recovery)
 
-**Difficulty**: Intermediate | **Category**: Error Handling | **Status**: Stable
+<span class="sb-badge sb-badge--intermediate">Intermediate</span> <span class="sb-tag sb-tag--error-handling">Error Handling</span> <span class="sb-badge sb-badge--stable">Stable</span>
 
 Comprehensive error handling patterns including Result types, fallback logic, graceful degradation, transaction rollback, and input validation. Essential for production-ready contracts.
 
+### [Staking with Reward Distribution](/docs/patterns/staking)
+
+<span class="sb-badge sb-badge--intermediate">Intermediate</span> <span class="sb-tag sb-tag--defi">DeFi</span> <span class="sb-badge sb-badge--stable">Stable</span>
+
+Token staking with pro-rata reward distribution over epochs. Demonstrates lazy reward computation, epoch-based accounting, and efficient O(1) per-user storage without batch operations.
+
 ## Pattern Categories
 
-### 🪙 Token Standards
+### 🪙 [Token Standards](/patterns/tokens)
+
+<span class="sb-tag sb-tag--token">Token</span>
+
+Explore fungible token standards, wrappers, and vault mechanisms for building robust token systems.
 
 - Basic token implementations
-- Token wrappers and vaults
-- Multi-token systems
+- Token wrappers and bridges
+- Multi-token vaults
 
-### 💰 DeFi Patterns
+### 💰 [DeFi Patterns](/patterns/defi)
 
-- Escrow contracts
+<span class="sb-tag sb-tag--defi">DeFi</span>
+
+Build decentralized finance applications with liquidity pools, staking, atomic swaps, and lending protocols.
+
+- Liquidity pools (AMM)
+- **Staking contracts** with epoch-based rewards
 - Atomic swaps
-- Liquidity pools
-- Timelock mechanisms
+- Lending and borrowing
 
-### 🗳️ Governance
+### 🗳️ [Governance](/patterns/governance)
 
-- Simple voting systems
+<span class="sb-tag sb-tag--governance">Governance</span>
+
+Implement decentralized governance with voting systems, DAOs, and proposal mechanisms.
+
+- Voting systems
 - DAO implementations
-- Proposal mechanisms
+- Proposal factories
+- Token delegation
+
+### 🎨 [NFT Patterns](/patterns/nft)
+
+<span class="sb-tag sb-tag--nft">NFT</span>
+
+Create and manage non-fungible tokens with marketplaces and collection systems.
+
+- NFT minting and transfers
+- Marketplace contracts
+- Collection management
+- Royalty mechanisms
+
+### 🔧 [Utility & Infrastructure](/patterns/utility)
+
+<span class="sb-badge sb-badge--intermediate">Intermediate</span>
+
+Build essential utility contracts for multi-signature wallets, escrow, and fund management.
+
+- Multi-signature wallets
+- Time-locked contracts
+- Escrow services
+- Registry systems
 
 ### ⚡ Advanced Patterns
+
+<span class="sb-badge sb-badge--advanced">Advanced</span>
 
 - Cross-contract calls
 - Upgradeable contracts
