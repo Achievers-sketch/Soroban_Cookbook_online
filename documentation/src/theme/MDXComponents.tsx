@@ -3,6 +3,13 @@ import { PatternCallout, PatternMeta, PatternSection } from '@site/src/component
 import { CodeSnippet } from '@site/src/components/CodeSnippet';
 import { PatternCustomizer } from '@site/src/components/PatternCustomizer';
 import { VideoPlayer } from '@site/src/components/VideoPlayer';
+import {
+  PatternCallout,
+  PatternMeta,
+  PatternSection,
+  EstimatedTime,
+} from '@site/src/components/PatternDoc';
+import CodeSnippet from '@site/src/components/CodeSnippet';
 
 export default {
   ...MDXComponents,
@@ -12,4 +19,6 @@ export default {
   CodeSnippet,
   PatternCustomizer,
   VideoPlayer,
+  EstimatedTime,
+  CodeSnippet,
 };

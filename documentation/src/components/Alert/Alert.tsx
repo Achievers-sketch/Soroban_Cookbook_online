@@ -52,7 +52,7 @@ export default function Alert({
         styles.alert,
         styles[`alert--${variant}`],
         styles[`alert--${display}`],
-        className
+        className,
       )}
       role="alert"
       aria-live={variant === 'error' ? 'assertive' : 'polite'}>

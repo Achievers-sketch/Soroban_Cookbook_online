@@ -8,7 +8,14 @@ Thank you for your interest in contributing! To ensure a smooth experience for b
 - **[Getting Started](https://soroban-cookbook.com/docs/contributing#getting-started)** - Project overview and types of contributions.
 - **[Local Setup](https://soroban-cookbook.com/docs/contributing#setup-instructions)** - How to clone, install, and run the project locally.
 - **[PR Conventions](https://soroban-cookbook.com/docs/contributing#branching--pr-conventions)** - Branch naming and commit message standards.
-- **[Validation Checklist](https://soroban-cookbook.com/docs/contributing#pre-pr-checklist)** - What to check before submitting your PR.
+- **[Validation Checklist](https://soroban-cookbook.com/docs/contributing#pre-pr-checklist)** - What to check before submitting your PR, including accessibility (a11y) standards.
+- **[Code of Conduct](CODE_OF_CONDUCT.md)** - Community standards and behavioral expectations.
+
+---
+
+### 📊 For Docs Maintainers
+- **[Analytics Dashboard](ANALYTICS_DASHBOARD.md)** - Key metrics, the weekly popular-pages report, and how to turn zero-result searches into documentation issues.
+- **[A/B Testing Plan](documentation/docs/planning/ab-testing.md)** - Required process and plan template before enabling any experiment.
 
 ---
 

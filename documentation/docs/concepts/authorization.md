@@ -1,4 +1,15 @@
+---
+sidebar_position: 6
+title: Authorization
+description: Implement secure authorization patterns in Soroban contracts — identity validation, role-based access control, and permission management for sensitive operations.
+---
+
 # Authorization
+
+title: Authorization
+description: Access control patterns for Soroban smart contracts.
+sidebar_position: 5
+---
 
 Authorization in Soroban ensures only expected identities can execute sensitive contract actions.
 
@@ -24,5 +35,6 @@ Authorization in Soroban ensures only expected identities can execute sensitive 
 ## Next
 
 - [Security Fundamentals](../security/fundamentals.md)
+- [Token Pattern Security Audit](../security/token-audit.md)
 - [Storage Patterns](./storage.md)
 - [Events](./events.md)

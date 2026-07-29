@@ -1,4 +1,15 @@
+---
+sidebar_position: 0
+title: What is Soroban?
+description: Learn what Soroban is — Stellar's smart contract platform built for speed, scalability, and developer experience with Rust.
+---
+
 # What is Soroban?
+
+title: What is Soroban?
+description: Introduction to Soroban, Stellar's smart contract platform.
+sidebar_position: 1
+---
 
 Welcome to Soroban, Stellar's smart contract platform. This guide introduces you to Soroban and explains why it matters in the Stellar ecosystem.
 
@@ -137,12 +148,12 @@ Soroban adds programmability to Stellar without compromising its core strengths:
 
 ## Key Differences from Other Platforms
 
-| Feature | Soroban | Ethereum | Others |
-|---------|---------|----------|--------|
-| **Language** | Rust | Solidity | Varies |
-| **Finality** | Sub-second | ~12 seconds | Varies |
-| **Fees** | Very low | Variable/High | Varies |
-| **Focus** | Real-world use | General purpose | Varies |
+| Feature      | Soroban        | Ethereum        | Others |
+| ------------ | -------------- | --------------- | ------ |
+| **Language** | Rust           | Solidity        | Varies |
+| **Finality** | Sub-second     | ~12 seconds     | Varies |
+| **Fees**     | Very low       | Variable/High   | Varies |
+| **Focus**    | Real-world use | General purpose | Varies |
 
 ## Your Learning Path
 
@@ -183,7 +194,7 @@ With Soroban, you can create:
 
 ## Resources
 
-- [Official Soroban Documentation](https://developers.stellar.org/docs/smart-contracts)
+- [Official Soroban Documentation](https://developers.stellar.org/docs/build/smart-contracts)
 - [Soroban SDK Reference](https://docs.rs/soroban-sdk)
 - [Soroban Examples Repository](https://github.com/stellar/soroban-examples)
 - [Stellar Developer Discord](https://discord.gg/stellardev)
@@ -194,5 +205,5 @@ With Soroban, you can create:
 Join the community:
 
 - **Discord** - [Stellar Developer Community](https://discord.gg/stellardev)
-- **GitHub** - [Soroban Cookbook Discussions](https://github.com/Soroban-Cookbook/Soroban-Cookbook-/discussions)
+- **GitHub** - [Soroban Cookbook Issues](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/issues)
 - **Stack Overflow** - Tag your questions with `soroban`

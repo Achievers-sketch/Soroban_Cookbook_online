@@ -1,12 +1,10 @@
 ---
-title: Testimonials
+title: Testimonials Component
 description: Community testimonials section component with responsive cards and social channels.
 ---
 
 import React from 'react';
 import Testimonials from '@site/src/components/UI/Testimonials';
-
-# Testimonials Component
 
 The `Testimonials` component renders a responsive community section for the homepage with:
 
@@ -32,7 +30,7 @@ export default function HomeCommunitySection() {
 ## Custom Data
 
 ```tsx
-import type {ReactNode} from 'react';
+import type { ReactNode } from 'react';
 import Testimonials from '@site/src/components/UI/Testimonials';
 
 const testimonials = [
@@ -46,14 +44,15 @@ const testimonials = [
   },
 ];
 
-const communityLinks: Array<{label: string; url: string; icon: ReactNode; description: string}> = [
-  {
-    label: 'Discord',
-    url: 'https://discord.gg/stellardev',
-    icon: <span>💬</span>,
-    description: 'Join developer discussions',
-  },
-];
+const communityLinks: Array<{ label: string; url: string; icon: ReactNode; description: string }> =
+  [
+    {
+      label: 'Discord',
+      url: 'https://discord.gg/stellardev',
+      icon: <span>💬</span>,
+      description: 'Join developer discussions',
+    },
+  ];
 
 export default function CustomTestimonials() {
   return <Testimonials testimonials={testimonials} communityLinks={communityLinks} />;
@@ -92,3 +91,10 @@ type TestimonialsProps = {
 - External links use `target="_blank"` with `rel="noopener noreferrer"`.
 - Community links and profile links include explicit `aria-label` values.
 - Uses semantic `section`, `article`, `header`, and `blockquote` structure.
+
+---
+
+## Related links
+
+- [Empty States](/docs/design-system/empty-states) — layout patterns for sparse content
+- [Button Component](/docs/components/buttons) — CTA buttons in community sections

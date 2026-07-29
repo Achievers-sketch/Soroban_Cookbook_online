@@ -1,6 +1,18 @@
+---
+time: 5
+sidebar_position: 0
+title: Environment Setup
+description: Set up your Soroban development environment — install Rust, Soroban CLI, and configure your system for smart contract development.
+---
+
 # Environment Setup
 
-Set up your Soroban development environment to start building smart contracts.
+title: Environment Setup
+description: Set up your Soroban development environment to start building smart contracts.
+sidebar_position: 1
+---
+
+For platform-specific instructions, see [Linux Environment Setup](/docs/getting-started/setup-linux) or [Windows Environment Setup](/docs/getting-started/setup-windows).
 
 ## Prerequisites
 
@@ -83,4 +95,4 @@ Now that your environment is ready:
 **Need Help?**
 
 - [Stellar Discord](https://discord.gg/stellardev)
-- [Soroban Documentation](https://developers.stellar.org/docs/smart-contracts)
+- [Soroban Documentation](https://developers.stellar.org/docs/build/smart-contracts)
