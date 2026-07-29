@@ -1,6 +1,6 @@
 /**
  * CodeSnippet component styling
- * Handles layout and presentation of code blocks with comment toggle
+ * Handles layout and presentation of code blocks with comment toggle and download
  */
 
 .wrapper {
@@ -23,7 +23,8 @@
   gap: 8px;
 }
 
-.toggleButton {
+.toggleButton,
+.downloadButton {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -38,18 +39,30 @@
   transition: all 0.2s ease;
 }
 
-.toggleButton:hover {
+.toggleButton:hover,
+.downloadButton:hover {
   background: var(--ifm-button-background-color-hover, #0e7490);
   border-color: var(--ifm-button-border-color-hover, #0e7490);
 }
 
-.toggleButton:active {
+.toggleButton:active,
+.downloadButton:active {
   transform: scale(0.98);
 }
 
 .toggleButton.hidden {
   background: var(--ifm-button-background-color-secondary, #6b7280);
   border-color: var(--ifm-button-border-color-secondary, #6b7280);
+}
+
+.downloadButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.downloadButton:disabled:hover {
+  background: var(--ifm-button-background-color, #0891b2);
+  border-color: var(--ifm-button-border-color, #0891b2);
 }
 
 .icon {
@@ -85,3 +98,4 @@
 .commentStatus.hidden {
   display: none;
 }
+

@@ -1,13 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import clsx from 'clsx';
 import styles from './CodeSnippet.module.css';
 import { CodeSnippetProps } from './types';
-import { hasCommentLines, getDisplayCode } from './utils';
+import { hasCommentLines, getDisplayCode, downloadFile, formatFilename } from './utils';
 
 /**
  * CodeSnippet Component
  * 
- * Renders code with optional toggle to hide/show detailed comments.
+ * Renders code with optional toggle to hide/show detailed comments and download button.
  * Comments are identified as lines starting with // (after whitespace).
  * 
  * @example
@@ -16,6 +16,8 @@ import { hasCommentLines, getDisplayCode } from './utils';
  *   code={myRustCode}
  *   language="rust"
  *   defaultShowComments={false}
+ *   filename="hello-world"
+ *   showDownload={true}
  * />
  * ```
  */
@@ -25,8 +27,11 @@ export default function CodeSnippet({
   defaultShowComments = true,
   className,
   onCommentToggle,
+  filename,
+  showDownload = true,
 }: CodeSnippetProps) {
   const [showComments, setShowComments] = useState(defaultShowComments);
+  const [downloadStatus, setDownloadStatus] = useState<'idle' | 'downloading'>('idle');
 
   // Check if code has comment-only lines
   const hasComments = useMemo(() => hasCommentLines(code), [code]);
@@ -43,10 +48,53 @@ export default function CodeSnippet({
     onCommentToggle?.(newState);
   };
 
+  // Generate the file to download (use full code, not filtered code)
+  const handleDownload = useCallback(() => {
+    try {
+      setDownloadStatus('downloading');
+      
+      // Use provided filename or generate one
+      const finalFilename = filename 
+        ? formatFilename(filename, language)
+        : formatFilename(`code-${Date.now()}`, language);
+
+      downloadFile(code, finalFilename);
+      
+      // Reset status after a brief moment
+      setTimeout(() => setDownloadStatus('idle'), 500);
+    } catch (error) {
+      console.error('Download failed:', error);
+      setDownloadStatus('idle');
+    }
+  }, [code, filename, language]);
+
   if (!hasComments) {
-    // If no comments, render plain code block
+    // If no comments, render plain code block with download button
     return (
       <div className={clsx(styles.wrapper, className)}>
+        <div className={styles.header}>
+          {showDownload && (
+            <button
+              className={styles.downloadButton}
+              onClick={handleDownload}
+              disabled={downloadStatus === 'downloading'}
+              aria-label={`Download code as ${formatFilename(filename || 'code', language)}`}
+              title={`Download as ${formatFilename(filename || 'code', language)}`}>
+              <span className={styles.icon}>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+              </span>
+              <span>Download</span>
+            </button>
+          )}
+        </div>
         <div className={styles.codeBlock}>
           <code>{code}</code>
         </div>
@@ -56,7 +104,7 @@ export default function CodeSnippet({
 
   return (
     <div className={clsx(styles.wrapper, className)}>
-      {/* Header with toggle button */}
+      {/* Header with toggle and download buttons */}
       <div className={styles.header}>
         <button
           className={clsx(styles.toggleButton, !showComments && styles.hidden)}
@@ -88,6 +136,28 @@ export default function CodeSnippet({
           </span>
           <span>{showComments ? 'Hide' : 'Show'} comments</span>
         </button>
+
+        {showDownload && (
+          <button
+            className={styles.downloadButton}
+            onClick={handleDownload}
+            disabled={downloadStatus === 'downloading'}
+            aria-label={`Download code as ${formatFilename(filename || 'code', language)}`}
+            title={`Download as ${formatFilename(filename || 'code', language)}`}>
+            <span className={styles.icon}>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+            </span>
+            <span>Download</span>
+          </button>
+        )}
       </div>
 
       {/* Status indicator */}

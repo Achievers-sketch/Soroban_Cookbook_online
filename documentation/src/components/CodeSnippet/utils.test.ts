@@ -2,7 +2,7 @@
  * Tests for CodeSnippet utility functions
  */
 
-import { stripComments, hasCommentLines, getDisplayCode } from './utils';
+import { stripComments, hasCommentLines, getDisplayCode, formatFilename } from './utils';
 
 describe('CodeSnippet utilities', () => {
   describe('stripComments', () => {
@@ -83,4 +83,42 @@ let z = 3; // inline`;
       expect(result).toContain('// inline');
     });
   });
+
+  describe('formatFilename', () => {
+    it('should convert camelCase to kebab-case', () => {
+      expect(formatFilename('HelloWorld', 'rust')).toBe('hello-world.rs');
+    });
+
+    it('should handle already kebab-case names', () => {
+      expect(formatFilename('hello-world', 'rust')).toBe('hello-world.rs');
+    });
+
+    it('should add correct file extension for rust', () => {
+      expect(formatFilename('contract', 'rust')).toBe('contract.rs');
+      expect(formatFilename('contract', 'rs')).toBe('contract.rs');
+    });
+
+    it('should add correct file extension for other languages', () => {
+      expect(formatFilename('config', 'toml')).toBe('config.toml');
+      expect(formatFilename('data', 'json')).toBe('data.json');
+      expect(formatFilename('script', 'bash')).toBe('script.sh');
+    });
+
+    it('should handle mixed case and separators', () => {
+      expect(formatFilename('HelloWorld_Test', 'rust')).toBe('hello-world-test.rs');
+    });
+
+    it('should remove invalid characters', () => {
+      expect(formatFilename('Hello@World#Test', 'rust')).toBe('hello-world-test.rs');
+    });
+
+    it('should collapse multiple hyphens', () => {
+      expect(formatFilename('hello---world', 'rust')).toBe('hello-world.rs');
+    });
+
+    it('should default to rust extension if no language specified', () => {
+      expect(formatFilename('contract')).toBe('contract.rs');
+    });
+  });
 });
+
