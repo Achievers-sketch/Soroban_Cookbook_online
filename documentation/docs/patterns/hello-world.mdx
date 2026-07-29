@@ -7,6 +7,7 @@ image: /img/soroban-social-card.png
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import { CodeSnippet } from '@site/src/components/CodeSnippet';
 
 <PatternMeta
   slug="hello-world"
@@ -75,6 +76,36 @@ fn hello_default() {
 
   </TabItem>
 </Tabs>
+
+<PatternCallout variant="info" title="Code with Comments">
+
+The example below demonstrates the new comment toggle feature. Click "Hide comments" to see the code without detailed annotations:
+
+</PatternCallout>
+
+<CodeSnippet
+  code={`#![no_std]
+use soroban_sdk::{contract, contractimpl, Env, String};
+
+// Define the contract struct that will hold the implementation
+#[contract]
+pub struct HelloWorld;
+
+// Implement contract functionality
+#[contractimpl]
+impl HelloWorld {
+    // Main entry point: returns a greeting message from storage
+    pub fn hello(env: Env) -> String {
+        // Retrieve the stored message from instance storage
+        // If not found, return default greeting
+        env.storage().instance().get(&String::from_str(&env, "msg")).unwrap_or(
+            String::from_str(&env, "Hello, Soroban!"),
+        )
+    }
+}`}
+  language="rust"
+  defaultShowComments={true}
+/>
 
 </PatternSection>
 
