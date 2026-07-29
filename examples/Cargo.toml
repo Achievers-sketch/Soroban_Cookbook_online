@@ -17,5 +17,6 @@ members = [
     "token-transfer",
     "token-wrapper",
     "upgradeable",
+    "multisig-wallet",
 ]
 resolver = "2"
