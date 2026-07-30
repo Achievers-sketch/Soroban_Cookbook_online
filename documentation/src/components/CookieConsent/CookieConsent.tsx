@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import { loadGoogleAnalytics } from '@site/src/utils/analytics';
+import { initAnalytics } from '@site/src/utils/analytics';
 import {
   CONSENT_CHANGE_EVENT,
   readConsent,
@@ -10,8 +10,13 @@ import {
 } from '@site/src/utils/cookieConsent';
 import styles from './CookieConsent.module.css';
 
-function getMeasurementId(customFields: Record<string, unknown> | undefined): string {
-  const raw = customFields?.gtagMeasurementId;
+function getGaId(customFields: Record<string, unknown> | undefined): string {
+  const raw = customFields?.gaMeasurementId ?? customFields?.gtagMeasurementId;
+  return typeof raw === 'string' ? raw.trim() : '';
+}
+
+function getClarityId(customFields: Record<string, unknown> | undefined): string {
+  const raw = customFields?.clarityProjectId;
   return typeof raw === 'string' ? raw.trim() : '';
 }
 
@@ -19,7 +24,8 @@ export default function CookieConsent(): React.JSX.Element | null {
   const {
     siteConfig: { customFields },
   } = useDocusaurusContext();
-  const measurementId = getMeasurementId(customFields as Record<string, unknown> | undefined);
+  const measurementId = getGaId(customFields as Record<string, unknown> | undefined);
+  const clarityProjectId = getClarityId(customFields as Record<string, unknown> | undefined);
 
   const [consent, setConsent] = useState<ConsentRecord | null>(null);
   const [forceOpen, setForceOpen] = useState(false);
@@ -44,19 +50,19 @@ export default function CookieConsent(): React.JSX.Element | null {
   }, []);
 
   useEffect(() => {
-    if (consent?.analytics === 'accepted' && measurementId) {
-      loadGoogleAnalytics(measurementId);
+    if (consent?.analytics === 'accepted' && (measurementId || clarityProjectId)) {
+      initAnalytics({ gaMeasurementId: measurementId, clarityProjectId });
     }
-  }, [consent, measurementId]);
+  }, [consent, measurementId, clarityProjectId]);
 
   const accept = useCallback(() => {
     const next = writeConsent('accepted');
     setConsent(next);
     setForceOpen(false);
-    if (measurementId) {
-      loadGoogleAnalytics(measurementId);
+    if (measurementId || clarityProjectId) {
+      initAnalytics({ gaMeasurementId: measurementId, clarityProjectId });
     }
-  }, [measurementId]);
+  }, [measurementId, clarityProjectId]);
 
   const reject = useCallback(() => {
     const next = writeConsent('rejected');

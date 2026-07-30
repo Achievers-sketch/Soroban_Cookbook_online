@@ -16,7 +16,7 @@
  */
 
 import type { Metric } from 'web-vitals';
-import { hasAnalyticsConsent } from './cookieConsent';
+import { hasConsent } from './analyticsConsent';
 
 /** POST target for beacon payloads. Falls through to console-only when blank. */
 const ANALYTICS_ENDPOINT = (typeof process !== 'undefined' && process.env.ANALYTICS_ENDPOINT) || '';
@@ -53,7 +53,7 @@ function sendToAnalytics(metric: Metric): void {
   }
 
   // Remote beacons are non-essential — require analytics consent.
-  if (!hasAnalyticsConsent()) {
+  if (!hasConsent()) {
     return;
   }
 

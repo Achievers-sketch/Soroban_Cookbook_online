@@ -4,8 +4,11 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
+    "prestart": "node scripts/generate-content-registry.mjs",
     "start": "docusaurus start",
+    "prebuild": "node scripts/generate-content-registry.mjs",
     "build": "docusaurus build",
+    "pretest": "node scripts/generate-content-registry.mjs",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -28,6 +31,7 @@
     "test:coverage": "vitest run --coverage",
 
     "audit:headings": "node scripts/audit-heading-hierarchy.mjs",
+    "press:screenshots": "node scripts/capture-press-screenshots.mjs",
     "audit:links": "node scripts/audit-internal-links.mjs",
     "check:external-links": "node scripts/check-external-links.mjs",
     "test:e2e": "playwright test",
@@ -74,7 +78,8 @@
     "sharp": "^0.34.5",
     "wait-on": "8.0.2",
     "typescript": "~5.6.2",
-    "vitest": "^1.0.4"
+    "vitest": "^1.0.4",
+    "webpack": "5.94.0"
   },
   "browserslist": {
     "production": [
@@ -90,5 +95,8 @@
   },
   "engines": {
     "node": ">=20.0"
+  },
+  "overrides": {
+    "webpack": "5.94.0"
   }
 }
