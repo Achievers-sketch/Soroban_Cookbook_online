@@ -51,7 +51,7 @@
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
                 },
                 {
-                  "string": "evt"
+                  "string": "p1"
                 },
                 {
                   "vec": [
@@ -109,8 +109,6 @@
         }
       ]
     ],
-    [],
-    [],
     [],
     [],
     []
@@ -296,7 +294,7 @@
                               "symbol": "description"
                             },
                             "val": {
-                              "string": "evt"
+                              "string": "p1"
                             }
                           },
                           {
