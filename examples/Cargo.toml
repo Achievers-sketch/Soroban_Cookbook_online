@@ -8,6 +8,7 @@ members = [
     "counter",
     "emergency-stop",
     "error-handling",
+    "escrow-multiparty",
     "hello-world",
     "htlc-swap",
     "oracle-consumer",
