@@ -33,14 +33,13 @@ describe('analytics', () => {
 
   it('pushes to dataLayer when present', () => {
     window.dataLayer = [];
-    trackSearch({ queryLength: 5, resultCount: 2 });
+    trackSearch('hello', 2);
 
     expect(window.dataLayer).toEqual([
       {
         event: 'search',
-        query_length: 5,
-        result_count: 2,
-        search_source: 'navbar',
+        search_term: 'hello',
+        search_results: 2,
       },
     ]);
   });

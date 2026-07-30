@@ -1,104 +1,88 @@
+import { useEffect, useRef, useState } from 'react';
+import { useLocation } from '@docusaurus/router';
+import { trackSearch } from '@site/src/utils/analytics';
+import { CONSENT_CHANGE_EVENT, hasConsent } from '@site/src/utils/analyticsConsent';
+
 /**
- * Attaches non-blocking search analytics to the local search navbar input.
- * Sends query length only — never the raw search string.
+ * Reports site-search queries and their result counts to GA4 (issue #358).
+ *
+ * Renders nothing. Rather than hooking the search plugin's internals (whose
+ * component names and CSS-module hashes change between releases), this watches
+ * the `/search` route — where every submitted query lands, whether typed in the
+ * navbar or arrived at from a link — and counts the rendered result articles.
  */
 
-import { useEffect } from 'react';
-import { trackSearch } from '@site/src/utils/analytics';
+const SEARCH_ROUTE = '/search';
+/** Results render asynchronously; poll until the count stops changing. */
+const SETTLE_INTERVAL_MS = 250;
+const SETTLE_STABLE_TICKS = 2;
+const SETTLE_MAX_MS = 6000;
 
-const SEARCH_INPUT_SELECTORS = [
-  'input[type="search"]',
-  '.navbar__search-input',
-  '#search_input_react',
-  'input[aria-label*="Search" i]',
-];
-
-function findSearchInput(): HTMLInputElement | null {
-  for (const selector of SEARCH_INPUT_SELECTORS) {
-    const el = document.querySelector(selector);
-    if (el instanceof HTMLInputElement) {
-      return el;
-    }
-  }
-  return null;
+function countResults(): number {
+  // The plugin renders one <article> per hit inside the search page container.
+  return document.querySelectorAll('.container.margin-vert--lg article').length;
 }
 
 export default function SearchAnalytics(): null {
+  const { pathname, search } = useLocation();
+  const [consented, setConsented] = useState(false);
+  // Guards against double-reporting the same query when React re-renders or the
+  // result list mutates after settling.
+  const reportedRef = useRef<string | null>(null);
+
   useEffect(() => {
-    let detach: (() => void) | undefined;
-    let observer: MutationObserver | undefined;
-    let lastTrackedKey = '';
+    setConsented(hasConsent());
+    const onChange = () => setConsented(hasConsent());
+    window.addEventListener(CONSENT_CHANGE_EVENT, onChange);
+    return () => window.removeEventListener(CONSENT_CHANGE_EVENT, onChange);
+  }, []);
 
-    const attach = () => {
-      const input = findSearchInput();
-      if (
-        !input ||
-        (input as HTMLInputElement & { dataset: DOMStringMap }).dataset.analyticsBound
-      ) {
-        return false;
-      }
-
-      input.dataset.analyticsBound = '1';
-
-      const fire = () => {
-        const value = input.value.trim();
-        if (value.length < 2) {
-          return;
-        }
-        // Deduplicate rapid repeats of the same length bucket.
-        const key = `${value.length}:${Math.floor(Date.now() / 5000)}`;
-        if (key === lastTrackedKey) {
-          return;
-        }
-        lastTrackedKey = key;
-        trackSearch({ queryLength: value.length, source: 'navbar' });
-      };
-
-      const onKeyDown = (event: KeyboardEvent) => {
-        if (event.key === 'Enter') {
-          fire();
-        }
-      };
-
-      let debounceTimer: ReturnType<typeof setTimeout> | undefined;
-      const onInput = () => {
-        if (debounceTimer) {
-          clearTimeout(debounceTimer);
-        }
-        debounceTimer = setTimeout(fire, 800);
-      };
-
-      input.addEventListener('keydown', onKeyDown);
-      input.addEventListener('change', fire);
-      input.addEventListener('input', onInput);
-
-      detach = () => {
-        if (debounceTimer) {
-          clearTimeout(debounceTimer);
-        }
-        input.removeEventListener('keydown', onKeyDown);
-        input.removeEventListener('change', fire);
-        input.removeEventListener('input', onInput);
-        delete input.dataset.analyticsBound;
-      };
-
-      return true;
-    };
-
-    if (!attach()) {
-      observer = new MutationObserver(() => {
-        if (attach()) {
-          observer?.disconnect();
-        }
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
+  useEffect(() => {
+    if (!consented) return;
+    if (pathname.replace(/\/$/, '') !== SEARCH_ROUTE) {
+      reportedRef.current = null;
+      return;
     }
 
+    const term = new URLSearchParams(search).get('q')?.trim();
+    if (!term) return;
+
+    const key = `${term}`;
+    if (reportedRef.current === key) return;
+
+    let cancelled = false;
+    let elapsed = 0;
+    let lastCount = -1;
+    let stableTicks = 0;
+
+    const timer = window.setInterval(() => {
+      if (cancelled) return;
+      const count = countResults();
+
+      if (count === lastCount) {
+        stableTicks += 1;
+      } else {
+        lastCount = count;
+        stableTicks = 0;
+      }
+
+      elapsed += SETTLE_INTERVAL_MS;
+      const settled = stableTicks >= SETTLE_STABLE_TICKS;
+
+      if (settled || elapsed >= SETTLE_MAX_MS) {
+        window.clearInterval(timer);
+        if (reportedRef.current !== key) {
+          reportedRef.current = key;
+          trackSearch(term, count);
+        }
+      }
+    }, SETTLE_INTERVAL_MS);
+
     return () => {
-      observer?.disconnect();
-      detach?.();
+      cancelled = true;
+      window.clearInterval(timer);
     };
-  }, []);
+  }, [consented, pathname, search]);
 
   return null;
 }

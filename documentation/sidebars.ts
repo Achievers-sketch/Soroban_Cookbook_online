@@ -24,6 +24,16 @@ const sidebars: SidebarsConfig = {
         'contributing',
         'contributing/add-tested-example',
         'contributing/analytics-events',
+        'contributing/versioning-strategy',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Migrations',
+      items: [
+        'migrations/index',
+        'migrations/baseline-22-0',
+        'migrations/template',
       ],
     },
     {
@@ -36,6 +46,7 @@ const sidebars: SidebarsConfig = {
         'concepts/storage',
         'concepts/authorization',
         'concepts/events',
+        'concepts/time-and-scheduling',
         'concepts/gas-and-resources',
         'concepts/cross-contract-invocation',
       ],
@@ -47,6 +58,7 @@ const sidebars: SidebarsConfig = {
         'patterns/overview',
         'patterns/hello-world',
         'patterns/basic-token',
+        'patterns/token-snapshot',
         'patterns/custom-types',
         'patterns/token-standards',
         'patterns/authorization',
@@ -86,6 +98,15 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Security Audit',
       items: ['security/code-audit'],
+    },
+    {
+      type: 'category',
+      label: 'Planning',
+      items: [
+        'planning/ab-testing',
+        'planning/video-tutorial-getting-started',
+        'planning/video-tutorial-first-contract',
+      ],
     },
   ],
 };

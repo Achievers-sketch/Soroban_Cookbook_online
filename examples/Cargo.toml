@@ -2,6 +2,7 @@
 members = [
     "access-control",
     "authorization",
+    "batch-ops",
     "constant-product-amm",
     "contract-factory",
     "counter",
@@ -14,7 +15,9 @@ members = [
     "simple-voting",
     "staking",
     "timelock-vault",
+    "token-snapshot",
     "token-transfer",
+    "token-vesting",
     "token-wrapper",
     "upgradeable",
 ]

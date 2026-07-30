@@ -43,6 +43,7 @@ Frontmatter
 functools
 GA4
 GBBD
+GDPR
 geolocation
 GitHub
 gtag
@@ -83,6 +84,7 @@ optimise
 optimised
 Optimised
 Optimising
+Optimizely
 Overlines
 pacman
 performancebudget
@@ -104,6 +106,7 @@ rustc
 RUSTFLAGS
 rustup
 sandboxed
+SCCs
 SDEX
 serialisation
 serialises
