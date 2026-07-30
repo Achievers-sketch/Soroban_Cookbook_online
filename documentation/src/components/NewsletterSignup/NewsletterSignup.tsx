@@ -6,6 +6,7 @@ import {
   clearCSRFToken,
   updateCSRFTokenFromResponse,
 } from '../../utils/csrf';
+import { trackNewsletterSubmit } from '@site/src/utils/analytics';
 import styles from './NewsletterSignup.module.css';
 import { isHttpsUrl } from '@site/src/utils/sanitizeUrl';
 
@@ -93,6 +94,15 @@ export default function NewsletterSignup({ className }: NewsletterSignupProps) {
       setStatus('loading');
       setMessage(null);
 
+      if (!endpoint) {
+        await new Promise((r) => setTimeout(r, 600));
+        setStatus('success');
+        setMessage('Thanks — you are on the list. We will share Soroban Cookbook updates here.');
+        setEmail('');
+        trackNewsletterSubmit({ method: 'demo' });
+        return;
+      }
+
       try {
         if (!endpoint) {
           await new Promise((r) => setTimeout(r, 600));
@@ -128,6 +138,7 @@ export default function NewsletterSignup({ className }: NewsletterSignupProps) {
         setMessage('Thanks — check your inbox to confirm your subscription.');
         setEmail('');
         clearCSRFToken();
+        trackNewsletterSubmit({ method: 'endpoint' });
       } catch {
         setStatus('error');
         setMessage('Something went wrong. Try again in a moment.');
@@ -184,10 +195,7 @@ export default function NewsletterSignup({ className }: NewsletterSignupProps) {
 
           <p className={styles.privacy}>
             We use your email only for Soroban Cookbook announcements. See our{' '}
-            <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/LICENSE">
-              license &amp; privacy
-            </a>{' '}
-            on GitHub.
+            <a href="/privacy">Privacy Policy</a>.
           </p>
 
           {message && (
