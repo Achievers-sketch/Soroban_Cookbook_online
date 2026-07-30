@@ -26,7 +26,13 @@ const config: Config = {
     newsletterEndpoint: process.env.NEWSLETTER_ENDPOINT ?? '',
     /** Soroban Cookbook Discord invite link. Set DISCORD_INVITE_URL at build time once the server is created. */
     discordInviteUrl: process.env.DISCORD_INVITE_URL ?? '',
-// Both are consent-gated — see ConsentBanner / src/utils/analytics.ts.
+/**
+     * Sentry DSN for error monitoring (issue #136).
+     * Set SENTRY_DSN in your CI/CD environment or .env.local.
+     * When absent, Sentry is not initialised (safe for local dev).
+     */
+    sentryDsn: process.env.SENTRY_DSN ?? '',
+    // Both are consent-gated — see ConsentBanner / src/utils/analytics.ts.
     // Unset by default, so no analytics script ever loads until an operator
     // opts in by setting the secret. See DEPLOYMENT.md → Analytics.
     /** GA4 measurement ID (e.g. "G-XXXXXXX") for conversion funnel tracking. */
