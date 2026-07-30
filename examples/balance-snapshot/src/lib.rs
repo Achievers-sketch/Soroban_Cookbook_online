@@ -138,6 +138,10 @@ impl BalanceSnapshot {
     /// event is published so off-chain indexers can pick up the full snapshot
     /// without scanning storage.
     ///
+    /// *Note:* Duplicate addresses are not filtered. They safely overwrite the
+    /// snapshot with the same balance, but will inflate the `num_addresses`
+    /// count in the emitted event.
+    ///
     /// Returns the newly assigned snapshot id.
     pub fn take_snapshot(env: Env, addresses: Vec<Address>) -> Result<u32, Error> {
         if addresses.is_empty() {
@@ -191,7 +195,7 @@ impl BalanceSnapshot {
     /// - The snapshot exists but `address` was not included in it.
     ///
     /// Callers can disambiguate these two cases by checking
-    /// [`snapshot_meta`](Self::snapshot_meta) first.
+    /// [`Self::snapshot_meta`] first.
     pub fn snapshot_balance(env: Env, snapshot_id: u32, address: Address) -> Option<i128> {
         if !env
             .storage()
@@ -227,7 +231,7 @@ impl BalanceSnapshot {
 mod tests {
     use super::*;
     use soroban_sdk::{
-        testutils::{Address as _, Ledger, LedgerInfo},
+        testutils::{Address as _, Events, Ledger, LedgerInfo},
         vec, Env,
     };
 
@@ -467,9 +471,9 @@ mod tests {
         assert_eq!(client.snapshot_balance(&id1, &bob), Some(0));
     }
 
-    /// Verifies that taking a snapshot succeeds and produces correct data.
-    /// The contract publishes an event on every successful snapshot — off-chain
-    /// indexers listen for these events to reconstruct snapshot history.
+    /// Verifies that taking a snapshot emits a contract event with the correct
+    /// topics and data — off-chain indexers listen for these events to
+    /// reconstruct snapshot history without scanning storage.
     #[test]
     fn test_snapshot_emits_event() {
         let (env, _, client) = setup();
@@ -482,14 +486,20 @@ mod tests {
         // Advance ledger so event data is predictable
         set_ledger(&env, 10, 1_700_000_000);
         let id = client.take_snapshot(&vec![&env, alice.clone(), bob.clone()]);
-
-        // Verify snapshot was created (event path executed successfully)
         assert_eq!(id, 0);
-        assert_eq!(client.snapshot_balance(&id, &alice), Some(1000));
-        assert_eq!(client.snapshot_balance(&id, &bob), Some(500));
-        let meta = client.snapshot_meta(&id).unwrap();
-        assert_eq!(meta.ledger, 10);
-        assert_eq!(meta.timestamp, 1_700_000_000);
+
+        // Verify the event was actually published.
+        let events = env.events().all();
+        assert_eq!(events.len(), 1);
+        let (_ev_contract, ev_topics, ev_data) = events.last().unwrap();
+        assert_eq!(
+            ev_topics,
+            (symbol_short!("snapshot"), 0u32).into_val(&env)
+        );
+        assert_eq!(
+            ev_data,
+            (10u32, 1_700_000_000u64, 2u32).into_val(&env)
+        );
     }
 
     #[test]
