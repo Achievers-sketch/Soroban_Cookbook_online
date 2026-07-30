@@ -163,6 +163,11 @@ const config: Config = {
     },
   ],
 
+  // ─── Search Analytics Client Module (issue #329) ──────────────────────────
+  // Loads on every page to observe the search input and fire onQuery /
+  // onResult analytics events via src/utils/searchAnalytics.ts.
+  clientModules: [require.resolve('./src/clientModules/searchAnalyticsModule.ts')],
+
   plugins: [
     [
       require.resolve('@easyops-cn/docusaurus-search-local'),
