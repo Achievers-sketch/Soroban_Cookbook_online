@@ -36,6 +36,7 @@ const sidebars: SidebarsConfig = {
         'migrations/index',
         'migrations/baseline-22-0',
         'migrations/template',
+        'contributing/offline-behavior',
       ],
     },
     {

@@ -37,6 +37,7 @@
 import React, { useEffect, type ReactNode } from 'react';
 import ConsentBanner from '@site/src/components/ConsentBanner';
 import FunnelTracker from '@site/src/components/FunnelTracker';
+import OfflineNotice from '@site/src/components/OfflineNotice';
 import SearchAnalytics from '@site/src/components/SearchAnalytics';
 import { hasConsent } from '@site/src/utils/analyticsConsent';
 import useRecommendationTracker from '../hooks/useRecommendationTracker';
@@ -145,6 +146,7 @@ export default function Root({ children }: RootProps): React.JSX.Element {
   return (
     <ProgressProvider>
       {children}
+      <OfflineNotice />
       <FunnelTracker />
       <SearchAnalytics />
       <ConsentBanner />
