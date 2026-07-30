@@ -4,6 +4,8 @@ description: Reusable Soroban smart contract patterns — storage, tokens, DeFi,
 image: /img/soroban-social-card.png
 ---
 
+import { VideoPlayer } from '@site/src/components/VideoPlayer';
+
 # Pattern Library
 
 Reusable smart contract patterns for common use cases.
@@ -11,6 +13,14 @@ Reusable smart contract patterns for common use cases.
 ## Template example
 
 The **[Hello World storage](/docs/patterns/hello-world)** pattern demonstrates the standard pattern page layout (metadata, prerequisites, implementation with code tabs, security, and related links). Copy its structure when adding new patterns.
+
+## Video Tutorial
+
+<VideoPlayer
+  url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  title="Getting Started with Soroban Smart Contracts"
+  description="Learn the basics of building smart contracts on the Soroban platform, including setup, deployment, and testing."
+/>
 
 ## Available Patterns
 

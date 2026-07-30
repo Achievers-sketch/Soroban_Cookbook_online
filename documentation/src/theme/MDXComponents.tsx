@@ -1,4 +1,8 @@
 import MDXComponents from '@theme-original/MDXComponents';
+import { PatternCallout, PatternMeta, PatternSection } from '@site/src/components/PatternDoc';
+import { CodeSnippet } from '@site/src/components/CodeSnippet';
+import { PatternCustomizer } from '@site/src/components/PatternCustomizer';
+import { VideoPlayer } from '@site/src/components/VideoPlayer';
 import {
   PatternCallout,
   PatternMeta,
@@ -13,6 +17,9 @@ export default {
   PatternMeta,
   PatternSection,
   PatternCallout,
+  CodeSnippet,
+  PatternCustomizer,
+  VideoPlayer,
   EstimatedTime,
   CodeSnippet,
   Collapsible,
