@@ -1,4 +1,5 @@
 ---
+time: 5
 sidebar_position: 0
 title: Environment Setup
 description: Set up your Soroban development environment — install Rust, Soroban CLI, and configure your system for smart contract development.
@@ -95,3 +96,54 @@ Now that your environment is ready:
 
 - [Stellar Discord](https://discord.gg/stellardev)
 - [Soroban Documentation](https://developers.stellar.org/docs/build/smart-contracts)
+
+## Frequently Asked Questions
+
+### How do I install Rust for Soroban development?
+You can install Rust by running:
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+And verify with `rustc --version`.
+
+### How do I install the Soroban CLI?
+You can install it via Cargo:
+```bash
+cargo install --locked soroban-cli
+```
+
+### Why do I need the wasm32-unknown-unknown target?
+Soroban smart contracts are compiled to WebAssembly (WASM). The `wasm32-unknown-unknown` target tells the Rust compiler to target WASM bytecode instead of native machine code.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I install Rust for Soroban development?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can install Rust by running curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh and verify it with rustc --version."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I install the Soroban CLI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can install it by running cargo install --locked soroban-cli."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do I need the wasm32-unknown-unknown target?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Soroban smart contracts are compiled to WebAssembly (WASM). The wasm32-unknown-unknown target tells the Rust compiler to target WASM bytecode instead of native machine code."
+      }
+    }
+  ]
+}
+</script>
