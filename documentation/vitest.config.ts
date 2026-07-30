@@ -13,6 +13,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@docusaurus/Link': path.resolve(__dirname, './vitest.setup.ts'),
+      '@docusaurus/router': path.resolve(__dirname, './vitest.setup.ts'),
     },
   },
 });

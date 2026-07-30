@@ -13,12 +13,15 @@ import React, { useEffect, type ReactNode } from 'react';
 import ConsentBanner from '@site/src/components/ConsentBanner';
 import FunnelTracker from '@site/src/components/FunnelTracker';
 import SearchAnalytics from '@site/src/components/SearchAnalytics';
+import useRecommendationTracker from '../hooks/useRecommendationTracker';
 
 interface RootProps {
   children: ReactNode;
 }
 
 export default function Root({ children }: RootProps): React.JSX.Element {
+  useRecommendationTracker();
+
   useEffect(() => {
     // Dynamic import keeps web-vitals out of the critical bundle path.
     import('../utils/webVitals').then(({ reportWebVitals }) => {
