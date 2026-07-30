@@ -7,6 +7,9 @@
 version: 2
 updates:
   # Application / documentation dependencies (Bun + package.json)
+version: 2
+updates:
+  # Enable version updates for npm (Bun project dependencies under documentation/)
   - package-ecosystem: "npm"
     directory: "/documentation"
     schedule:
@@ -36,6 +39,16 @@ updates:
           - "jsdom"
 
   # GitHub Actions used by workflows under .github/workflows/
+    open-pull-requests-limit: 10
+
+  # Enable version updates for Cargo (Rust examples)
+  - package-ecosystem: "cargo"
+    directory: "/examples"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+
+  # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -47,3 +60,4 @@ updates:
       - "github-actions"
     commit-message:
       prefix: "chore(ci)"
+    open-pull-requests-limit: 10

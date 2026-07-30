@@ -26,6 +26,16 @@
   color: var(--ifm-color-content-secondary);
 }
 
+.privacyLink {
+  color: var(--ifm-color-primary);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.privacyLink:hover {
+  color: var(--ifm-color-primary-darker);
+}
+
 .actions {
   display: flex;
   gap: 0.5rem;
