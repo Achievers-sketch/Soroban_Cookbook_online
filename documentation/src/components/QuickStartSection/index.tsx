@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from '@docusaurus/Link';
 import { useColorMode } from '@docusaurus/theme-common';
 import { Highlight, themes as prismThemes } from 'prism-react-renderer';
+import { trackCopyCode } from '@site/src/utils/analytics';
 import styles from './styles.module.css';
 
 const SNIPPET = `#![no_std]
@@ -47,6 +48,7 @@ function CopyButton({ text }: { text: string }) {
     try {
       await navigator.clipboard.writeText(text);
       setCopyState('success');
+      trackCopyCode({ language: 'rust', section: 'quick_start' });
     } catch {
       setCopyState('error');
     }
@@ -69,8 +71,14 @@ function CopyButton({ text }: { text: string }) {
 }
 
 export default function QuickStartSection() {
-  const { colorMode } = useColorMode();
-  const selectedTheme = colorMode === 'dark' ? prismThemes.vsDark : prismThemes.github;
+  let isDark = true;
+  try {
+    const { colorMode } = useColorMode();
+    isDark = colorMode === 'dark';
+  } catch {
+    isDark = true;
+  }
+  const selectedTheme = isDark ? prismThemes.vsDark : prismThemes.github;
 
   return (
     <section className={styles.section}>
