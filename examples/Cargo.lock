@@ -1646,6 +1646,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "token-vesting"
+version = "0.1.0"
+dependencies = [
+ "soroban-sdk",
+]
+
+[[package]]
 name = "token-wrapper"
 version = "0.1.0"
 dependencies = [

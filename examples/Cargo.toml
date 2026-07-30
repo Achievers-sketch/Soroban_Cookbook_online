@@ -17,6 +17,7 @@ members = [
     "timelock-vault",
     "token-snapshot",
     "token-transfer",
+    "token-vesting",
     "token-wrapper",
     "upgradeable",
 ]
