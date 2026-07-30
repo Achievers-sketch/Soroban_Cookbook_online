@@ -94,6 +94,49 @@ cargo test
 - [Learn about storage](../concepts/storage)
 - [Explore patterns](../patterns/overview.md)
 
+## Knowledge Check
+
+Test what you've learned about creating your first Soroban contract.
+
+<Quiz title="First Contract Knowledge Check" questions={[
+  {
+    id: "fc-q1",
+    question: "What command initializes a new Soroban smart contract project?",
+    options: [
+      "soroban init my-first-contract",
+      "soroban contract init my-first-contract",
+      "cargo new my-first-contract",
+      "soroban new my-first-contract",
+    ],
+    correctIndex: 1,
+    explanation: "The correct command is `soroban contract init my-first-contract`. This initializes a new Soroban project with the proper Cargo.toml, src/lib.rs, and Cargo.lock structure.",
+  },
+  {
+    id: "fc-q2",
+    question: "What file format does Soroban compile contracts into?",
+    options: [
+      "Native binary (.exe)",
+      "WebAssembly (.wasm)",
+      "JavaScript (.js)",
+      "LLVM IR (.ll)",
+    ],
+    correctIndex: 1,
+    explanation: "Soroban contracts are compiled to WebAssembly (.wasm), enabling efficient and secure execution on the Stellar network.",
+  },
+  {
+    id: "fc-q3",
+    question: "How do you run tests for your Soroban contract?",
+    options: [
+      "soroban test",
+      "cargo test",
+      "rustc --test src/lib.rs",
+      "npm test",
+    ],
+    correctIndex: 1,
+    explanation: "Soroban uses standard Rust testing. You run `cargo test`, and tests are defined in a `#[cfg(test)] mod test` block within your contract source file.",
+  },
+]} />
+
 ## Resources
 
 - [Soroban SDK Documentation](https://docs.rs/soroban-sdk)
