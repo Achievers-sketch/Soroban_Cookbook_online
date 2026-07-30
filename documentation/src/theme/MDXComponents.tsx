@@ -11,16 +11,19 @@ import {
 } from '@site/src/components/PatternDoc';
 import CodeSnippet from '@site/src/components/CodeSnippet';
 import Collapsible from '@site/src/components/Collapsible/Collapsible';
+import { Quiz } from '@site/src/components/Quiz';
 
 export default {
   ...MDXComponents,
   PatternMeta,
   PatternSection,
   PatternCallout,
+  EstimatedTime,
   CodeSnippet,
   PatternCustomizer,
   VideoPlayer,
   EstimatedTime,
   CodeSnippet,
   Collapsible,
+  Quiz,
 };

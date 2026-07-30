@@ -14,6 +14,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/setup-linux',
         'getting-started/setup-windows',
         'getting-started/setup-macos',
+        'getting-started/development-tools',
         'getting-started/first-contract',
         'getting-started/building-and-compilation',
         'getting-started/browser-server-compilation',
@@ -35,6 +36,7 @@ const sidebars: SidebarsConfig = {
         'migrations/index',
         'migrations/baseline-22-0',
         'migrations/template',
+        'contributing/offline-behavior',
       ],
     },
     {
@@ -50,6 +52,7 @@ const sidebars: SidebarsConfig = {
         'concepts/time-and-scheduling',
         'concepts/gas-and-resources',
         'concepts/cross-contract-invocation',
+        'concepts/randomness',
       ],
     },
     {
@@ -109,6 +112,13 @@ const sidebars: SidebarsConfig = {
         'planning/ab-testing',
         'planning/video-tutorial-getting-started',
         'planning/video-tutorial-first-contract',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Legal',
+      items: [
+        'legal/privacy',
       ],
     },
   ],
