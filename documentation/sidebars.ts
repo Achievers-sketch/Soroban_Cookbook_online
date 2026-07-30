@@ -23,6 +23,16 @@ const sidebars: SidebarsConfig = {
         'getting-started/contract-interaction',
         'contributing',
         'contributing/add-tested-example',
+        'contributing/versioning-strategy',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Migrations',
+      items: [
+        'migrations/index',
+        'migrations/baseline-22-0',
+        'migrations/template',
       ],
     },
     {

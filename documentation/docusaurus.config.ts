@@ -306,6 +306,16 @@ const config: Config = {
           routeBasePath: '/docs',
           editUrl:
             'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/documentation/',
+          // Docs versioning: the latest cut version (e.g. "22.0") is served at the
+          // site root; in-progress edits to docs/ live at /docs/next/ until the next
+          // version is cut. See docs/contributing/versioning-strategy.md.
+          includeCurrentVersion: true,
+          versions: {
+            current: {
+              label: 'Next 🚧',
+              badge: true,
+            },
+          },
         },
         blog: false,
         theme: {
@@ -340,6 +350,10 @@ const config: Config = {
           sidebarId: 'tutorialSidebar',
           position: 'left',
           label: 'Docs',
+        },
+        {
+          type: 'docsVersionDropdown',
+          position: 'right',
         },
         {
           href: process.env.DISCORD_INVITE_URL ?? 'https://discord.gg/YNBu3jKEF',
