@@ -54,7 +54,7 @@
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "web-vitals": "^4.2.4"
+    "web-vitals": "^6.0.1"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.9.2",
