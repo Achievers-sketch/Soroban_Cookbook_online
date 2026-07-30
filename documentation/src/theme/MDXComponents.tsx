@@ -11,6 +11,7 @@ import {
 } from '@site/src/components/PatternDoc';
 import CodeSnippet from '@site/src/components/CodeSnippet';
 import Collapsible from '@site/src/components/Collapsible/Collapsible';
+import { Quiz } from '@site/src/components/Quiz';
 
 export default {
   ...MDXComponents,
@@ -24,4 +25,5 @@ export default {
   EstimatedTime,
   CodeSnippet,
   Collapsible,
+  Quiz,
 };
