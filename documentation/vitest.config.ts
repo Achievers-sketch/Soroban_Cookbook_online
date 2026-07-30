@@ -63,9 +63,22 @@ export default defineConfig({
         },
       },
     },
+    exclude: ['node_modules', 'dist', 'e2e/**'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      thresholds: {
+        lines: 50,
+        functions: 50,
+        branches: 50,
+        statements: 50
+      },
+      include: ['src/components/**/*.{ts,tsx}']
+    }
   },
   resolve: {
     alias: {
+      '@site': path.resolve(__dirname, './'),
       '@': path.resolve(__dirname, './src'),
       '@site': path.resolve(__dirname, '.'),
       '@docusaurus/Link': path.resolve(__dirname, './vitest.setup.ts'),

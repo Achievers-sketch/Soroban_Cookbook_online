@@ -76,6 +76,8 @@
     "@axe-core/playwright": "^4.10.2",
     "@vitest/coverage-v8": "^1.0.4",
     "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/coverage-v8": "1.6.1",
     "@vitest/ui": "^1.0.4",
     "cspell": "^8.17.5",
     "eslint": "^9.39.3",
