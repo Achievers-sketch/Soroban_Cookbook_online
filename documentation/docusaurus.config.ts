@@ -2,6 +2,9 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+/** Optional GA4 measurement ID — enables page views + custom events when set. */
+const gtagMeasurementId = process.env.GTAG_MEASUREMENT_ID || process.env.GOOGLE_ANALYTICS_ID || '';
+
 const config: Config = {
   title: 'Soroban Cookbook',
   tagline: 'A comprehensive guide to building smart contracts on Stellar with Soroban',
@@ -328,6 +331,14 @@ const config: Config = {
             './src/css/search-experience.css',
           ],
         },
+        ...(gtagMeasurementId
+          ? {
+              gtag: {
+                trackingID: gtagMeasurementId,
+                anonymizeIP: true,
+              },
+            }
+          : {}),
       } satisfies Preset.Options,
     ],
   ],

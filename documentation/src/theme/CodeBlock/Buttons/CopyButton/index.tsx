@@ -5,7 +5,7 @@ import { useCodeBlockContext } from '@docusaurus/theme-common/internal';
 import Button from '@theme/CodeBlock/Buttons/Button';
 import IconCopy from '@theme/Icon/Copy';
 import IconSuccess from '@theme/Icon/Success';
-import { trackEvent } from '@site/src/utils/analytics';
+import { trackCopyCode } from '@site/src/utils/analytics';
 import styles from './styles.module.css';
 
 type CopyState = 'idle' | 'success' | 'error';
@@ -52,13 +52,6 @@ function labelFor(state: CopyState) {
   }
 }
 
-function trackCopy(language: string | undefined) {
-  trackEvent('copy_code', {
-    code_language: language ?? 'unknown',
-    code_section: 'code_block',
-  });
-}
-
 function useCopyButton() {
   const {
     metadata: { code, language },
@@ -75,7 +68,7 @@ function useCopyButton() {
     try {
       await navigator.clipboard.writeText(code);
       setCopyState('success');
-      trackCopy(language);
+      trackCopyCode({ language, section: 'code_block' });
     } catch {
       setCopyState('error');
     }
