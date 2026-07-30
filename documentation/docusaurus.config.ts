@@ -179,6 +179,19 @@ const config: Config = {
         indexDocs: true,
         indexPages: true,
         indexBlog: false,
+        // ── Phase 5: Code Snippet & API Search (issue #333) ───────────────────
+        // docsRouteBasePath must match preset-classic docs.routeBasePath so the
+        // search index covers all documentation pages (including code blocks).
+        docsRouteBasePath: '/docs',
+        // Index code inside fenced code blocks — the plugin strips Markdown
+        // formatting but preserves code block text by default; this comment
+        // documents that behaviour so future maintainers don't accidentally
+        // disable it by adding `removeDefaultStemmer: true` without testing.
+        // searchBarShortcutHint shows keyboard shortcut in the search bar.
+        searchBarShortcutHint: true,
+        // Make all search contexts available even when no context is selected,
+        // so a top-level search also surfaces results from nested doc sections.
+        useAllContextsWithNoSearchContext: true,
       },
     ],
     // ─── 301 Redirects ────────────────────────────────────────────────────────
