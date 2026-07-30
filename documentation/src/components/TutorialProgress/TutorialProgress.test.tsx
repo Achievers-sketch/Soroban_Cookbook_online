@@ -72,12 +72,15 @@ describe('TutorialProgress', () => {
     // jsdom has no IntersectionObserver; stub it so the component's effect
     // runs without throwing. The scroll-spy recompute logic itself is
     // covered separately by the pure `pickActiveIndex` tests above.
-    (globalThis as unknown as { IntersectionObserver: unknown }).IntersectionObserver = vi
-      .fn()
-      .mockImplementation(() => ({
-        observe: observeMock,
-        disconnect: disconnectMock,
-      }));
+    // Must be a real constructor function (not an arrow function) since the
+    // component calls it with `new`.
+    class MockIntersectionObserver {
+      observe = observeMock;
+      disconnect = disconnectMock;
+    }
+    (
+      globalThis as unknown as { IntersectionObserver: unknown }
+    ).IntersectionObserver = MockIntersectionObserver;
 
     Element.prototype.scrollIntoView = vi.fn();
   });
