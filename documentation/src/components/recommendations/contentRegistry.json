@@ -1,0 +1,1061 @@
+[
+  {
+    "id": "components/alert-callout-showcase",
+    "title": "alert-callout-showcase",
+    "description": "Complete showcase of alert and callout components",
+    "category": "components",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors",
+      "tokens",
+      "upgrade"
+    ],
+    "href": "/docs/components/alert-callout-showcase"
+  },
+  {
+    "id": "components/alerts",
+    "title": "alerts",
+    "description": "Alert components for important messages",
+    "category": "components",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "storage",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/components/alerts"
+  },
+  {
+    "id": "components/buttons",
+    "title": "buttons",
+    "description": "Soroban Cookbook button system with variants, sizes, states, icon support, and accessibility guidance.",
+    "category": "components",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "events",
+      "tokens"
+    ],
+    "href": "/docs/components/buttons"
+  },
+  {
+    "id": "components/callouts",
+    "title": "callouts",
+    "description": "Callout components for documentation emphasis",
+    "category": "components",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "optimization",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/components/callouts"
+  },
+  {
+    "id": "components/iconography",
+    "title": "iconography",
+    "description": "Guide for using icons in the Soroban Cookbook documentation",
+    "category": "components",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "errors"
+    ],
+    "href": "/docs/components/iconography"
+  },
+  {
+    "id": "components/testimonials",
+    "title": "testimonials",
+    "description": "Community testimonials section component with responsive cards and social channels.",
+    "category": "components",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [],
+    "href": "/docs/components/testimonials"
+  },
+  {
+    "id": "concepts/authorization",
+    "title": "Authorization",
+    "description": "Implement secure authorization patterns in Soroban contracts — identity validation, role-based access control, and permission management for sensitive operations.",
+    "category": "concepts",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "tokens",
+      "governance"
+    ],
+    "href": "/docs/concepts/authorization"
+  },
+  {
+    "id": "concepts/best-practices",
+    "title": "Soroban Best Practices",
+    "description": "Essential dos and donts for Soroban smart contract development — safe patterns, input validation, and a production-ready contract checklist.",
+    "category": "concepts",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "optimization",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/concepts/best-practices"
+  },
+  {
+    "id": "concepts/cross-contract-invocation",
+    "title": "cross-contract-invocation",
+    "description": "Soroban tutorial on cross-contract-invocation.",
+    "category": "concepts",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors",
+      "tokens",
+      "upgrade"
+    ],
+    "href": "/docs/concepts/cross-contract-invocation"
+  },
+  {
+    "id": "concepts/error-handling",
+    "title": "error-handling",
+    "description": "Soroban tutorial on error-handling.",
+    "category": "concepts",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/concepts/error-handling"
+  },
+  {
+    "id": "concepts/events",
+    "title": "Events",
+    "description": "Emit and track contract events for observability, debugging, and off-chain indexing in Soroban smart contracts.",
+    "category": "concepts",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "errors"
+    ],
+    "href": "/docs/concepts/events"
+  },
+  {
+    "id": "concepts/gas-and-resources",
+    "title": "Gas and Resource Management",
+    "description": "Document resource usage fundamentals and optimization strategies in Soroban.",
+    "category": "concepts",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "storage",
+      "optimization",
+      "errors"
+    ],
+    "href": "/docs/concepts/gas-and-resources"
+  },
+  {
+    "id": "concepts/introduction",
+    "title": "What is Soroban?",
+    "description": "Learn what Soroban is — Stellars smart contract platform built for speed, scalability, and developer experience with Rust.",
+    "category": "concepts",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "tokens",
+      "governance"
+    ],
+    "href": "/docs/concepts/introduction"
+  },
+  {
+    "id": "concepts/overview",
+    "title": "Core Concepts",
+    "description": "Essential Soroban concepts — storage, authorization, events, error handling, and contract lifecycle for robust smart contracts.",
+    "category": "concepts",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "errors",
+      "upgrade"
+    ],
+    "href": "/docs/concepts/overview"
+  },
+  {
+    "id": "concepts/storage",
+    "title": "Storage Patterns",
+    "description": "Master Sorobans three storage types — instance, persistent, and temporary — and learn patterns for efficient, scalable contract state management.",
+    "category": "concepts",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/concepts/storage"
+  },
+  {
+    "id": "concepts/testing-strategies",
+    "title": "Advanced Soroban Testing Strategies",
+    "description": "Soroban tutorial on Advanced Soroban Testing Strategies.",
+    "category": "concepts",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/concepts/testing-strategies"
+  },
+  {
+    "id": "concepts/token-standards",
+    "title": "Soroban Token Standards Overview",
+    "description": "Soroban tutorial on Soroban Token Standards Overview.",
+    "category": "concepts",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "errors",
+      "tokens",
+      "governance",
+      "upgrade"
+    ],
+    "href": "/docs/concepts/token-standards"
+  },
+  {
+    "id": "contributing/accessibility-guide",
+    "title": "Accessibility Guide",
+    "description": "WCAG 2.1 Level AA accessibility guidelines for the Soroban Cookbook.",
+    "category": "contributing",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "optimization",
+      "errors"
+    ],
+    "href": "/docs/contributing/accessibility-guide"
+  },
+  {
+    "id": "contributing/add-tested-example",
+    "title": "Test only your new example",
+    "description": "Soroban tutorial on Test only your new example.",
+    "category": "contributing",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "events",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/contributing/add-tested-example"
+  },
+  {
+    "id": "contributing/image-optimization",
+    "title": "image-optimization",
+    "description": "Best practices for using images in Soroban Cookbook documentation",
+    "category": "contributing",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "optimization"
+    ],
+    "href": "/docs/contributing/image-optimization"
+  },
+  {
+    "id": "contributing/internal-linking",
+    "title": "internal-linking",
+    "description": "Soroban tutorial on internal-linking.",
+    "category": "contributing",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors",
+      "tokens",
+      "governance",
+      "upgrade"
+    ],
+    "href": "/docs/contributing/internal-linking"
+  },
+  {
+    "id": "contributing/mobile-performance",
+    "title": "Mobile Performance Optimization",
+    "description": "Guidelines for achieving 90+ Lighthouse mobile performance score",
+    "category": "contributing",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "events",
+      "optimization"
+    ],
+    "href": "/docs/contributing/mobile-performance"
+  },
+  {
+    "id": "contributing/performance-impact",
+    "title": "performance-impact",
+    "description": "Before and after metrics for image optimization implementation",
+    "category": "contributing",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "events",
+      "optimization"
+    ],
+    "href": "/docs/contributing/performance-impact"
+  },
+  {
+    "id": "contributing",
+    "title": "Using bun (recommended)",
+    "description": "Learn how to contribute to the Soroban Cookbook project.",
+    "category": "general",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "storage",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/contributing"
+  },
+  {
+    "id": "design-system/alerts-callouts",
+    "title": "alerts-callouts",
+    "description": "Alert and callout components for important messages and documentation emphasis",
+    "category": "design-system",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors"
+    ],
+    "href": "/docs/design-system/alerts-callouts"
+  },
+  {
+    "id": "design-system/badges-tags",
+    "title": "badges-tags",
+    "description": "Soroban tutorial on badges-tags.",
+    "category": "design-system",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "errors",
+      "tokens",
+      "governance",
+      "upgrade"
+    ],
+    "href": "/docs/design-system/badges-tags"
+  },
+  {
+    "id": "design-system/buttons",
+    "title": "buttons",
+    "description": "Soroban tutorial on buttons.",
+    "category": "design-system",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "events",
+      "tokens"
+    ],
+    "href": "/docs/design-system/buttons"
+  },
+  {
+    "id": "design-system/empty-states",
+    "title": "empty-states",
+    "description": "Soroban tutorial on empty-states.",
+    "category": "design-system",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/design-system/empty-states"
+  },
+  {
+    "id": "design-system/typography",
+    "title": "typography",
+    "description": "Soroban tutorial on typography.",
+    "category": "design-system",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "events",
+      "tokens"
+    ],
+    "href": "/docs/design-system/typography"
+  },
+  {
+    "id": "getting-started/api-security",
+    "title": "API Security",
+    "description": "Security best practices for backend API endpoints",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "events",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/getting-started/api-security"
+  },
+  {
+    "id": "getting-started/building-and-compilation",
+    "title": "Add the WASM compilation target",
+    "description": "Soroban tutorial on Add the WASM compilation target.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "optimization",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/getting-started/building-and-compilation"
+  },
+  {
+    "id": "getting-started/contract-interaction",
+    "title": "Pass an integer value by name",
+    "description": "Soroban tutorial on Pass an integer value by name.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "optimization",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/getting-started/contract-interaction"
+  },
+  {
+    "id": "getting-started/contract-testing",
+    "title": "Contract Testing Guide",
+    "description": "Soroban tutorial on Contract Testing Guide.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/getting-started/contract-testing"
+  },
+  {
+    "id": "getting-started/debugging",
+    "title": "Document the exact steps",
+    "description": "Systematic debugging workflows and practical troubleshooting techniques for Soroban smart contract development",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/getting-started/debugging"
+  },
+  {
+    "id": "getting-started/deploy-mainnet",
+    "title": "Inspect the on-chain contract metadata",
+    "description": "Soroban tutorial on Inspect the on-chain contract metadata.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors",
+      "tokens",
+      "upgrade"
+    ],
+    "href": "/docs/getting-started/deploy-mainnet"
+  },
+  {
+    "id": "getting-started/deploy-testnet",
+    "title": "Deploy to Testnet",
+    "description": "Deploy Soroban contracts to Stellar testnet for validation, testing, and live environment verification before mainnet deployment.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "events",
+      "optimization",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/getting-started/deploy-testnet"
+  },
+  {
+    "id": "getting-started/first-contract",
+    "title": "Your First Contract",
+    "description": "Create, build, and test your first Soroban smart contract from scratch — a beginner-friendly introduction to contract development.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "storage"
+    ],
+    "href": "/docs/getting-started/first-contract"
+  },
+  {
+    "id": "getting-started/local-testing-and-simulation",
+    "title": "Run all tests",
+    "description": "Soroban tutorial on Run all tests.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors"
+    ],
+    "href": "/docs/getting-started/local-testing-and-simulation"
+  },
+  {
+    "id": "getting-started/local-testing",
+    "title": "Soroban Local Testing with Simulation and Snapshots",
+    "description": "Soroban tutorial on Soroban Local Testing with Simulation and Snapshots.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "optimization"
+    ],
+    "href": "/docs/getting-started/local-testing"
+  },
+  {
+    "id": "getting-started/setup-linux",
+    "title": "Linux Environment Setup",
+    "description": "Set up your Soroban development environment on Linux — complete guide for Ubuntu, Debian, and other distributions.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "errors",
+      "upgrade"
+    ],
+    "href": "/docs/getting-started/setup-linux"
+  },
+  {
+    "id": "getting-started/setup-macos",
+    "title": "setup-macos",
+    "description": "Soroban tutorial on setup-macos.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "errors"
+    ],
+    "href": "/docs/getting-started/setup-macos"
+  },
+  {
+    "id": "getting-started/setup-windows",
+    "title": "Windows Environment Setup",
+    "description": "Set up your Soroban development environment on Windows — guides for both WSL 2 and native Windows installation.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "errors",
+      "upgrade"
+    ],
+    "href": "/docs/getting-started/setup-windows"
+  },
+  {
+    "id": "getting-started/setup",
+    "title": "Environment Setup",
+    "description": "Set up your Soroban development environment — install Rust, Soroban CLI, and configure your system for smart contract development.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth"
+    ],
+    "href": "/docs/getting-started/setup"
+  },
+  {
+    "id": "getting-started/testing-errors",
+    "title": "Run all tests",
+    "description": "Soroban tutorial on Run all tests.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/getting-started/testing-errors"
+  },
+  {
+    "id": "patterns/authorization",
+    "title": "Phase 5 (issue #333): API keyword frontmatter for code-snippet search.",
+    "description": "Soroban tutorial on Phase 5 (issue #333): API keyword frontmatter for code-snippet search..",
+    "category": "patterns",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "errors",
+      "tokens",
+      "governance"
+    ],
+    "href": "/docs/patterns/authorization"
+  },
+  {
+    "id": "patterns/basic-token",
+    "title": "Phase 5 (issue #333): API keyword frontmatter for code-snippet search.",
+    "description": "Soroban tutorial on Phase 5 (issue #333): API keyword frontmatter for code-snippet search..",
+    "category": "patterns",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/patterns/basic-token"
+  },
+  {
+    "id": "patterns/contract-factory",
+    "title": "Contract Factory Pattern",
+    "description": "Deploy multiple contract instances from a factory contract",
+    "category": "patterns",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "errors",
+      "tokens",
+      "upgrade"
+    ],
+    "href": "/docs/patterns/contract-factory"
+  },
+  {
+    "id": "patterns/custom-types",
+    "title": "custom-types",
+    "description": "Soroban tutorial on custom-types.",
+    "category": "patterns",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors",
+      "tokens",
+      "upgrade"
+    ],
+    "href": "/docs/patterns/custom-types"
+  },
+  {
+    "id": "patterns/error-handling",
+    "title": "Phase 5 (issue #333): API keyword frontmatter for code-snippet search.",
+    "description": "Soroban tutorial on Phase 5 (issue #333): API keyword frontmatter for code-snippet search..",
+    "category": "patterns",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/patterns/error-handling"
+  },
+  {
+    "id": "patterns/error-recovery",
+    "title": "error-recovery",
+    "description": "Soroban tutorial on error-recovery.",
+    "category": "patterns",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/patterns/error-recovery"
+  },
+  {
+    "id": "patterns/hello-world",
+    "title": "hello-world",
+    "description": "Soroban tutorial on hello-world.",
+    "category": "patterns",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "tokens",
+      "upgrade"
+    ],
+    "href": "/docs/patterns/hello-world"
+  },
+  {
+    "id": "patterns/lifecycle-upgrades",
+    "title": "Phase 5 (issue #333): API keyword frontmatter for code-snippet search.",
+    "description": "Soroban tutorial on Phase 5 (issue #333): API keyword frontmatter for code-snippet search..",
+    "category": "patterns",
+    "difficulty": "advanced",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors",
+      "tokens",
+      "governance",
+      "upgrade"
+    ],
+    "href": "/docs/patterns/lifecycle-upgrades"
+  },
+  {
+    "id": "patterns/optimization-playbook",
+    "title": "optimization-playbook",
+    "description": "Soroban tutorial on optimization-playbook.",
+    "category": "patterns",
+    "difficulty": "advanced",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "storage",
+      "events",
+      "optimization",
+      "tokens"
+    ],
+    "href": "/docs/patterns/optimization-playbook"
+  },
+  {
+    "id": "patterns/oracle-consumer",
+    "title": "Oracle Consumer Pattern",
+    "description": "Read external price feeds and data from oracle contracts",
+    "category": "patterns",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/patterns/oracle-consumer"
+  },
+  {
+    "id": "patterns/overview",
+    "title": "Pattern Library",
+    "description": "Soroban tutorial on Pattern Library.",
+    "category": "patterns",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "errors",
+      "tokens",
+      "governance",
+      "upgrade"
+    ],
+    "href": "/docs/patterns/overview"
+  },
+  {
+    "id": "patterns/proposal-lifecycle",
+    "title": "proposal-lifecycle",
+    "description": "Soroban tutorial on proposal-lifecycle.",
+    "category": "patterns",
+    "difficulty": "advanced",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "errors",
+      "tokens",
+      "governance",
+      "upgrade"
+    ],
+    "href": "/docs/patterns/proposal-lifecycle"
+  },
+  {
+    "id": "patterns/staking",
+    "title": "staking",
+    "description": "Soroban tutorial on staking.",
+    "category": "patterns",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [],
+    "href": "/docs/patterns/staking"
+  },
+  {
+    "id": "patterns/timelock-vault",
+    "title": "Timelock Vault",
+    "description": "Soroban tutorial on Timelock Vault.",
+    "category": "patterns",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/patterns/timelock-vault"
+  },
+  {
+    "id": "patterns/token-standards",
+    "title": "token-standards",
+    "description": "Soroban tutorial on token-standards.",
+    "category": "patterns",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors",
+      "tokens",
+      "governance"
+    ],
+    "href": "/docs/patterns/token-standards"
+  },
+  {
+    "id": "responsive/breakpoints",
+    "title": "breakpoints",
+    "description": "Mobile-first responsive design guidelines, breakpoint tokens, container system, and utility classes for the Soroban Cookbook.",
+    "category": "responsive",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "events",
+      "tokens"
+    ],
+    "href": "/docs/responsive/breakpoints"
+  },
+  {
+    "id": "security/code-audit",
+    "title": "Code Security Audit",
+    "description": "Formal security audit checklist for the Soroban Cookbook documentation site.",
+    "category": "security",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "storage",
+      "events",
+      "errors",
+      "tokens",
+      "upgrade"
+    ],
+    "href": "/docs/security/code-audit"
+  },
+  {
+    "id": "security/defi-patterns",
+    "title": "DeFi Security Patterns",
+    "description": "Soroban tutorial on DeFi Security Patterns.",
+    "category": "security",
+    "difficulty": "advanced",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "events",
+      "optimization",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/security/defi-patterns"
+  },
+  {
+    "id": "security/fundamentals",
+    "title": "fundamentals",
+    "description": "Essential security practices for Soroban smart contracts — threat modeling, secure coding patterns, and protecting funds from vulnerabilities.",
+    "category": "security",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors",
+      "tokens",
+      "governance",
+      "upgrade"
+    ],
+    "href": "/docs/security/fundamentals"
+  },
+  {
+    "id": "security/governance",
+    "title": "governance",
+    "description": "Security considerations for decentralized governance contracts in Soroban — voting systems, proposal mechanisms, and attack mitigation.",
+    "category": "security",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "events",
+      "tokens",
+      "governance",
+      "upgrade"
+    ],
+    "href": "/docs/security/governance"
+  },
+  {
+    "id": "security/token-audit",
+    "title": "token-audit",
+    "description": "Soroban tutorial on token-audit.",
+    "category": "security",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "errors",
+      "tokens",
+      "governance",
+      "upgrade"
+    ],
+    "href": "/docs/security/token-audit"
+  }
+]
