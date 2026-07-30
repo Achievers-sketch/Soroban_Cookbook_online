@@ -1,4 +1,5 @@
 ---
+time: 25
 sidebar_position: 5
 title: Contract Optimization Playbook
 description: A systematic guide to profiling, benchmarking, and optimizing Soroban smart contracts for gas and performance.
@@ -9,8 +10,11 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { Callout } from '@site/src/components/Callout';
 import { Alert } from '@site/src/components/Alert';
+import { QuickNav } from '@site/src/components/QuickNav';
 
 ## Overview
+
+<QuickNav />
 
 In Soroban, performance isn't just about speed—it's about **predictability and cost**. Every operation (CPU instructions, memory allocation, and ledger access) consumes resources that are metered and capped. This playbook provides a repeatable, measurable workflow for optimizing your contracts.
 

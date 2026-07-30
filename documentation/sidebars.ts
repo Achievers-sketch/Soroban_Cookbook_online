@@ -14,6 +14,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/setup-linux',
         'getting-started/setup-windows',
         'getting-started/setup-macos',
+        'getting-started/development-tools',
         'getting-started/first-contract',
         'getting-started/building-and-compilation',
         'getting-started/browser-server-compilation',
@@ -24,6 +25,18 @@ const sidebars: SidebarsConfig = {
         'getting-started/contract-interaction',
         'contributing',
         'contributing/add-tested-example',
+        'contributing/analytics-events',
+        'contributing/versioning-strategy',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Migrations',
+      items: [
+        'migrations/index',
+        'migrations/baseline-22-0',
+        'migrations/template',
+        'contributing/offline-behavior',
       ],
     },
     {
@@ -36,8 +49,10 @@ const sidebars: SidebarsConfig = {
         'concepts/storage',
         'concepts/authorization',
         'concepts/events',
+        'concepts/time-and-scheduling',
         'concepts/gas-and-resources',
         'concepts/cross-contract-invocation',
+        'concepts/randomness',
       ],
     },
     {
@@ -47,11 +62,13 @@ const sidebars: SidebarsConfig = {
         'patterns/overview',
         'patterns/hello-world',
         'patterns/basic-token',
+        'patterns/token-snapshot',
         'patterns/custom-types',
         'patterns/token-standards',
         'patterns/authorization',
         'patterns/error-handling',
         'patterns/error-recovery',
+        'patterns/escrow-multiparty',
         'patterns/optimization-playbook',
         'patterns/lifecycle-upgrades',
         'patterns/proposal-lifecycle',
@@ -61,11 +78,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Security',
-      items: [
-        'security/fundamentals',
-        'security/governance',
-        'security/defi-patterns',
-      ],
+      items: ['security/fundamentals', 'security/governance', 'security/defi-patterns'],
     },
     {
       type: 'category',
@@ -80,23 +93,32 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Components',
-      items: [
-        'components/buttons',
-        'components/testimonials',
-      ],
+      items: ['components/buttons', 'components/testimonials'],
     },
     {
       type: 'category',
       label: 'Responsive',
-      items: [
-        'responsive/breakpoints',
-      ],
+      items: ['responsive/breakpoints'],
     },
     {
       type: 'category',
       label: 'Security Audit',
+      items: ['security/code-audit'],
+    },
+    {
+      type: 'category',
+      label: 'Planning',
       items: [
-        'security/code-audit',
+        'planning/ab-testing',
+        'planning/video-tutorial-getting-started',
+        'planning/video-tutorial-first-contract',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Legal',
+      items: [
+        'legal/privacy',
       ],
     },
   ],
