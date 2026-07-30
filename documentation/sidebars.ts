@@ -50,6 +50,7 @@ const sidebars: SidebarsConfig = {
         'concepts/time-and-scheduling',
         'concepts/gas-and-resources',
         'concepts/cross-contract-invocation',
+        'concepts/randomness',
       ],
     },
     {
