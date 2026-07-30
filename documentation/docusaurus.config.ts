@@ -158,6 +158,11 @@ const config: Config = {
   // Loads on every page to observe the search input and fire onQuery /
   // onResult analytics events via src/utils/searchAnalytics.ts.
   clientModules: [require.resolve('./src/clientModules/searchAnalyticsModule.ts')],
+  markdown: {
+    mermaid: true,
+  },
+
+  themes: ['@docusaurus/theme-mermaid'],
 
   plugins: [
     [
@@ -490,6 +495,12 @@ const config: Config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.vsDark,
       additionalLanguages: ['rust', 'toml', 'bash'],
+    },
+    mermaid: {
+      theme: {
+        light: 'neutral',
+        dark: 'dark',
+      },
     },
   } satisfies Preset.ThemeConfig,
 };
