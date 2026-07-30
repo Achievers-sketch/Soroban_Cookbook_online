@@ -79,6 +79,8 @@ export default defineConfig({
     include: ['src/**/*.test.{ts,tsx}'],
     // Exclude Bun-specific unit tests (e.g. those using bun:test) from the Vitest runner
     exclude: ['src/utils/__tests__/**', 'node_modules/**'],
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['node_modules/**', 'e2e/**', 'build/**', 'src/utils/__tests__/sanitizeUrl.test.ts'],
   },
   resolve: {
     alias: {
@@ -122,6 +124,10 @@ export default defineConfig({
       '@docusaurus/useDocusaurusContext': path.resolve(__dirname, './src/__mocks__/@docusaurus/useDocusaurusContext.tsx'),
       '@docusaurus/router': path.resolve(__dirname, './src/__mocks__/@docusaurus/router.tsx'),
       '@docusaurus/theme-common': path.resolve(__dirname, './src/__mocks__/@docusaurus/theme-common.tsx'),
+      '@docusaurus/useDocusaurusContext': path.resolve(
+        __dirname,
+        './src/test-mocks/useDocusaurusContext.ts',
+      ),
     },
   },
 });
