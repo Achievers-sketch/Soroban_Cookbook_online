@@ -30,6 +30,7 @@
     "test": "vitest run",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
+    "check:bundle-budget": "node scripts/check-performance-budget.mjs",
 
     "audit:headings": "node scripts/audit-heading-hierarchy.mjs",
     "press:screenshots": "node scripts/capture-press-screenshots.mjs",
