@@ -14,8 +14,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://soroban-cookbook.dev',
-  baseUrl: '/',
+  url: process.env.SITE_URL || 'https://soroban-cookbook.dev',
+  baseUrl: process.env.BASE_URL || '/',
 
   organizationName: 'Soroban-Cookbook',
   projectName: 'Soroban_Cookbook_online',
@@ -129,13 +129,7 @@ const config: Config = {
         content: 'Soroban Cookbook',
       },
     },
-    {
-      tagName: 'meta',
-      attributes: {
-        property: 'og:image',
-        content: 'https://soroban-cookbook.dev/img/soroban-social-card.png',
-      },
-    },
+    // Open Graph image size tags (og:image, twitter:card, and twitter:image are automatically injected by Docusaurus from themeConfig.image)
     {
       tagName: 'meta',
       attributes: {
@@ -148,20 +142,6 @@ const config: Config = {
       attributes: {
         property: 'og:image:height',
         content: '630',
-      },
-    },
-    {
-      tagName: 'meta',
-      attributes: {
-        name: 'twitter:card',
-        content: 'summary_large_image',
-      },
-    },
-    {
-      tagName: 'meta',
-      attributes: {
-        name: 'twitter:image',
-        content: 'https://soroban-cookbook.dev/img/soroban-social-card.png',
       },
     },
   ],
