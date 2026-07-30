@@ -82,8 +82,12 @@ main .container.margin-vert--lg section article a {
   text-decoration: none;
 }
 
-main .container.margin-vert--lg section article a:hover {
+main .container.margin-vert--lg section article a:hover,
+main .container.margin-vert--lg section article a:focus,
+main .container.margin-vert--lg section article a:focus-visible {
   text-decoration: underline;
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 4px;
 }
 
 /* Result metadata display */
