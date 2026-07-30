@@ -2,6 +2,8 @@
  * DocItem/Content wrapper — surfaces EstimatedTime from `time` frontmatter
  * (issue #307 / Phase 4), the page feedback widget (issue #359), and the
  * content recommendation engine (issue #341 / Phase 5).
+ * (issue #307 / Phase 4), the page feedback widget (issue #359), and
+ * scroll-spy sidebar highlighting (issue #133 / Phase 4).
  */
 
 import React, { type ReactNode } from 'react';
@@ -10,6 +12,7 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useDoc } from '@docusaurus/plugin-content-docs/client';
 import { EstimatedTime, parseEstimatedTime } from '@site/src/components/PatternDoc';
 import DocFeedback from '@site/src/components/DocFeedback';
+import ScrollSpyActivator from '@site/src/components/ScrollSpyActivator';
 import styles from './styles.module.css';
 
 type Props = React.ComponentProps<typeof Content>;
@@ -47,6 +50,7 @@ export default function DocItemContentWrapper(props: Props): ReactNode {
         </BrowserOnly>
       ) : null}
       <DocFeedback />
+      <ScrollSpyActivator />
     </>
   );
 }
