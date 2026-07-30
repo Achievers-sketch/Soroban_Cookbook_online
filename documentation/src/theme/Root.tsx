@@ -1,12 +1,16 @@
 /**
  * Docusaurus theme swizzle — Root wrapper
  *
- * Issue #136: Error Monitoring Setup (Sentry)
- * Issue #179: Web Vitals reporting
+ * - Issue #136: Sentry error monitoring (DSN from env, release capture, PII scrub)
+ * - Issue #179: Web Vitals reporting
+ * - Issues #361/#362: analytics consent banner
+ * - Issue #358: search analytics
+ * - Issue #352: privacy / GDPR consent gating for non-essential beacons
  *
- * Initialises both Sentry (error monitoring) and Web Vitals reporting once
- * on the client side. Neither must ever break the page render — all SDK
- * calls are wrapped in try/catch or silent-swallow promise chains.
+ * This component wraps the entire Docusaurus app. We use it to initialise
+ * Sentry and Web Vitals on the client side, and to mount the site-wide
+ * analytics consent banner and route-level trackers, without modifying the
+ * core layout.
  *
  * ## Sentry configuration
  *
@@ -19,14 +23,6 @@
  *   SENTRY_RELEASE      – Semantic version string, e.g. "1.4.2"
  *                         defaults to npm_package_version
  *
- * Example (Vercel):
- *   Add SENTRY_DSN in Vercel Dashboard → Settings → Environment Variables
- *
- * Example (GitHub Actions):
- *   Add SENTRY_DSN as a repository secret, then expose it in the workflow:
- *   env:
- *     SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
- *
  * When SENTRY_DSN is absent (local dev without a configured project), Sentry
  * is NOT initialised — the page behaves exactly as before this change.
  *
@@ -34,13 +30,16 @@
  *
  * In a browser console on a Sentry-connected build:
  *   window.__sentryTest()
- * This fires a test error that should appear in your Sentry dashboard within
- * a few seconds.
  *
  * See: https://docusaurus.io/docs/swizzling#wrapper-your-site-with-root
  */
 
 import React, { useEffect, type ReactNode } from 'react';
+import ConsentBanner from '@site/src/components/ConsentBanner';
+import FunnelTracker from '@site/src/components/FunnelTracker';
+import SearchAnalytics from '@site/src/components/SearchAnalytics';
+import { hasConsent } from '@site/src/utils/analyticsConsent';
+import useRecommendationTracker from '../hooks/useRecommendationTracker';
 
 // Build-time constants injected by Docusaurus / webpack DefinePlugin.
 // process.env is statically replaced at build time; these are safe to read
@@ -61,6 +60,8 @@ interface RootProps {
 }
 
 export default function Root({ children }: RootProps): React.JSX.Element {
+  useRecommendationTracker();
+
   useEffect(() => {
     // ── Sentry initialisation ──────────────────────────────────────────────
     // Only initialise when a DSN is configured. This keeps local development
@@ -78,19 +79,14 @@ export default function Root({ children }: RootProps): React.JSX.Element {
             sampleRate: 1.0,
 
             // Performance tracing — capture 10 % of transactions by default.
-            // Increase to 1.0 during initial rollout to get a baseline, then
-            // dial back to reduce quota usage.
             tracesSampleRate: 0.1,
 
             // Ignore common browser extension noise and benign network errors.
             ignoreErrors: [
-              // Browser extension messaging
               'ResizeObserver loop limit exceeded',
               'ResizeObserver loop completed with undelivered notifications',
-              // Chrome extension noise
               /chrome-extension:\/\//,
               /extensions\//,
-              // Network errors that aren't actionable
               'NetworkError',
               'Failed to fetch',
               'Load failed',
@@ -98,11 +94,9 @@ export default function Root({ children }: RootProps): React.JSX.Element {
 
             // Strip user PII from breadcrumbs and event data.
             beforeSend(event) {
-              // Remove any query-string parameters that might contain tokens
               if (event.request?.url) {
                 try {
                   const url = new URL(event.request.url);
-                  // Scrub common sensitive query params
                   ['token', 'key', 'secret', 'password', 'auth'].forEach((p) =>
                     url.searchParams.delete(p),
                   );
@@ -119,9 +113,7 @@ export default function Root({ children }: RootProps): React.JSX.Element {
           // verified without a real user-facing error:
           //   window.__sentryTest()
           if (typeof window !== 'undefined') {
-            (
-              window as Window & { __sentryTest?: () => void }
-            ).__sentryTest = () => {
+            (window as Window & { __sentryTest?: () => void }).__sentryTest = () => {
               Sentry.captureException(
                 new Error(
                   '[Sentry test] Manual verification — safe to ignore in production.',
@@ -137,17 +129,24 @@ export default function Root({ children }: RootProps): React.JSX.Element {
     }
 
     // ── Web Vitals reporting ───────────────────────────────────────────────
-    // Dynamic import keeps web-vitals out of the critical bundle path.
-    import('../utils/webVitals')
-      .then(({ reportWebVitals }) => {
+    import('../utils/webVitals').then(({ reportWebVitals }) => {
+      // Remote vitals beacons are non-essential; only start collectors when
+      // analytics consent is present. Console-only logging still helps locally
+      // when consent was accepted or during development without a remote sink.
+      if (hasConsent() || process.env.NODE_ENV !== 'production') {
         reportWebVitals().catch(() => {
-          // Silently swallow errors — vitals reporting must never break the page.
+          // Vitals reporting must never break the page.
         });
-      })
-      .catch(() => {
-        // Ignore if the module fails to load.
-      });
-  }, []); // Run once on mount
+      }
+    });
+  }, []);
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      <FunnelTracker />
+      <SearchAnalytics />
+      <ConsentBanner />
+    </>
+  );
 }
