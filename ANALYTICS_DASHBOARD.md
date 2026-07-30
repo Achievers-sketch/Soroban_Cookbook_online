@@ -205,3 +205,6 @@ don't automate the judgment.
 - Search terms are typed by users and could in principle contain something
   personal. Do not export raw search terms outside the docs team.
 - Access to the GA4 property and the dashboard is limited to maintainers. -->
+- Full data-handling practices are documented in our
+  [Privacy Policy](/docs/legal/privacy) (GDPR-compliant, with data-controller
+  contact, lawful basis, retention periods, and third-party processor details).

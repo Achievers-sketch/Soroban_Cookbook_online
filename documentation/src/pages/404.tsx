@@ -79,3 +79,5 @@ export default function NotFound() {
     </Layout>
   );
 }
+import NotFound from '@theme/NotFound';
+export default NotFound;
