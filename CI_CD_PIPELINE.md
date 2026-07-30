@@ -138,7 +138,20 @@ Deploys the built documentation to GitHub Pages.
 
 **Environment:** `github-pages`
 
-**Output:** Deployment URL available in workflow run details
+**Output:** Deployment URL available in workflow run details (`page_url` job output)
+
+#### 3. Deploy Status Notification (`notify`)
+Notifies the team of deploy success or failure via Slack and/or Discord.
+
+**Runs After:** `build` and `deploy` (always runs, including when either job fails)
+
+**Steps:**
+- Determine overall outcome from `needs.build.result` / `needs.deploy.result`
+- Send Slack notification when `SLACK_WEBHOOK_URL` is configured
+- Send Discord notification when `DISCORD_WEBHOOK_URL` is configured
+- Log a setup hint when neither webhook secret is present
+
+**Secrets (optional):** `SLACK_WEBHOOK_URL`, `DISCORD_WEBHOOK_URL` — see [DEPLOYMENT.md](DEPLOYMENT.md) → Deploy Status Notifications
 
 ## Caching Strategy
 
@@ -321,7 +334,7 @@ First run (without cache) may take 2-3x longer.
 
 - [ ] Add PR preview deployments
 - [ ] Add Lighthouse performance audits
-- [ ] Add deployment notifications
+- [x] Add deployment notifications
 - [ ] Add automated rollback on deployment failure
 - [ ] Add security scanning (SAST/dependency checks)
 - [ ] Add artifact retention policies

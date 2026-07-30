@@ -248,7 +248,7 @@ Deployment does not require any environment variables to succeed — the build f
 
 Because this is a fully static site, any value baked in via `customFields` ends up readable in the published JavaScript bundle — a visitor's browser has to receive it to use it. Storing them as GitHub Secrets controls **who can set or change the value** (write access to repo secrets) and **keeps it out of git history and pull request diffs**; it does not make the value secret from website visitors. Treat these as build-time configuration, not authentication credentials — never put real API keys, passwords, or signing keys into `customFields` or any other value that reaches the client bundle.
 
-This repo follows the same secrets-only pattern for actual credentials: `.github/workflows/alerts.yml` reads `SLACK_WEBHOOK_URL` exclusively via `${{ secrets.SLACK_WEBHOOK_URL }}` (see [Alert System](#alert-system) below) and never hardcodes it. There are no `.env` files committed to this repository — `.gitignore` excludes `.env*` so local secrets never reach version control.
+This repo follows the same secrets-only pattern for actual credentials: `.github/workflows/alerts.yml` and `.github/workflows/deploy.yml` read `SLACK_WEBHOOK_URL` / `DISCORD_WEBHOOK_URL` exclusively via `${{ secrets.* }}` (see [Deploy Status Notifications](#deploy-status-notifications) and [Alert System](#alert-system) below) and never hardcode them. There are no `.env` files committed to this repository — `.gitignore` excludes `.env*` so local secrets never reach version control.
 
 ## Analytics
 
@@ -446,9 +446,39 @@ grep -o '<meta http-equiv="Content-Security-Policy"[^>]*>' documentation/build/i
 
 This repo's `documentation/e2e/smoke-console.spec.ts` Playwright suite (`bun run test:console`, also run in CI as the `e2e-console` job) loads the homepage, docs pages, search, and the 404 page with a real Chromium instance and fails the build if the browser logs any CSP violation — so any future change that introduces a new third-party script, font, image host, or inline style that the policy doesn't already allow will be caught automatically rather than silently breaking in production.
 
+## Deploy Status Notifications
+
+Deployment success and failure alerts are sent directly from `.github/workflows/deploy.yml` via the `notify` job (`Deploy Status Notification`). The job always runs after `build` and `deploy` (`if: always()`), so the team is notified whether the pipeline succeeds or fails.
+
+| Outcome | Channels | Payload includes |
+|---|---|---|
+| Build + deploy both succeed | Slack and/or Discord | Branch, commit, actor, site URL, Actions run URL |
+| Build or deploy fails / is skipped | Slack and/or Discord | Branch, commit, actor, build/deploy job results, Actions run URL |
+
+Webhooks are optional. If neither secret is set, the notify job logs a setup hint and exits successfully so deployments are never blocked by missing notification config.
+
+### Setup
+
+#### Slack (`SLACK_WEBHOOK_URL`)
+
+Uses the same Incoming Webhook as the [Alert System](#alert-system) below. If you already configured `SLACK_WEBHOOK_URL` for `alerts.yml`, deploy status notifications reuse it automatically.
+
+#### Discord (`DISCORD_WEBHOOK_URL`)
+
+1. In Discord: **Server Settings → Integrations → Webhooks → New Webhook**.
+2. Choose the target channel (e.g. `#deployments`), then copy the webhook URL.
+3. Go to **GitHub → Settings → Secrets and variables → Actions**.
+4. Click **New repository secret**.
+5. Name: `DISCORD_WEBHOOK_URL` — Value: the Discord webhook URL.
+
+#### Verify
+
+1. Trigger a deploy (`push` to `main` or **Actions → CD - Deploy to GitHub Pages → Run workflow**).
+2. When the run finishes, confirm a success or failure message appears in Slack and/or Discord.
+
 ## Alert System
 
-Alerting is handled by `.github/workflows/alerts.yml`. The workflow covers three scenarios:
+Alerting for CI/CD workflow conclusions and site uptime is handled by `.github/workflows/alerts.yml` (complements the in-workflow deploy notifications above). The workflow covers:
 
 | Trigger | Job | What fires |
 |---|---|---|
@@ -501,7 +531,8 @@ If you want to set up a formal PagerDuty integration, replace the `slackapi/slac
 
 | Channel | Purpose | Configured via |
 |---|---|---|
-| Slack `#soroban-alerts` | CI failures, recoveries, downtime | `SLACK_WEBHOOK_URL` secret |
+| Slack `#soroban-alerts` | Deploy status, CI failures, recoveries, downtime | `SLACK_WEBHOOK_URL` secret |
+| Discord webhook channel | Deploy success / failure status | `DISCORD_WEBHOOK_URL` secret |
 | GitHub Actions email | Default GitHub notification for workflow failures | GitHub account notification settings |
 
 ---
@@ -512,7 +543,7 @@ If you want to set up a formal PagerDuty integration, replace the `slackapi/slac
 - [ ] Add performance metrics collection
 - [ ] Implement preview deployments for pull requests
 - [ ] Add automated lighthouse audits
-- [ ] Set up deployment notifications
+- [x] Set up deployment notifications
 
 ## Support
 

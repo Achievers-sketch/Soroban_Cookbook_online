@@ -65,6 +65,15 @@ jobs:
           curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
             | tar -xz -C /tmp gitleaks
           sudo install /tmp/gitleaks /usr/local/bin/gitleaks
+      - name: Install gitleaks CLI
+        run: |
+          GITLEAKS_VERSION=8.24.3
+          curl -sSL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      - name: Run gitleaks
+        run: gitleaks detect --source . --verbose --redact
       # Use the gitleaks CLI directly — gitleaks-action@v2 requires a paid
       # GITLEAKS_LICENSE for GitHub organizations, which this repo does not have.
       - name: Install gitleaks
