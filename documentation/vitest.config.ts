@@ -76,6 +76,9 @@ export default defineConfig({
       include: ['src/components/**/*.{ts,tsx}']
     }
     exclude: ['**/node_modules/**', '**/dist/**', '**/e2e/**', '**/__tests__/sanitizeUrl.test.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
+    // Exclude Bun-specific unit tests (e.g. those using bun:test) from the Vitest runner
+    exclude: ['src/utils/__tests__/**', 'node_modules/**'],
   },
   resolve: {
     alias: {
@@ -114,6 +117,11 @@ export default defineConfig({
       '@docusaurus/serverEntry': docusaurusAlias('serverEntry.js'),
       '@docusaurus/useHistory': docusaurusAlias('useHistory'),
       '@docusaurus/useLocation': docusaurusAlias('useLocation'),
+      '@docusaurus/Link': path.resolve(__dirname, './src/__mocks__/@docusaurus/Link.tsx'),
+      '@theme/Layout': path.resolve(__dirname, './src/__mocks__/@theme/Layout.tsx'),
+      '@docusaurus/useDocusaurusContext': path.resolve(__dirname, './src/__mocks__/@docusaurus/useDocusaurusContext.tsx'),
+      '@docusaurus/router': path.resolve(__dirname, './src/__mocks__/@docusaurus/router.tsx'),
+      '@docusaurus/theme-common': path.resolve(__dirname, './src/__mocks__/@docusaurus/theme-common.tsx'),
     },
   },
 });

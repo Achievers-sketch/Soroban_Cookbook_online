@@ -111,6 +111,8 @@ jobs:
 
   unit-tests:
     name: Unit Tests (Vitest)
+  test-unit-integration:
+    name: Run Unit & Integration Tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -193,6 +195,8 @@ jobs:
         env:
           CI: true
           BASE_URL: http://127.0.0.1:3000
+      - name: Run unit & integration tests
+        run: bun run test
 
   build-docs:
     name: Build Documentation
@@ -434,6 +438,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, e2e-console, e2e-smoke]
     needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, e2e-console, security-scan]
+    needs: [lint-format, spellcheck, typecheck, test-unit-integration, build-docs, validate-deployment, test-examples, e2e-console]
     if: always()
     runs-on: ubuntu-latest    needs: [lint-format, spellcheck, typecheck, unit-tests, build-docs, validate-deployment, test-examples, e2e-console, e2e-search]    if: always()
     steps:
@@ -453,6 +458,8 @@ jobs:
           fi
           if [ "${{ needs.unit-tests.result }}" != "success" ]; then
             echo "❌ Unit tests failed"
+          if [ "${{ needs.test-unit-integration.result }}" != "success" ]; then
+            echo "❌ Unit & Integration tests failed"
             exit 1
           fi
           if [ "${{ needs.build-docs.result }}" != "success" ]; then
