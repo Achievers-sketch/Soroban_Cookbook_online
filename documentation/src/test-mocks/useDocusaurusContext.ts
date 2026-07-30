@@ -1,5 +1,6 @@
 /**
  * Vitest stub for `@docusaurus/useDocusaurusContext`.
+ * Tests override `mockUseDocusaurusContext` via vi.spyOn / module replacement.
  */
 export type MockDocusaurusContext = {
   siteConfig: {
