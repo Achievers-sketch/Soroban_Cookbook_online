@@ -698,8 +698,8 @@
   },
   {
     "id": "patterns/authorization",
-    "title": "authorization",
-    "description": "Soroban tutorial on authorization.",
+    "title": "Phase 5 (issue #333): API keyword frontmatter for code-snippet search.",
+    "description": "Soroban tutorial on Phase 5 (issue #333): API keyword frontmatter for code-snippet search..",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
@@ -715,8 +715,8 @@
   },
   {
     "id": "patterns/basic-token",
-    "title": "basic-token",
-    "description": "Soroban tutorial on basic-token.",
+    "title": "Phase 5 (issue #333): API keyword frontmatter for code-snippet search.",
+    "description": "Soroban tutorial on Phase 5 (issue #333): API keyword frontmatter for code-snippet search..",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
@@ -768,8 +768,8 @@
   },
   {
     "id": "patterns/error-handling",
-    "title": "error-handling",
-    "description": "Soroban tutorial on error-handling.",
+    "title": "Phase 5 (issue #333): API keyword frontmatter for code-snippet search.",
+    "description": "Soroban tutorial on Phase 5 (issue #333): API keyword frontmatter for code-snippet search..",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
@@ -819,8 +819,8 @@
   },
   {
     "id": "patterns/lifecycle-upgrades",
-    "title": "lifecycle-upgrades",
-    "description": "Soroban tutorial on lifecycle-upgrades.",
+    "title": "Phase 5 (issue #333): API keyword frontmatter for code-snippet search.",
+    "description": "Soroban tutorial on Phase 5 (issue #333): API keyword frontmatter for code-snippet search..",
     "category": "patterns",
     "difficulty": "advanced",
     "status": "stable",

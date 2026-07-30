@@ -15,8 +15,19 @@ import styles from './styles.module.css';
 type Props = React.ComponentProps<typeof Content>;
 
 export default function DocItemContentWrapper(props: Props): ReactNode {
-  const { metadata, frontMatter } = useDoc();
-  const rawTime = (frontMatter as { time?: string | number }).time;
+  let metadata: { id: string } | undefined;
+  let frontMatter: { time?: string | number } | undefined;
+
+  try {
+    const docObj = useDoc();
+    metadata = docObj.metadata;
+    frontMatter = docObj.frontMatter as { time?: string | number };
+  } catch {
+    metadata = undefined;
+    frontMatter = undefined;
+  }
+
+  const rawTime = frontMatter?.time;
   const label = parseEstimatedTime(rawTime);
 
   return (
@@ -27,14 +38,15 @@ export default function DocItemContentWrapper(props: Props): ReactNode {
         </div>
       ) : null}
       <Content {...props} />
-      <BrowserOnly>
-        {() => {
-          const { RecommendationWidget } = require('../../../components/recommendations');
-          return <RecommendationWidget currentDocId={metadata.id} />;
-        }}
-      </BrowserOnly>
+      {metadata?.id ? (
+        <BrowserOnly>
+          {() => {
+            const { RecommendationWidget } = require('../../../components/recommendations');
+            return <RecommendationWidget currentDocId={metadata.id} />;
+          }}
+        </BrowserOnly>
+      ) : null}
       <DocFeedback />
     </>
   );
 }
-

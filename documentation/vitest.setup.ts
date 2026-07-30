@@ -14,3 +14,31 @@ vi.mock('@docusaurus/router', () => {
   };
 });
 
+vi.mock('@docusaurus/Head', () => {
+  return {
+    default: (props: any) => React.createElement('head', null, props?.children),
+  };
+});
+
+vi.mock('@docusaurus/useDocusaurusContext', () => {
+  return {
+    default: () => ({
+      siteConfig: {
+        url: 'https://soroban-cookbook.dev',
+        baseUrl: '/',
+      },
+    }),
+  };
+});
+
+vi.mock('@docusaurus/plugin-content-docs/client', () => {
+  return {
+    useSidebarBreadcrumbs: () => [],
+    useDoc: () => ({
+      metadata: {
+        title: 'Doc',
+        permalink: '/docs/doc',
+      },
+    }),
+  };
+});
