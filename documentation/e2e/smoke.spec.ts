@@ -114,6 +114,17 @@ test.describe('Accessibility – basic', () => {
         .filter((x) => x.alt === null),
     );
     expect(missing, `Images missing alt: ${JSON.stringify(missing)}`).toEqual([]);
+    // Snapshot alts in one evaluate to avoid flaky nth() on lazy/detached imgs
+    const images = await page.locator('img').evaluateAll((imgs) =>
+      imgs.map((img) => ({
+        src: img.getAttribute('src') ?? '',
+        alt: img.getAttribute('alt'),
+      })),
+    );
+    expect(images.length).toBeGreaterThan(0);
+    for (const { src, alt } of images) {
+      expect(alt, `Image ${src || '(no src)'} is missing alt text`).not.toBeNull();
+    }
 
     // Single evaluate avoids flaky per-image locator timeouts on lazy/detached nodes.
     const missingAlts = await page.evaluate(() =>
