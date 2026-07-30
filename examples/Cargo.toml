@@ -15,6 +15,7 @@ members = [
     "simple-voting",
     "staking",
     "timelock-vault",
+    "token-snapshot",
     "token-transfer",
     "token-wrapper",
     "upgradeable",
