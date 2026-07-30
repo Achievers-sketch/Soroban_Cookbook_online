@@ -416,7 +416,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Download build artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: documentation-build
           path: documentation/build
