@@ -45,6 +45,7 @@ const sidebars: SidebarsConfig = {
         'concepts/storage',
         'concepts/authorization',
         'concepts/events',
+        'concepts/time-and-scheduling',
         'concepts/gas-and-resources',
         'concepts/cross-contract-invocation',
       ],
@@ -113,6 +114,8 @@ const sidebars: SidebarsConfig = {
       label: 'Planning',
       items: [
         'planning/ab-testing',
+        'planning/video-tutorial-getting-started',
+        'planning/video-tutorial-first-contract',
       ],
     },
   ],
