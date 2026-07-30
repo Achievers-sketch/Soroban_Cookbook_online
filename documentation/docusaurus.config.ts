@@ -414,6 +414,7 @@ const config: Config = {
             },
             {
               html: '<button type="button" class="footer__link-item" style="background:none;border:none;padding:0;color:inherit;cursor:pointer;font:inherit;text-align:left" onclick="window.dispatchEvent(new CustomEvent(\'soroban-open-consent\'))">Cookie settings</button>',
+              to: '/docs/legal/privacy',
             },
           ],
         },

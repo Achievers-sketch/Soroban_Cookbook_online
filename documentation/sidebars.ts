@@ -111,6 +111,13 @@ const sidebars: SidebarsConfig = {
         'planning/video-tutorial-first-contract',
       ],
     },
+    {
+      type: 'category',
+      label: 'Legal',
+      items: [
+        'legal/privacy',
+      ],
+    },
   ],
 };
 

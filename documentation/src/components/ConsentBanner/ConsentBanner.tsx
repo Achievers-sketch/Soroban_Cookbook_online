@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Link from '@docusaurus/Link';
 import { getConsent, setConsent } from '@site/src/utils/analyticsConsent';
 import { initAnalytics } from '@site/src/utils/analytics';
 import styles from './ConsentBanner.module.css';
@@ -52,6 +53,10 @@ export default function ConsentBanner() {
         We use privacy-friendly analytics to understand how the docs are used (page views, CTA
         clicks, heatmaps). No data loads unless you accept. See the{' '}
         <Link to="/privacy">Privacy Policy</Link> for details.
+        clicks, heatmaps).{' '}
+        <Link to="/docs/legal/privacy" className={styles.privacyLink}>
+          Privacy policy
+        </Link>
       </p>
       <div className={styles.actions}>
         <button type="button" className={styles.decline} onClick={decline}>
