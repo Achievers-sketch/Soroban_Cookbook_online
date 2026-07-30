@@ -157,11 +157,32 @@ If the issue persists after revert, you can manually rollback the GitHub Pages d
 
 #### Staging Verification Before Production
 
-Test fixes on a staging environment first:
+This repository features an automated **staging deployment** pipeline configured within `.github/workflows/deploy.yml` that isolates staging builds to avoid any overwrites to the live production site.
 
-1. Deploy to a staging branch
-2. Verify the fix resolves the issue
-3. Merge staging branch to `main` for production deployment
+##### Split-Deployment Architecture
+
+Because GitHub Pages only supports a single active custom domain/deployment per repository, deploying staging to the same Pages target directly would overwrite your production environment. To solve this, our deployment pipeline uses a **split-deployment strategy**:
+
+1. **Production Deployment (`main` branch)**:
+   - Deploys automatically on merge to `main`.
+   - Uses the native `actions/deploy-pages` to deploy the static assets directly to GitHub Pages.
+   - Tied to the `github-pages` environment at `https://soroban-cookbook.dev`.
+
+2. **Staging Deployment (`staging` branch)**:
+   - Deploys automatically on push/merge to `staging`.
+   - Generates the build with `SITE_URL` dynamically set to `https://staging.soroban-cookbook.dev`.
+   - Pushes the compiled static directory to a dedicated **`gh-pages-staging`** branch using `peaceiris/actions-gh-pages`.
+   - This ensures staging remains safely isolated. Your custom domain provider (or external hosting platforms such as Vercel, Netlify, or Cloudflare Pages) can then be pointed to read from the `gh-pages-staging` branch to serve the staging site at `https://staging.soroban-cookbook.dev` without ever affecting your live site!
+
+##### Step-by-Step Staging and Production Release Process
+
+To test and release a new feature:
+1. Create a pull request targeting the `staging` branch to test integration.
+2. Push or merge changes to the `staging` branch.
+3. The CD pipeline will trigger and automatically push the new staging build to the `gh-pages-staging` branch.
+4. Verify that the staging site at `https://staging.soroban-cookbook.dev` behaves correctly.
+5. Once verified, create a pull request from `staging` to `main`.
+6. Merging to `main` will automatically build and deploy to the production environment (`github-pages`) at `https://soroban-cookbook.dev`.
 
 **Note:** This repository uses GitHub Pages for hosting, which tracks deployments. Each successful workflow run creates a deployment artifact that can be restored if needed.
 
