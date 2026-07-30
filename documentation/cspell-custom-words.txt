@@ -41,9 +41,12 @@ Friendbot
 frontmatter
 Frontmatter
 functools
+GA4
 GBBD
+GDPR
 geolocation
 GitHub
+gtag
 GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 hashlock
 Hashlock
@@ -85,6 +88,7 @@ Optimizely
 Overlines
 pacman
 performancebudget
+PII
 preimage
 Prettier
 println
@@ -102,6 +106,7 @@ rustc
 RUSTFLAGS
 rustup
 sandboxed
+SCCs
 SDEX
 serialisation
 serialises

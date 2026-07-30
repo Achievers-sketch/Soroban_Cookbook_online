@@ -23,11 +23,11 @@ const config: Config = {
     newsletterEndpoint: process.env.NEWSLETTER_ENDPOINT ?? '',
     /** Soroban Cookbook Discord invite link. Set DISCORD_INVITE_URL at build time once the server is created. */
     discordInviteUrl: process.env.DISCORD_INVITE_URL ?? '',
-    // Both are consent-gated — see ConsentBanner / src/utils/analytics.ts.
+// Both are consent-gated — see ConsentBanner / src/utils/analytics.ts.
     // Unset by default, so no analytics script ever loads until an operator
     // opts in by setting the secret. See DEPLOYMENT.md → Analytics.
     /** GA4 measurement ID (e.g. "G-XXXXXXX") for conversion funnel tracking. */
-    gaMeasurementId: process.env.GA_MEASUREMENT_ID ?? '',
+    gaMeasurementId: process.env.GA_MEASUREMENT_ID ?? process.env.GTAG_MEASUREMENT_ID ?? process.env.GOOGLE_ANALYTICS_ID ?? '',
     /** Microsoft Clarity project ID for heatmaps/session replay. */
     clarityProjectId: process.env.CLARITY_PROJECT_ID ?? '',
   },
@@ -56,7 +56,7 @@ const config: Config = {
         'http-equiv': 'Content-Security-Policy',
         content: [
           "default-src 'self'",
-          "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms",
+"script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms",
           "style-src 'self' 'unsafe-inline'",
           "img-src 'self' data: https:",
           "font-src 'self' data:",
@@ -86,7 +86,7 @@ const config: Config = {
       attributes: {
         'http-equiv': 'Content-Security-Policy',
         content:
-          "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.dicebear.com; font-src 'self' data:; connect-src 'self' https:; form-action 'self' https:; object-src 'none'; base-uri 'self'",
+"default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.dicebear.com; font-src 'self' data:; connect-src 'self' https:; form-action 'self' https:; object-src 'none'; base-uri 'self'",
       },
     },
     // Preload the Inter variable font (latin woff2) — critical for above-the-fold text.
@@ -410,6 +410,13 @@ const config: Config = {
             {
               label: 'GitHub',
               href: 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online',
+            },
+            {
+              label: 'Privacy Policy',
+              to: '/privacy',
+            },
+            {
+              html: '<button type="button" class="footer__link-item" style="background:none;border:none;padding:0;color:inherit;cursor:pointer;font:inherit;text-align:left" onclick="window.dispatchEvent(new CustomEvent(\'soroban-open-consent\'))">Cookie settings</button>',
             },
           ],
         },

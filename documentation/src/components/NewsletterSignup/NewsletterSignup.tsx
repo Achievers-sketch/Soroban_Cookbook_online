@@ -153,10 +153,7 @@ export default function NewsletterSignup({ className }: NewsletterSignupProps) {
 
           <p className={styles.privacy}>
             We use your email only for Soroban Cookbook announcements. See our{' '}
-            <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/LICENSE">
-              license &amp; privacy
-            </a>{' '}
-            on GitHub.
+            <a href="/privacy">Privacy Policy</a>.
           </p>
 
           {message && (
