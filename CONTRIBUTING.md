@@ -20,6 +20,7 @@ Thank you for your interest in contributing! To ensure a smooth experience for b
 
 ---
 
+
 ### Why the Guide?
 We want to enable you to submit high-quality PRs with minimal back-and-forth. The guide provides clear expectations, automated check commands, and standardized practices.
 
