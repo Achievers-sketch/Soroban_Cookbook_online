@@ -388,6 +388,10 @@ jobs:
   security-scan:
     name: Dependency Audit
     runs-on: ubuntu-latest
+  e2e-a11y:
+    name: Automated Accessibility Audit (@axe-core)
+    runs-on: ubuntu-latest
+    needs: [build-docs]
     defaults:
       run:
         working-directory: ./documentation
@@ -444,6 +448,16 @@ jobs:
 
       - name: Audit dependencies
         run: bun audit --audit-level=critical
+      - name: Build documentation
+        run: bun run build
+
+      - name: Install Playwright browsers
+        run: bunx playwright install --with-deps chromium
+
+      - name: Run automated a11y audit
+        run: bun run test:a11y
+        env:
+          CI: true
 
   summary:
     name: CI Summary
@@ -451,6 +465,7 @@ jobs:
     needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, e2e-console, e2e-smoke]
     needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, e2e-console, security-scan]
     needs: [lint-format, spellcheck, typecheck, test-unit-integration, build-docs, validate-deployment, test-examples, e2e-console]
+    needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, e2e-console, e2e-a11y]
     if: always()
     runs-on: ubuntu-latest    needs: [lint-format, spellcheck, typecheck, unit-tests, build-docs, validate-deployment, test-examples, e2e-console, e2e-search]    if: always()
     steps:
@@ -492,6 +507,8 @@ jobs:
             echo "❌ /search E2E failed"
           if [ "${{ needs.security-scan.result }}" != "success" ]; then
             echo "❌ Dependency Audit failed"
+          if [ "${{ needs.e2e-a11y.result }}" != "success" ]; then
+            echo "❌ Automated accessibility audit failed"
             exit 1
           fi
           if [ "${{ needs.test-examples.result }}" != "success" ]; then
