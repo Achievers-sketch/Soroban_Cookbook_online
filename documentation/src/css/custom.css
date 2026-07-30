@@ -735,3 +735,38 @@ html {
     animation: none !important;
   }
 }
+
+/* ── Scroll-Spy Sidebar Highlighting (issue #133 / Phase 4) ────────────────── */
+
+/**
+ * Applied programmatically by useScrollSpy to the <a> tag inside
+ * .theme-doc-sidebar-container that matches the currently visible heading.
+ *
+ * We deliberately piggyback on Infima's existing --ifm-menu-color-active and
+ * --ifm-menu-color-background-hover tokens so the highlight follows the
+ * project's light/dark colour scheme automatically.
+ */
+
+.theme-doc-sidebar-container a.scroll-spy-active {
+  color: var(--ifm-menu-color-active);
+  font-weight: 600;
+}
+
+/* Subtle left-border accent to make the active item visually distinct */
+.theme-doc-sidebar-container a.scroll-spy-active {
+  border-left: 3px solid var(--ifm-color-primary);
+  padding-left: calc(var(--ifm-menu-link-padding-horizontal) - 3px);
+  background-color: var(--ifm-menu-color-background-hover);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .theme-doc-sidebar-container a.scroll-spy-active {
+    transition: none;
+  }
+}
