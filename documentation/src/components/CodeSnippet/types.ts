@@ -14,4 +14,9 @@ export interface CodeSnippetProps {
   className?: string;
   /** Callback when comments visibility changes */
   onCommentToggle?: (showComments: boolean) => void;
+  /** Custom filename for download (without extension) */
+  filename?: string;
+  /** Show/hide download button */
+  showDownload?: boolean;
 }
+

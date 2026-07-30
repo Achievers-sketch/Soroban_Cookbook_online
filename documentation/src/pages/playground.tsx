@@ -20,7 +20,9 @@ type MonacoLike = {
 
 type MonacoEditorLike = {
   dispose: () => void;
+  getValue: () => string;
   setValue: (value: string) => void;
+  onDidChangeModelContent: (listener: () => void) => { dispose: () => void };
 };
 
 const TEMPLATE = `#![no_std]
@@ -37,13 +39,72 @@ impl HelloContract {
 }
 `;
 
+const SHARE_HASH_PREFIX = '#code=';
+
+function encodeSharedCode(value: string): string {
+  const bytes = new TextEncoder().encode(value);
+  let binary = '';
+
+  bytes.forEach((byte) => {
+    binary += String.fromCharCode(byte);
+  });
+
+  return window.btoa(binary);
+}
+
+function decodeSharedCode(value: string): string {
+  const binary = window.atob(value);
+  const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+
+  return new TextDecoder().decode(bytes);
+}
+
+function getSharedCodeFromHash(hash: string): string | null {
+  if (!hash.startsWith(SHARE_HASH_PREFIX)) {
+    return null;
+  }
+
+  const encoded = hash.slice(SHARE_HASH_PREFIX.length);
+  if (!encoded) {
+    return null;
+  }
+
+  try {
+    return decodeSharedCode(encoded);
+  } catch {
+    return null;
+  }
+}
+
 export default function PlaygroundPage(): React.ReactElement {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const editorRef = useRef<MonacoEditorLike | null>(null);
-  const [status, setStatus] = useState('Loading Monaco editor…');
+  const initialCodeRef = useRef(TEMPLATE);
+  const [code, setCode] = useState(TEMPLATE);
+  const [status, setStatus] = useState('Loading Monaco editor...');
+  const [shareMessage, setShareMessage] = useState('');
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const sharedCode = getSharedCodeFromHash(window.location.hash);
+    if (sharedCode) {
+      initialCodeRef.current = sharedCode;
+      setCode(sharedCode);
+      setStatus('Loaded shared snippet');
+      return;
+    }
+
+    if (window.location.hash.startsWith(SHARE_HASH_PREFIX)) {
+      setStatus('Invalid shared link. Loaded default template instead.');
+    }
+  }, []);
 
   useEffect(() => {
     let disposed = false;
+    let changeSubscription: { dispose: () => void } | undefined;
 
     const mountEditor = (monaco: MonacoLike) => {
       if (disposed || !hostRef.current) {
@@ -51,12 +112,17 @@ export default function PlaygroundPage(): React.ReactElement {
       }
 
       editorRef.current = monaco.editor.create(hostRef.current, {
-        value: TEMPLATE,
+        value: initialCodeRef.current,
         language: 'rust',
         theme: 'vs-dark',
         automaticLayout: true,
         minimap: { enabled: false },
         fontSize: 14,
+      });
+      changeSubscription = editorRef.current.onDidChangeModelContent(() => {
+        const nextCode = editorRef.current?.getValue() ?? '';
+        setCode(nextCode);
+        setShareMessage('');
       });
       setStatus('Ready');
     };
@@ -90,10 +156,41 @@ export default function PlaygroundPage(): React.ReactElement {
 
     return () => {
       disposed = true;
+      changeSubscription?.dispose();
       editorRef.current?.dispose();
       editorRef.current = null;
     };
   }, []);
+
+  const handleReset = () => {
+    editorRef.current?.setValue(TEMPLATE);
+    setCode(TEMPLATE);
+    setShareMessage('');
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  };
+
+  const handleShare = async () => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const sharedUrl = `${window.location.origin}${window.location.pathname}${window.location.search}${SHARE_HASH_PREFIX}${encodeSharedCode(code)}`;
+
+    try {
+      if (!navigator.clipboard?.writeText) {
+        throw new Error('Clipboard unavailable');
+      }
+
+      await navigator.clipboard.writeText(sharedUrl);
+      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}${SHARE_HASH_PREFIX}${encodeSharedCode(code)}`);
+      setShareMessage('Share link copied');
+    } catch {
+      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}${SHARE_HASH_PREFIX}${encodeSharedCode(code)}`);
+      setShareMessage('Share URL ready in the address bar');
+    }
+  };
 
   return (
     <Layout title="Code Playground" description="In-browser Monaco editor for Soroban snippets">
@@ -103,14 +200,18 @@ export default function PlaygroundPage(): React.ReactElement {
           Monaco-powered playground for editing Soroban Rust snippets directly in the browser.
         </p>
         <div className={styles.toolbar}>
-          <span className={styles.status}>{status}</span>
-          <button
-            className={styles.button}
-            onClick={() => {
-              editorRef.current?.setValue(TEMPLATE);
-            }}>
-            Reset Template
-          </button>
+          <div className={styles.statusGroup}>
+            <span className={styles.status}>{status}</span>
+            {shareMessage ? <span className={styles.shareMessage}>{shareMessage}</span> : null}
+          </div>
+          <div className={styles.actions}>
+            <button className={styles.button} onClick={handleShare}>
+              Share
+            </button>
+            <button className={styles.button} onClick={handleReset}>
+              Reset Template
+            </button>
+          </div>
         </div>
         <div className={styles.editorHost}>
           <div ref={hostRef} className={styles.editorInner} />
