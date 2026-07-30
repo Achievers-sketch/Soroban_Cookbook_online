@@ -31,57 +31,65 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
     "check:bundle-budget": "node scripts/check-performance-budget.mjs",
-
+    "test:coverage:check": "vitest run --coverage --coverage.reporter=text --coverage.reporter=json-summary",
     "audit:headings": "node scripts/audit-heading-hierarchy.mjs",
     "press:screenshots": "node scripts/capture-press-screenshots.mjs",
     "audit:links": "node scripts/audit-internal-links.mjs",
     "check:external-links": "node scripts/check-external-links.mjs",
     "test:e2e": "playwright test",
     "test:console": "playwright test e2e/smoke-console.spec.ts --project=chromium",
-    "spellcheck": "cspell --no-progress --config cspell.json"
+    "spellcheck": "cspell --no-progress --config cspell.json",
+    "test:a11y": "playwright test e2e/accessibility.spec.ts --project=chromium"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",
     "@docusaurus/plugin-client-redirects": "3.9.2",
+    "@docusaurus/plugin-pwa": "^3.9.2",
     "@docusaurus/preset-classic": "3.9.2",
+    "@docusaurus/theme-mermaid": "3.9.2",
     "@easyops-cn/docusaurus-search-local": "0.49.2",
     "@fontsource-variable/inter": "^5.2.8",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@mdx-js/react": "^3.0.0",
-    "@sentry/react": "8.55.0",
+    "@sentry/react": "10.69.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.575.0",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.2.8",
     "react-dom": "^19.0.0",
-    "web-vitals": "^4.2.4"
+    "web-vitals": "^6.0.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
     "@docusaurus/module-type-aliases": "3.9.2",
     "@docusaurus/tsconfig": "3.9.2",
     "@docusaurus/types": "3.9.2",
-    "@eslint/js": "^9.39.3",
-    "cspell": "^8.17.5",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.51.1",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
-    "@vitejs/plugin-react": "^4.2.1",
     "@typescript-eslint/parser": "^8.56.1",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/coverage-v8": "^1.0.4",
     "@vitest/ui": "^1.0.4",
+    "cspell": "^8.17.5",
     "eslint": "^9.39.3",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "globals": "^15.0.0",
+    "globals": "^17.8.0",
+    "jest-axe": "^8.0.0",
     "jsdom": "^23.0.1",
     "prettier": "^3.8.1",
     "sharp": "^0.34.5",
-    "wait-on": "8.0.2",
     "typescript": "~5.6.2",
     "vitest": "^1.0.4",
+    "wait-on": "8.0.2",
     "webpack": "5.94.0"
   },
   "browserslist": {
@@ -100,6 +108,9 @@
     "node": ">=20.0"
   },
   "overrides": {
-    "webpack": "5.94.0"
+    "webpack": "5.94.0",
+    "eslint-scope": "5.1.1",
+    "websocket-driver": "0.7.5",
+    "shell-quote": "1.8.4"
   }
 }

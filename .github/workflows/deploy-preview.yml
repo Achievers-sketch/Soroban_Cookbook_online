@@ -56,6 +56,10 @@ jobs:
         with:
           source-dir: ./documentation/build
           action: remove
+        if: github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          echo "Build succeeded."
+          echo "Skipping gh-pages preview deploy for fork PR (GITHUB_TOKEN cannot push to upstream)."
       - name: Verify build (fork PRs)
         if: github.event.pull_request.head.repo.full_name != github.repository
         run: |
