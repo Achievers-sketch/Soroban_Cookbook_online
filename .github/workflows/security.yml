@@ -57,6 +57,14 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Use the gitleaks binary directly — gitleaks-action@v2 requires an org
+      # GITLEAKS_LICENSE secret which this repo does not have configured.
+      - name: Install gitleaks
+        run: |
+          GITLEAKS_VERSION=8.24.3
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C /tmp gitleaks
+          sudo install /tmp/gitleaks /usr/local/bin/gitleaks
       # Use the gitleaks CLI directly — gitleaks-action@v2 requires a paid
       # GITLEAKS_LICENSE for GitHub organizations, which this repo does not have.
       - name: Install gitleaks

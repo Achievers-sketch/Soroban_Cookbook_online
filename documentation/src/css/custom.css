@@ -10,12 +10,16 @@
 /* Issue #40: Mobile menu polish */
 @import './mobile-menu.css';
 
+/* Issue #135: Mobile responsiveness audit fixes */
+@import './mobile-audit.css';
+
 /* ── Light Mode (Default) ───────────────────────────────────────────────────── */
 
 :root {
   /* Typography — wire Infima to our design-token font stacks */
   --ifm-font-family-base: var(--font-family-sans);
   --ifm-font-family-monospace: var(--font-family-mono);
+  --ifm-font-size-base: var(--font-size-base);
 
   /* Primary Colors */
   --ifm-color-primary: #2e8555;
@@ -628,6 +632,34 @@ html {
 .sb-btn-group--vertical .sb-btn + .sb-btn {
   margin-left: 0;
   margin-top: -1px;
+}
+
+/* ── Breadcrumbs ────────────────────────────────────────────────────────────── */
+
+/* Breadcrumb link states — wired to design tokens so they follow the theme */
+
+.breadcrumbs__link {
+  border-radius: var(--radius-sm, 4px);
+  transition:
+    background-color var(--sb-motion-duration-fast, 120ms) var(--sb-motion-ease-standard, ease),
+    color var(--sb-motion-duration-fast, 120ms) var(--sb-motion-ease-standard, ease);
+}
+
+.breadcrumbs__link:hover {
+  background-color: var(--ifm-color-emphasis-100, #f3f4f6);
+}
+
+.breadcrumbs__item--active .breadcrumbs__link {
+  color: var(--ifm-font-color-base, #374151);
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+[data-theme='dark'] .breadcrumbs__link:hover {
+  background-color: var(--ifm-color-emphasis-200, #334155);
+}
+
+[data-theme='dark'] .breadcrumbs__item--active .breadcrumbs__link {
+  color: var(--ifm-font-color-base, #cbd5e1);
 }
 
 /* ── Icon System ────────────────────────────────────────────────────────────── */
