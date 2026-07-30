@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - staging
   workflow_dispatch:
 
 permissions:
@@ -46,6 +47,7 @@ jobs:
         env:
           # Sourced from GitHub Repository Secrets — never hardcode these values.
           # See DEPLOYMENT.md → Environment Variables for setup instructions.
+          SITE_URL: ${{ github.ref_name == 'main' && 'https://soroban-cookbook.dev' || 'https://staging.soroban-cookbook.dev' }}
           NEWSLETTER_ENDPOINT: ${{ secrets.NEWSLETTER_ENDPOINT }}
           DISCORD_INVITE_URL: ${{ secrets.DISCORD_INVITE_URL }}
           # Analytics stays disabled until these are set — see DEPLOYMENT.md → Analytics.
@@ -58,11 +60,15 @@ jobs:
           path: ./build
 
   deploy:
+    if: github.ref_name == 'main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+    permissions:
+      pages: write
+      id-token: write
     outputs:
       page_url: ${{ steps.deployment.outputs.page_url }}
     steps:
@@ -77,11 +83,52 @@ jobs:
         run: |
           echo "## ✅ Deployment Complete"
           echo ""
-          echo "**Environment**: GitHub Pages"
+          echo "**Environment**: Production (GitHub Pages)"
           echo "**URL**: ${{ steps.deployment.outputs.page_url }}"
           echo "**Commit**: ${{ github.sha }}"
           echo "**Branch**: ${{ github.ref_name }}"
 
+  deploy-staging:
+    if: github.ref_name == 'staging'
+    environment:
+      name: staging
+      url: https://staging.soroban-cookbook.dev
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: ./build-artifact
+
+      - name: Extract Build Artifact
+        run: |
+          mkdir -p ./build
+          tar -xf ./build-artifact/artifact.tar -C ./build
+
+      - name: Deploy Staging to gh-pages-staging branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          publish_branch: gh-pages-staging
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Deployment Summary
+        run: |
+          echo "## ✅ Deployment Complete"
+          echo ""
+          echo "**Environment**: Staging"
+          echo "**Branch**: gh-pages-staging"
+          echo "**URL**: https://staging.soroban-cookbook.dev"
+          echo "**Commit**: ${{ github.sha }}"
   # ─── Deploy status notifications (Phase 7) ─────────────────────────────────
   # Notifies Slack and/or Discord on deploy success or failure.
   # Secrets are optional — steps no-op when webhooks are not configured.
