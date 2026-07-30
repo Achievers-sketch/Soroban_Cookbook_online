@@ -2,6 +2,7 @@
 members = [
     "access-control",
     "authorization",
+    "balance-snapshot",
     "constant-product-amm",
     "contract-factory",
     "counter",
