@@ -80,6 +80,7 @@
     "@vitest/coverage-v8": "1.6.1",
     "@vitest/ui": "^1.0.4",
     "cspell": "^8.17.5",
+    "@vitest/ui": "^3.2.6",
     "eslint": "^9.39.3",
     "jest-axe": "^8.0.0",
     "eslint-config-prettier": "^10.1.8",
@@ -95,6 +96,7 @@
     "vitest": "^1.0.4",
     "webpack": "5.94.0"
     "wait-on": "8.0.2"
+    "vitest": "^3.2.6"
   },
   "browserslist": {
     "production": [
@@ -113,5 +115,8 @@
   },
   "overrides": {
     "webpack": "5.94.0"
+    "eslint-scope": "5.1.1",
+    "websocket-driver": "0.7.5",
+    "shell-quote": "1.8.4"
   }
 }

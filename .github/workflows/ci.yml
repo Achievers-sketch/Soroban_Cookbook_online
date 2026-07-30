@@ -369,6 +369,9 @@ jobs:
     name: Playwright Smoke Tests (Chromium)
     runs-on: ubuntu-latest
     needs: [build-docs]
+  security-scan:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./documentation
@@ -419,11 +422,18 @@ jobs:
           name: playwright-report-ci-chromium
           path: documentation/playwright-report
           retention-days: 7
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "latest"
+
+      - name: Audit dependencies
+        run: bun audit --audit-level=critical
 
   summary:
     name: CI Summary
     runs-on: ubuntu-latest
     needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, e2e-console, e2e-smoke]
+    needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, e2e-console, security-scan]
     if: always()
     runs-on: ubuntu-latest    needs: [lint-format, spellcheck, typecheck, unit-tests, build-docs, validate-deployment, test-examples, e2e-console, e2e-search]    if: always()
     steps:
@@ -461,6 +471,8 @@ jobs:
             echo "❌ Playwright smoke tests failed"
           if [ "${{ needs.e2e-search.result }}" != "success" ]; then
             echo "❌ /search E2E failed"
+          if [ "${{ needs.security-scan.result }}" != "success" ]; then
+            echo "❌ Dependency Audit failed"
             exit 1
           fi
           if [ "${{ needs.test-examples.result }}" != "success" ]; then

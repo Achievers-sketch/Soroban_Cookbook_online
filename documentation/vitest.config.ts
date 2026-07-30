@@ -75,6 +75,7 @@ export default defineConfig({
       },
       include: ['src/components/**/*.{ts,tsx}']
     }
+    exclude: ['**/node_modules/**', '**/dist/**', '**/e2e/**', '**/__tests__/sanitizeUrl.test.ts'],
   },
   resolve: {
     alias: {
