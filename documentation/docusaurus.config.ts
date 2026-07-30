@@ -2,6 +2,9 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+/** Optional GA4 measurement ID — enables page views + custom events when set. */
+const gtagMeasurementId = process.env.GTAG_MEASUREMENT_ID || process.env.GOOGLE_ANALYTICS_ID || '';
+
 const config: Config = {
   title: 'Soroban Cookbook',
   tagline: 'A comprehensive guide to building smart contracts on Stellar with Soroban',
@@ -11,8 +14,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://soroban-cookbook.dev',
-  baseUrl: '/',
+  url: process.env.SITE_URL || 'https://soroban-cookbook.dev',
+  baseUrl: process.env.BASE_URL || '/',
 
   organizationName: 'Soroban-Cookbook',
   projectName: 'Soroban_Cookbook_online',
@@ -23,11 +26,17 @@ const config: Config = {
     newsletterEndpoint: process.env.NEWSLETTER_ENDPOINT ?? '',
     /** Soroban Cookbook Discord invite link. Set DISCORD_INVITE_URL at build time once the server is created. */
     discordInviteUrl: process.env.DISCORD_INVITE_URL ?? '',
+/**
+     * Sentry DSN for error monitoring (issue #136).
+     * Set SENTRY_DSN in your CI/CD environment or .env.local.
+     * When absent, Sentry is not initialised (safe for local dev).
+     */
+    sentryDsn: process.env.SENTRY_DSN ?? '',
     // Both are consent-gated — see ConsentBanner / src/utils/analytics.ts.
     // Unset by default, so no analytics script ever loads until an operator
     // opts in by setting the secret. See DEPLOYMENT.md → Analytics.
     /** GA4 measurement ID (e.g. "G-XXXXXXX") for conversion funnel tracking. */
-    gaMeasurementId: process.env.GA_MEASUREMENT_ID ?? '',
+    gaMeasurementId: process.env.GA_MEASUREMENT_ID ?? process.env.GTAG_MEASUREMENT_ID ?? process.env.GOOGLE_ANALYTICS_ID ?? '',
     /** Microsoft Clarity project ID for heatmaps/session replay. */
     clarityProjectId: process.env.CLARITY_PROJECT_ID ?? '',
   },
@@ -56,7 +65,7 @@ const config: Config = {
         'http-equiv': 'Content-Security-Policy',
         content: [
           "default-src 'self'",
-          "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms",
+"script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms",
           "style-src 'self' 'unsafe-inline'",
           "img-src 'self' data: https:",
           "font-src 'self' data:",
@@ -86,7 +95,7 @@ const config: Config = {
       attributes: {
         'http-equiv': 'Content-Security-Policy',
         content:
-          "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.dicebear.com; font-src 'self' data:; connect-src 'self' https:; form-action 'self' https:; object-src 'none'; base-uri 'self'",
+"default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.dicebear.com; font-src 'self' data:; connect-src 'self' https:; form-action 'self' https:; object-src 'none'; base-uri 'self'",
       },
     },
     // Preload the Inter variable font (latin woff2) — critical for above-the-fold text.
@@ -126,13 +135,7 @@ const config: Config = {
         content: 'Soroban Cookbook',
       },
     },
-    {
-      tagName: 'meta',
-      attributes: {
-        property: 'og:image',
-        content: 'https://soroban-cookbook.dev/img/soroban-social-card.png',
-      },
-    },
+    // Open Graph image size tags (og:image, twitter:card, and twitter:image are automatically injected by Docusaurus from themeConfig.image)
     {
       tagName: 'meta',
       attributes: {
@@ -147,21 +150,12 @@ const config: Config = {
         content: '630',
       },
     },
-    {
-      tagName: 'meta',
-      attributes: {
-        name: 'twitter:card',
-        content: 'summary_large_image',
-      },
-    },
-    {
-      tagName: 'meta',
-      attributes: {
-        name: 'twitter:image',
-        content: 'https://soroban-cookbook.dev/img/soroban-social-card.png',
-      },
-    },
   ],
+
+  // ─── Search Analytics Client Module (issue #329) ──────────────────────────
+  // Loads on every page to observe the search input and fire onQuery /
+  // onResult analytics events via src/utils/searchAnalytics.ts.
+  clientModules: [require.resolve('./src/clientModules/searchAnalyticsModule.ts')],
 
   plugins: [
     [
@@ -174,6 +168,21 @@ const config: Config = {
         indexDocs: true,
         indexPages: true,
         indexBlog: false,
+        // ── Phase 5: Code Snippet & API Search (issue #333) ───────────────────
+        // docsRouteBasePath must match preset-classic docs.routeBasePath so the
+        // search index covers all documentation pages (including code blocks).
+        docsRouteBasePath: '/docs',
+        // Index code inside fenced code blocks — the plugin strips Markdown
+        // formatting but preserves code block text by default; this comment
+        // documents that behaviour so future maintainers don't accidentally
+        // disable it by adding `removeDefaultStemmer: true` without testing.
+        // searchBarShortcutHint shows keyboard shortcut in the search bar.
+        searchBarShortcutHint: true,
+        // Make all search contexts available even when no context is selected,
+        // so a top-level search also surfaces results from nested doc sections.
+        useAllContextsWithNoSearchContext: true,
+        searchResultLimits: 8,
+        searchResultContextMaxLength: 50,
       },
     ],
     // ─── 301 Redirects ────────────────────────────────────────────────────────
@@ -288,6 +297,16 @@ const config: Config = {
           routeBasePath: '/docs',
           editUrl:
             'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/documentation/',
+          // Docs versioning: the latest cut version (e.g. "22.0") is served at the
+          // site root; in-progress edits to docs/ live at /docs/next/ until the next
+          // version is cut. See docs/contributing/versioning-strategy.md.
+          includeCurrentVersion: true,
+          versions: {
+            current: {
+              label: 'Next 🚧',
+              badge: true,
+            },
+          },
         },
         blog: false,
         theme: {
@@ -300,6 +319,14 @@ const config: Config = {
             './src/css/search-experience.css',
           ],
         },
+        ...(gtagMeasurementId
+          ? {
+              gtag: {
+                trackingID: gtagMeasurementId,
+                anonymizeIP: true,
+              },
+            }
+          : {}),
       } satisfies Preset.Options,
     ],
   ],
@@ -322,6 +349,10 @@ const config: Config = {
           sidebarId: 'tutorialSidebar',
           position: 'left',
           label: 'Docs',
+        },
+        {
+          type: 'docsVersionDropdown',
+          position: 'right',
         },
         {
           href: process.env.DISCORD_INVITE_URL ?? 'https://discord.gg/YNBu3jKEF',
@@ -378,6 +409,14 @@ const config: Config = {
             {
               label: 'GitHub',
               href: 'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online',
+            },
+            {
+              label: 'Privacy Policy',
+              to: '/privacy',
+            },
+            {
+              html: '<button type="button" class="footer__link-item" style="background:none;border:none;padding:0;color:inherit;cursor:pointer;font:inherit;text-align:left" onclick="window.dispatchEvent(new CustomEvent(\'soroban-open-consent\'))">Cookie settings</button>',
+              to: '/docs/legal/privacy',
             },
           ],
         },
