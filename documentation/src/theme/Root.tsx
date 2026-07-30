@@ -54,6 +54,7 @@ const SENTRY_RELEASE: string =
   (typeof process !== 'undefined' &&
     (process.env.SENTRY_RELEASE || process.env.npm_package_version)) ||
   'unknown';
+import { ProgressProvider } from '@site/src/contexts/ProgressContext';
 
 interface RootProps {
   children: ReactNode;
@@ -142,11 +143,11 @@ export default function Root({ children }: RootProps): React.JSX.Element {
   }, []);
 
   return (
-    <>
+    <ProgressProvider>
       {children}
       <FunnelTracker />
       <SearchAnalytics />
       <ConsentBanner />
-    </>
+    </ProgressProvider>
   );
 }

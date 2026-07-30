@@ -13,6 +13,7 @@ import { useDoc } from '@docusaurus/plugin-content-docs/client';
 import { EstimatedTime, parseEstimatedTime } from '@site/src/components/PatternDoc';
 import DocFeedback from '@site/src/components/DocFeedback';
 import ScrollSpyActivator from '@site/src/components/ScrollSpyActivator';
+import ProgressToggleButton from '@site/src/components/ProgressToggleButton/ProgressToggleButton';
 import styles from './styles.module.css';
 
 type Props = React.ComponentProps<typeof Content>;
@@ -31,6 +32,8 @@ export default function DocItemContentWrapper(props: Props): ReactNode {
   }
 
   const rawTime = frontMatter?.time;
+  const { frontMatter, metadata } = useDoc();
+  const rawTime = (frontMatter as { time?: string | number }).time;
   const label = parseEstimatedTime(rawTime);
 
   return (
@@ -49,6 +52,7 @@ export default function DocItemContentWrapper(props: Props): ReactNode {
           }}
         </BrowserOnly>
       ) : null}
+      <ProgressToggleButton path={metadata.permalink} />
       <DocFeedback />
       <ScrollSpyActivator />
     </>
