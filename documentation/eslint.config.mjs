@@ -45,6 +45,11 @@ export default [
       ...prettierConfig.rules,
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
+      // `no-undef` mis-fires on TypeScript-only types (e.g. `NodeListOf`,
+      // `HTMLInputElement` in test mocks) because ESLint's own scope
+      // analysis doesn't read TS lib types. `tsc --noEmit` is the source of
+      // truth for that — see the typecheck CI job.
+      'no-undef': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {

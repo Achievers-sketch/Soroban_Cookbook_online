@@ -4,6 +4,8 @@ description: Reusable Soroban smart contract patterns — storage, tokens, DeFi,
 image: /img/soroban-social-card.png
 ---
 
+import { VideoPlayer } from '@site/src/components/VideoPlayer';
+
 # Pattern Library
 
 Reusable smart contract patterns for common use cases.
@@ -11,6 +13,14 @@ Reusable smart contract patterns for common use cases.
 ## Template example
 
 The **[Hello World storage](/docs/patterns/hello-world)** pattern demonstrates the standard pattern page layout (metadata, prerequisites, implementation with code tabs, security, and related links). Copy its structure when adding new patterns.
+
+## Video Tutorial
+
+<VideoPlayer
+  url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  title="Getting Started with Soroban Smart Contracts"
+  description="Learn the basics of building smart contracts on the Soroban platform, including setup, deployment, and testing."
+/>
 
 ## Available Patterns
 
@@ -27,6 +37,12 @@ Minimal Soroban contract demonstrating instance storage. Perfect starting point 
 <span class="sb-badge sb-badge--beginner">Beginner</span> <span class="sb-tag sb-tag--token">Token</span> <span class="sb-badge sb-badge--stable">Stable</span>
 
 Complete token contract with mint, transfer, and balance functions. Learn core token mechanics and authorization patterns before advancing to standardized interfaces like SAC.
+
+### [Token Snapshot](/docs/patterns/token-snapshot)
+
+<span class="sb-badge sb-badge--intermediate">Intermediate</span> <span class="sb-tag sb-tag--governance">Governance</span> <span class="sb-badge sb-badge--stable">Stable</span>
+
+Create immutable point-in-time balance snapshots for governance voting and dividend distribution. Includes flash-loan resistance, claim tracking, and off-chain indexer integration.
 
 ### [Error Handling](/docs/patterns/error-handling)
 
