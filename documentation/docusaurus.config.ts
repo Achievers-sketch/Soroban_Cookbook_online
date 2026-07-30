@@ -181,6 +181,8 @@ const config: Config = {
         // Make all search contexts available even when no context is selected,
         // so a top-level search also surfaces results from nested doc sections.
         useAllContextsWithNoSearchContext: true,
+        searchResultLimits: 8,
+        searchResultContextMaxLength: 50,
       },
     ],
     // ─── 301 Redirects ────────────────────────────────────────────────────────
