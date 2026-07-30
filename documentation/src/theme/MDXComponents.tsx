@@ -17,6 +17,7 @@ export default {
   PatternMeta,
   PatternSection,
   PatternCallout,
+  EstimatedTime,
   CodeSnippet,
   PatternCustomizer,
   VideoPlayer,
