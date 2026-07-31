@@ -6,7 +6,6 @@
   },
   "auth": [
     [],
-    [],
     [
       [
         "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
@@ -23,7 +22,7 @@
                   "u64": "3600"
                 },
                 {
-                  "i128": "1"
+                  "i128": "3"
                 },
                 {
                   "u32": 5000
@@ -38,6 +37,7 @@
         }
       ]
     ],
+    [],
     [
       [
         "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4",
@@ -51,7 +51,7 @@
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
                 },
                 {
-                  "string": "evt"
+                  "string": "p1"
                 },
                 {
                   "vec": [
@@ -86,21 +86,18 @@
     ],
     [
       [
-        "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
+        "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4",
         {
           "function": {
             "contract_fn": {
               "contract_address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4",
-              "function_name": "vote",
+              "function_name": "cancel_proposal",
               "args": [
                 {
-                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM"
+                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
                 },
                 {
                   "u32": 1
-                },
-                {
-                  "bool": true
                 }
               ]
             }
@@ -110,15 +107,12 @@
       ]
     ],
     [],
-    [],
-    [],
-    [],
     []
   ],
   "ledger": {
     "protocol_version": 27,
     "sequence_number": 0,
-    "timestamp": 10800,
+    "timestamp": 0,
     "network_id": "0000000000000000000000000000000000000000000000000000000000000000",
     "base_reserve": 0,
     "min_persistent_entry_ttl": 4096,
@@ -135,26 +129,6 @@
               "key": {
                 "ledger_key_nonce": {
                   "nonce": "801925984706572462"
-                }
-              },
-              "durability": "temporary",
-              "val": "void"
-            }
-          },
-          "ext": "v0"
-        },
-        "live_until": 6311999
-      },
-      {
-        "entry": {
-          "last_modified_ledger_seq": 0,
-          "data": {
-            "contract_data": {
-              "ext": "v0",
-              "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
-              "key": {
-                "ledger_key_nonce": {
-                  "nonce": "1033654523790656264"
                 }
               },
               "durability": "temporary",
@@ -211,7 +185,7 @@
                               "symbol": "quorum"
                             },
                             "val": {
-                              "i128": "1"
+                              "i128": "3"
                             }
                           },
                           {
@@ -280,7 +254,7 @@
                               "symbol": "cancelled"
                             },
                             "val": {
-                              "bool": false
+                              "bool": true
                             }
                           },
                           {
@@ -296,7 +270,7 @@
                               "symbol": "description"
                             },
                             "val": {
-                              "string": "evt"
+                              "string": "p1"
                             }
                           },
                           {
@@ -312,7 +286,7 @@
                               "symbol": "executed"
                             },
                             "val": {
-                              "bool": true
+                              "bool": false
                             }
                           },
                           {
@@ -336,7 +310,7 @@
                               "symbol": "queued_at"
                             },
                             "val": {
-                              "u64": "7200"
+                              "u64": "0"
                             }
                           },
                           {
@@ -352,7 +326,7 @@
                               "symbol": "yes_votes"
                             },
                             "val": {
-                              "i128": "1"
+                              "i128": "0"
                             }
                           }
                         ]
@@ -368,38 +342,6 @@
                       },
                       "val": {
                         "u32": 1
-                      }
-                    },
-                    {
-                      "key": {
-                        "vec": [
-                          {
-                            "symbol": "Vote"
-                          },
-                          {
-                            "map": [
-                              {
-                                "key": {
-                                  "symbol": "proposal_id"
-                                },
-                                "val": {
-                                  "u32": 1
-                                }
-                              },
-                              {
-                                "key": {
-                                  "symbol": "voter"
-                                },
-                                "val": {
-                                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM"
-                                }
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      "val": {
-                        "bool": true
                       }
                     }
                   ]
@@ -425,16 +367,7 @@
                   "executable": {
                     "wasm": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
                   },
-                  "storage": [
-                    {
-                      "key": {
-                        "string": "executed"
-                      },
-                      "val": {
-                        "bool": true
-                      }
-                    }
-                  ]
+                  "storage": null
                 }
               }
             }
@@ -442,6 +375,26 @@
           "ext": "v0"
         },
         "live_until": 4095
+      },
+      {
+        "entry": {
+          "last_modified_ledger_seq": 0,
+          "data": {
+            "contract_data": {
+              "ext": "v0",
+              "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4",
+              "key": {
+                "ledger_key_nonce": {
+                  "nonce": "1033654523790656264"
+                }
+              },
+              "durability": "temporary",
+              "val": "void"
+            }
+          },
+          "ext": "v0"
+        },
+        "live_until": 6311999
       },
       {
         "entry": {
