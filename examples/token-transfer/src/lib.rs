@@ -6,6 +6,7 @@ use soroban_sdk::{contract, contracterror, contractimpl, contracttype, Address, 
 pub enum DataKey {
     Balance(Address),
     Allowance(Address, Address), // (owner, spender)
+    TotalSupply,
 }
 
 #[contracterror]
@@ -25,16 +26,16 @@ pub struct TokenTransfer;
 impl TokenTransfer {
     /// Mint tokens to an address (for testing purposes).
     pub fn mint(env: Env, to: Address, amount: i128) {
-        let key = DataKey::Balance(to.clone());
-        let current: i128 = env.storage().persistent().get(&key).unwrap_or(0);
-        env.storage().persistent().set(&key, &(current + amount));
-    }
+    let key = DataKey::Balance(to.clone());
+    let current: i128 = env.storage().persistent().get(&key).unwrap_or(0);
+    env.storage().persistent().set(&key, &(current + amount));
+
+    let supply_key = DataKey::TotalSupply;
+    let supply: i128 = env.storage().persistent().get(&supply_key).unwrap_or(0);
+    env.storage().persistent().set(&supply_key, &(supply + amount));
+}
 
     /// Return the balance of an address.
-    pub fn balance(env: Env, of: Address) -> i128 {
-        let key = DataKey::Balance(of);
-        env.storage().persistent().get(&key).unwrap_or(0)
-    }
 
     /// Transfer tokens from one address to another.
     pub fn transfer(env: Env, from: Address, to: Address, amount: i128) -> Result<(), Error> {
@@ -68,6 +69,33 @@ impl TokenTransfer {
         Ok(())
     }
 
+
+    /// Burn tokens from an address, reducing total supply. Requires authorization from `from`.
+    pub fn burn(env: Env, from: Address, amount: i128) -> Result<(), Error> {
+        from.require_auth();
+
+        if amount <= 0 {
+            return Err(Error::InvalidAmount);
+        }
+
+        let from_key = DataKey::Balance(from.clone());
+        let from_balance: i128 = env.storage().persistent().get(&from_key).unwrap_or(0);
+
+        if from_balance < amount {
+            return Err(Error::InsufficientBalance);
+        }
+
+        env.storage()
+            .persistent()
+            .set(&from_key, &(from_balance - amount));
+
+        let supply_key = DataKey::TotalSupply;
+        let supply: i128 = env.storage().persistent().get(&supply_key).unwrap_or(0);
+        env.storage().persistent().set(&supply_key, &(supply - amount));
+
+        Ok(())
+    }
+
     /// Approve another address to spend tokens on behalf of the caller.
     pub fn approve(env: Env, owner: Address, spender: Address, amount: i128) -> Result<(), Error> {
         owner.require_auth();
@@ -88,6 +116,19 @@ impl TokenTransfer {
         env.storage().persistent().get(&key).unwrap_or(0)
     }
 
+
+    /// Return the balance of an address.
+    pub fn balance(env: Env, of: Address) -> i128 {
+        let key = DataKey::Balance(of);
+        env.storage().persistent().get(&key).unwrap_or(0)
+    }
+
+    /// Return the total supply of the token.
+    pub fn total_supply(env: Env) -> i128 {
+        env.storage().persistent().get(&DataKey::TotalSupply).unwrap_or(0)
+    }
+
+    /// Transfer tokens from one address to another.
     /// Transfer tokens from one address to another using allowance.
     /// The caller must be approved to spend tokens on behalf of the from address.
     pub fn transfer_from(env: Env, spender: Address, from: Address, to: Address, amount: i128) -> Result<(), Error> {
@@ -323,6 +364,101 @@ mod tests {
     }
 
     #[test]
+    fn test_approve_zero_revokes_allowance() {
+        let (env, _, client) = setup();
+        let alice = Address::generate(&env);
+        let bob = Address::generate(&env);
+
+        client.approve(&alice, &bob, &500);
+        assert_eq!(client.allowance(&alice, &bob), 500);
+
+        client.approve(&alice, &bob, &0);
+        assert_eq!(client.allowance(&alice, &bob), 0);
+    }
+
+    #[test]
+    fn test_initial_total_supply_is_zero() {
+        let (_, _, client) = setup();
+        assert_eq!(client.total_supply(), 0);
+    }
+
+    #[test]
+    fn test_mint_increases_total_supply() {
+        let (env, _, client) = setup();
+        let alice = Address::generate(&env);
+
+        client.mint(&alice, &500);
+        assert_eq!(client.total_supply(), 500);
+
+        client.mint(&alice, &300);
+        assert_eq!(client.total_supply(), 800);
+    }
+
+    #[test]
+    fn test_burn_decreases_balance() {
+        let (env, _, client) = setup();
+        let alice = Address::generate(&env);
+
+        client.mint(&alice, &1000);
+        client.burn(&alice, &400);
+
+        assert_eq!(client.balance(&alice), 600);
+    }
+
+    #[test]
+    fn test_burn_decreases_total_supply() {
+        let (env, _, client) = setup();
+        let alice = Address::generate(&env);
+        let bob = Address::generate(&env);
+
+        client.mint(&alice, &500);
+        client.mint(&bob, &300);
+        assert_eq!(client.total_supply(), 800);
+
+        client.burn(&alice, &200);
+        assert_eq!(client.total_supply(), 600);
+    }
+
+    #[test]
+    fn test_burn_fails_on_insufficient_balance() {
+        let (env, _, client) = setup();
+        let alice = Address::generate(&env);
+
+        client.mint(&alice, &100);
+        let result = client.try_burn(&alice, &200);
+
+        assert_eq!(result, Err(Ok(Error::InsufficientBalance)));
+        assert_eq!(client.balance(&alice), 100);
+        assert_eq!(client.total_supply(), 100);
+    }
+
+    #[test]
+    fn test_burn_fails_on_invalid_amount() {
+        let (env, _, client) = setup();
+        let alice = Address::generate(&env);
+
+        client.mint(&alice, &100);
+
+        let result = client.try_burn(&alice, &0);
+        assert_eq!(result, Err(Ok(Error::InvalidAmount)));
+
+        let result = client.try_burn(&alice, &-50);
+        assert_eq!(result, Err(Ok(Error::InvalidAmount)));
+    }
+
+    #[test]
+    fn test_burn_entire_balance() {
+        let (env, _, client) = setup();
+        let alice = Address::generate(&env);
+
+        client.mint(&alice, &500);
+        client.burn(&alice, &500);
+
+        assert_eq!(client.balance(&alice), 0);
+        assert_eq!(client.total_supply(), 0);
+    }
+
+    #[test]
     fn test_transfer_from_fails_on_invalid_amount() {
         let (env, _, client) = setup();
         let alice = Address::generate(&env);
@@ -391,18 +527,5 @@ mod tests {
         // Check final balances
         assert_eq!(client.balance(&alice), 750);
         assert_eq!(client.balance(&dave), 250);
-    }
-
-    #[test]
-    fn test_approve_zero_revokes_allowance() {
-        let (env, _, client) = setup();
-        let alice = Address::generate(&env);
-        let bob = Address::generate(&env);
-
-        client.approve(&alice, &bob, &500);
-        assert_eq!(client.allowance(&alice, &bob), 500);
-
-        client.approve(&alice, &bob, &0);
-        assert_eq!(client.allowance(&alice, &bob), 0);
     }
 }
