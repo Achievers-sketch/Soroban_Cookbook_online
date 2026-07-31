@@ -12,6 +12,7 @@ import {
 import CodeSnippet from '@site/src/components/CodeSnippet';
 import Collapsible from '@site/src/components/Collapsible/Collapsible';
 import { Quiz } from '@site/src/components/Quiz';
+import { CodeComparison } from '@site/src/components/CodeComparison';
 
 export default {
   ...MDXComponents,
@@ -26,4 +27,5 @@ export default {
   CodeSnippet,
   Collapsible,
   Quiz,
+  CodeComparison,
 };
