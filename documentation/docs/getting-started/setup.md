@@ -1,22 +1,20 @@
 ---
 time: 5
-sidebar_position: 0
+sidebar_position: 1
 title: Environment Setup
 description: Set up your Soroban development environment — install Rust, Soroban CLI, and configure your system for smart contract development.
 ---
 
 # Environment Setup
 
-title: Environment Setup
-description: Set up your Soroban development environment to start building smart contracts.
-sidebar_position: 1
----
-
 For platform-specific instructions, see [Linux Environment Setup](/docs/getting-started/setup-linux) or [Windows Environment Setup](/docs/getting-started/setup-windows).
+
+<PrerequisitesChecker />
 
 ## Prerequisites
 
 Before you begin, ensure you have:
+
 
 - **Rust** - Latest stable version
 - **Soroban CLI** - Command-line interface for Soroban

@@ -59,7 +59,6 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Patterns',
       items: [
-        'patterns/overview',
         'patterns/hello-world',
         'patterns/basic-token',
         'patterns/token-snapshot',

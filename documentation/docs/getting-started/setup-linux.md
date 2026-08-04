@@ -7,12 +7,10 @@ description: Set up your Soroban development environment on Linux — complete g
 
 # Linux Environment Setup
 
-title: Linux Environment Setup
-description: Set up your Soroban development environment on Linux.
-sidebar_position: 3
----
-
 Set up your Soroban development environment on Linux to start building smart contracts. This guide covers Ubuntu/Debian-based distributions with notes for other Linux distros.
+
+<PrerequisitesChecker />
+
 
 ## Prerequisites
 
