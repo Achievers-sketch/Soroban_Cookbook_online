@@ -1,11 +1,10 @@
 {
   "generators": {
-    "address": 3,
+    "address": 4,
     "nonce": 0,
     "mux_id": 0
   },
   "auth": [
-    [],
     [],
     [],
     []
@@ -39,7 +38,7 @@
               },
               "durability": "persistent",
               "val": {
-                "i128": "100"
+                "i128": "1000"
               }
             }
           },
@@ -63,7 +62,7 @@
               },
               "durability": "persistent",
               "val": {
-                "i128": "100"
+                "i128": "1000"
               }
             }
           },
