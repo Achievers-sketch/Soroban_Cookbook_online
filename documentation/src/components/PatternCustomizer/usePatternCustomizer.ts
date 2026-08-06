@@ -5,11 +5,11 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import { replaceTemplateVariables, validateTemplateValues } from './utils';
-import { CustomizerField, CustomizerState } from './types';
+import { CustomizerField } from './types';
 
 /**
  * Hook to manage pattern customizer state and code generation
- * 
+ *
  * @example
  * const { values, generatedCode, updateField } = usePatternCustomizer({
  *   fields: [{
@@ -58,12 +58,15 @@ export function usePatternCustomizer(fields: CustomizerField[], codeTemplate: st
   }, [initialValues]);
 
   // Reset a specific field to its default
-  const resetField = useCallback((fieldName: string) => {
-    const field = fields.find((f) => f.name === fieldName);
-    if (field) {
-      updateField(fieldName, field.defaultValue);
-    }
-  }, [fields, updateField]);
+  const resetField = useCallback(
+    (fieldName: string) => {
+      const field = fields.find((f) => f.name === fieldName);
+      if (field) {
+        updateField(fieldName, field.defaultValue);
+      }
+    },
+    [fields, updateField],
+  );
 
   return {
     values,

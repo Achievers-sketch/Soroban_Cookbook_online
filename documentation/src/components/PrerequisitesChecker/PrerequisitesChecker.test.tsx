@@ -29,7 +29,9 @@ describe('PrerequisitesChecker Component', () => {
     render(<PrerequisitesChecker />);
 
     expect(screen.getByText('Prerequisites Readiness Checker')).toBeInTheDocument();
-    expect(screen.getByText(/Verify that your local environment is configured/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Verify that your local environment is configured/),
+    ).toBeInTheDocument();
 
     DEFAULT_PREREQUISITES.forEach((item) => {
       expect(screen.getByText(item.name)).toBeInTheDocument();

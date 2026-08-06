@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Link from '@docusaurus/Link';
 import { Badge } from '../Badge';
 import { getHistory } from '../../../lib/recommendations/tracker';
-import { getRecommendations, RegistryDocument } from '../../../lib/recommendations/recommendationEngine';
+import {
+  getRecommendations,
+  RegistryDocument,
+} from '../../../lib/recommendations/recommendationEngine';
 import registryData from './contentRegistry.json';
 import styles from './RecommendationWidget.module.css';
 
@@ -37,7 +40,7 @@ export default function RecommendationWidget({ currentDocId }: RecommendationWid
   }
 
   // Find current doc metadata in registry to generate reasons
-  const currentDoc = (registryData as RegistryDocument[]).find(doc => doc.id === currentDocId);
+  const currentDoc = (registryData as RegistryDocument[]).find((doc) => doc.id === currentDocId);
 
   const getReason = (doc: RegistryDocument) => {
     if (currentDoc && doc.category === currentDoc.category) {
@@ -59,14 +62,16 @@ export default function RecommendationWidget({ currentDocId }: RecommendationWid
     if (!cat) return '';
     return cat
       .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   };
 
   return (
     <div className={styles.container} data-testid="recommendations-widget">
       <h2 className={styles.title}>
-        <span className={styles.titleIcon} aria-hidden="true">💡</span>
+        <span className={styles.titleIcon} aria-hidden="true">
+          💡
+        </span>
         Recommended for You
       </h2>
       <div className={styles.grid}>
@@ -75,18 +80,18 @@ export default function RecommendationWidget({ currentDocId }: RecommendationWid
             key={doc.id}
             to={doc.href}
             className={styles.card}
-            data-testid={`rec-card-${doc.id}`}
-          >
+            data-testid={`rec-card-${doc.id}`}>
             <div className={styles.cardHeader}>
               <span className={styles.category}>{formatCategory(doc.category)}</span>
-              <Badge variant={doc.difficulty as any} size="sm" />
+              <Badge
+                variant={doc.difficulty as 'beginner' | 'intermediate' | 'advanced'}
+                size="sm"
+              />
             </div>
             <h3 className={styles.cardTitle}>{doc.title}</h3>
             <p className={styles.cardDescription}>{doc.description}</p>
             <div className={styles.cardFooter}>
-              <span className={styles.readTime}>
-                ⏱️ {doc.time} min
-              </span>
+              <span className={styles.readTime}>⏱️ {doc.time} min</span>
               <span className={styles.reason}>{getReason(doc)}</span>
             </div>
           </Link>

@@ -92,9 +92,9 @@ export default function CookieConsent(): React.JSX.Element | null {
             Cookies &amp; analytics
           </p>
           <p id="cookie-consent-desc" className={styles.text}>
-            We use essential storage for theme preference and form security. Optional analytics
-            (for example Google Analytics, when configured) help us understand documentation usage.
-            See the <Link to="/privacy">Privacy Policy</Link> for details. You can change this choice
+            We use essential storage for theme preference and form security. Optional analytics (for
+            example Google Analytics, when configured) help us understand documentation usage. See
+            the <Link to="/privacy">Privacy Policy</Link> for details. You can change this choice
             anytime via Cookie settings in the footer.
           </p>
         </div>

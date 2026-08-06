@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, type ReactNode } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { List, ChevronUp } from 'lucide-react';
 import styles from './QuickNav.module.css';
@@ -146,8 +146,7 @@ export default function QuickNav({
         aria-label={isOpen ? 'Close quick navigation' : 'Open quick navigation'}
         aria-expanded={isOpen}
         aria-controls="quicknav-menu"
-        type="button"
-      >
+        type="button">
         <List size={18} aria-hidden="true" />
         <span className={styles.toggleLabel}>On this page</span>
       </button>
@@ -156,27 +155,21 @@ export default function QuickNav({
       <nav
         ref={navRef}
         id="quicknav-menu"
-        className={clsx(
-          styles.quicknav,
-          isOpen && styles.quicknavOpen,
-          className,
-        )}
+        className={clsx(styles.quicknav, isOpen && styles.quicknavOpen, className)}
         aria-label="Quick section navigation"
-        role="navigation"
-      >
+        role="navigation">
         <div className={styles.quicknavHeader}>
           <span className={styles.quicknavTitle}>On this page</span>
           <button
             className={styles.closeButton}
             onClick={() => setIsOpen(false)}
             aria-label="Close quick navigation"
-            type="button"
-          >
+            type="button">
             <ChevronUp size={16} aria-hidden="true" />
           </button>
         </div>
 
-        <ul className={styles.quicknavList} role="list">
+        <ul className={styles.quicknavList}>
           {headings.map((item) => (
             <li key={item.id}>
               <a
@@ -190,8 +183,7 @@ export default function QuickNav({
                   e.preventDefault();
                   handleClick(item.id);
                 }}
-                aria-current={activeId === item.id ? 'true' : undefined}
-              >
+                aria-current={activeId === item.id ? 'true' : undefined}>
                 {item.text}
               </a>
             </li>

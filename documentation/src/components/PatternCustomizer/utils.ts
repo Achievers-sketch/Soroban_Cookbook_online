@@ -6,7 +6,7 @@
 /**
  * Replace template variables in code string
  * Supports {{variableName}} syntax
- * 
+ *
  * @example
  * const template = 'String::from_str(&env, "{{greeting}}")';
  * const values = { greeting: 'Hello World' };
@@ -31,7 +31,7 @@ export function replaceTemplateVariables(
 /**
  * Extract all template variable names from template string
  * Finds all {{variableName}} patterns
- * 
+ *
  * @example
  * extractTemplateVariables('Hello {{name}}, you are {{age}} years old');
  * // Returns: ['name', 'age']
@@ -52,7 +52,7 @@ export function extractTemplateVariables(template: string): string[] {
 
 /**
  * Validate that all required template variables have values
- * 
+ *
  * @example
  * validateTemplateValues('Hello {{name}}, {{age}} years', { name: 'Alice', age: '25' });
  * // Returns: { valid: true, missing: [] }
@@ -77,9 +77,9 @@ export function validateTemplateValues(
 export function sanitizeInput(value: string): string {
   return value
     .replace(/\\/g, '\\\\') // Escape backslashes
-    .replace(/"/g, '\\"')   // Escape quotes
-    .replace(/'/g, "\\'")   // Escape single quotes
-    .replace(/\n/g, '\\n')  // Escape newlines
+    .replace(/"/g, '\\"') // Escape quotes
+    .replace(/'/g, "\\'") // Escape single quotes
+    .replace(/\n/g, '\\n') // Escape newlines
     .replace(/\t/g, '\\t'); // Escape tabs
 }
 
@@ -96,6 +96,7 @@ export function isValidRustIdentifier(str: string): boolean {
  * Allows alphanumeric, spaces, and common punctuation
  */
 export function isValidRustString(str: string): boolean {
-  const pattern = /^[a-zA-Z0-9\s\.,!?-]*$/;
+  const pattern = /^[a-zA-Z0-9\s.,!?-]*$/;
+
   return pattern.test(str);
 }

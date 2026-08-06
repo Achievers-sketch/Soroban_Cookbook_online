@@ -89,10 +89,7 @@ export function initAnalytics({ gaMeasurementId, clarityProjectId }: AnalyticsId
  * Fire a custom analytics event. Safe to call during SSR and when GA is absent.
  * Failures are swallowed so analytics never blocks UI interactions.
  */
-export function trackEvent(
-  name: AnalyticsEventName | string,
-  params: AnalyticsParams = {},
-): void {
+export function trackEvent(name: AnalyticsEventName | string, params: AnalyticsParams = {}): void {
   if (typeof window === 'undefined') return;
 
   try {

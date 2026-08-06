@@ -23,7 +23,6 @@ type MonacoEditorLike = {
   getValue: () => string;
   setValue: (value: string) => void;
   onDidChangeModelContent: (listener: () => void) => { dispose: () => void };
-  getValue: () => string;
 };
 
 const TEMPLATE = `#![no_std]
@@ -84,6 +83,11 @@ export default function PlaygroundPage(): React.ReactElement {
   const [code, setCode] = useState(TEMPLATE);
   const [status, setStatus] = useState('Loading Monaco editor...');
   const [shareMessage, setShareMessage] = useState('');
+  const [isTesting, setIsTesting] = useState(false);
+  const [testOutput, setTestOutput] = useState<{
+    status: 'idle' | 'running' | 'success' | 'error';
+    message: React.ReactNode;
+  }>({ status: 'idle', message: '' });
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -102,12 +106,6 @@ export default function PlaygroundPage(): React.ReactElement {
       setStatus('Invalid shared link. Loaded default template instead.');
     }
   }, []);
-  const [status, setStatus] = useState('Loading Monaco editor…');
-  const [isTesting, setIsTesting] = useState(false);
-  const [testOutput, setTestOutput] = useState<{
-    status: 'idle' | 'running' | 'success' | 'error';
-    message: React.ReactNode;
-  }>({ status: 'idle', message: '' });
 
   const runMockTests = () => {
     if (!editorRef.current) return;
@@ -115,8 +113,8 @@ export default function PlaygroundPage(): React.ReactElement {
     setTestOutput({ status: 'running', message: 'Compiling project...\nRunning 1 test...' });
 
     setTimeout(() => {
-      const code = editorRef.current?.getValue() || '';
-      const isPass = code.includes('#[contractimpl]');
+      const editorCode = editorRef.current?.getValue() || '';
+      const isPass = editorCode.includes('#[contractimpl]');
 
       setIsTesting(false);
       if (isPass) {
@@ -229,6 +227,7 @@ export default function PlaygroundPage(): React.ReactElement {
     editorRef.current?.setValue(TEMPLATE);
     setCode(TEMPLATE);
     setShareMessage('');
+    setTestOutput({ status: 'idle', message: '' });
     if (typeof window !== 'undefined') {
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
     }
@@ -247,10 +246,18 @@ export default function PlaygroundPage(): React.ReactElement {
       }
 
       await navigator.clipboard.writeText(sharedUrl);
-      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}${SHARE_HASH_PREFIX}${encodeSharedCode(code)}`);
+      window.history.replaceState(
+        null,
+        '',
+        `${window.location.pathname}${window.location.search}${SHARE_HASH_PREFIX}${encodeSharedCode(code)}`,
+      );
       setShareMessage('Share link copied');
     } catch {
-      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}${SHARE_HASH_PREFIX}${encodeSharedCode(code)}`);
+      window.history.replaceState(
+        null,
+        '',
+        `${window.location.pathname}${window.location.search}${SHARE_HASH_PREFIX}${encodeSharedCode(code)}`,
+      );
       setShareMessage('Share URL ready in the address bar');
     }
   };
@@ -272,16 +279,6 @@ export default function PlaygroundPage(): React.ReactElement {
               Share
             </button>
             <button className={styles.button} onClick={handleReset}>
-              Reset Template
-            </button>
-          <span className={styles.status}>{status}</span>
-          <div className={styles.buttonGroup}>
-            <button
-              className={styles.button}
-              onClick={() => {
-                editorRef.current?.setValue(TEMPLATE);
-                setTestOutput({ status: 'idle', message: '' });
-              }}>
               Reset Template
             </button>
             <button

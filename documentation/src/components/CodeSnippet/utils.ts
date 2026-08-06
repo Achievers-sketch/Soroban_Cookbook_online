@@ -23,7 +23,8 @@ export function stripComments(code: string): string {
  * Check if code has any comment-only lines
  * Used to determine if toggle button should be visible
  */
-export function hasCommentLines(code: string): boolean {
+export function hasCommentLines(code: string | undefined | null): boolean {
+  if (!code) return false;
   return code.split('\n').some((line) => {
     const trimmed = line.trim();
     return trimmed.startsWith('//') && trimmed.length > 2;
@@ -33,13 +34,14 @@ export function hasCommentLines(code: string): boolean {
 /**
  * Get the display code based on showComments flag
  */
-export function getDisplayCode(code: string, showComments: boolean): string {
-  return showComments ? code : stripComments(code);
+export function getDisplayCode(code: string | undefined | null, showComments: boolean): string {
+  const safeCode = code ?? '';
+  return showComments ? safeCode : stripComments(safeCode);
 }
 
 /**
  * Format a filename by converting to kebab-case and adding appropriate extension
- * 
+ *
  * @example
  * formatFilename('HelloWorld', 'rust') // returns 'hello-world.rs'
  * formatFilename('hello-world', 'rs') // returns 'hello-world.rs'
@@ -78,7 +80,7 @@ export function formatFilename(name: string, language: string = 'rust'): string 
 
 /**
  * Download content as a file using Blob and anchor element
- * 
+ *
  * @example
  * downloadFile('fn main() { println!("Hello"); }', 'hello.rs');
  */
@@ -105,7 +107,7 @@ export function downloadFile(content: string, filename: string): void {
     URL.revokeObjectURL(url);
   } catch (error) {
     console.error('Failed to download file:', error);
-    throw new Error(`Failed to download file: ${filename}`);
+    throw new Error(`Failed to download file: ${filename}`, { cause: error });
   }
 }
 
@@ -135,5 +137,3 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     return false;
   }
 }
-
-

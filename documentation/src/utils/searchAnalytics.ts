@@ -37,7 +37,8 @@ export const QUERY_DEBOUNCE_MS = 500;
  */
 const PII_PATTERNS: Array<[RegExp, string]> = [
   // Email addresses
-  [/[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}/gi, '<email>'],
+  [/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/gi, '<email>'],
+
   // Hex strings ≥ 32 chars (wallet addresses, API keys, tx hashes, …)
   [/\b[0-9a-f]{32,}\b/gi, '<token>'],
   // Long decimal numbers (≥ 10 digits; not typical doc search terms)

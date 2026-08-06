@@ -6,10 +6,10 @@ import { usePatternCustomizer } from './usePatternCustomizer';
 
 /**
  * PatternCustomizer Component
- * 
+ *
  * Interactive form to customize pattern parameters with live code preview.
  * Supports template variables using {{variableName}} syntax.
- * 
+ *
  * @example
  * ```tsx
  * <PatternCustomizer
@@ -34,12 +34,14 @@ export default function PatternCustomizer({
   description,
   fields,
   codeTemplate,
-  language = 'rust',
+  language: _language = 'rust',
   onCodeChange,
   className,
 }: PatternCustomizerProps) {
-  const { values, generatedCode, validation, updateField, reset } =
-    usePatternCustomizer(fields, codeTemplate);
+  const { values, generatedCode, validation, updateField, reset } = usePatternCustomizer(
+    fields,
+    codeTemplate,
+  );
 
   // Notify parent when code changes
   useEffect(() => {
@@ -136,9 +138,7 @@ export default function PatternCustomizer({
                 Missing values: {validation.missing.join(', ')}
               </div>
             )}
-            {validation.valid && (
-              <div className={styles.validationSuccess}>✓ Ready to use</div>
-            )}
+            {validation.valid && <div className={styles.validationSuccess}>✓ Ready to use</div>}
           </form>
         </div>
 

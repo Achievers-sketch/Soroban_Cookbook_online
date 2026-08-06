@@ -39,24 +39,22 @@ import ConsentBanner from '@site/src/components/ConsentBanner';
 import FunnelTracker from '@site/src/components/FunnelTracker';
 import OfflineNotice from '@site/src/components/OfflineNotice';
 import SearchAnalytics from '@site/src/components/SearchAnalytics';
+import SearchLoading from '@site/src/components/SearchLoading';
+import { ProgressProvider } from '@site/src/contexts/ProgressContext';
 import { hasConsent } from '@site/src/utils/analyticsConsent';
 import useRecommendationTracker from '../hooks/useRecommendationTracker';
 
 // Build-time constants injected by Docusaurus / webpack DefinePlugin.
 // process.env is statically replaced at build time; these are safe to read
 // in a browser bundle.
-const SENTRY_DSN: string =
-  (typeof process !== 'undefined' && process.env.SENTRY_DSN) || '';
+const SENTRY_DSN: string = (typeof process !== 'undefined' && process.env.SENTRY_DSN) || '';
 const SENTRY_ENVIRONMENT: string =
-  (typeof process !== 'undefined' &&
-    (process.env.SENTRY_ENVIRONMENT || process.env.NODE_ENV)) ||
+  (typeof process !== 'undefined' && (process.env.SENTRY_ENVIRONMENT || process.env.NODE_ENV)) ||
   'production';
 const SENTRY_RELEASE: string =
   (typeof process !== 'undefined' &&
     (process.env.SENTRY_RELEASE || process.env.npm_package_version)) ||
   'unknown';
-import { ProgressProvider } from '@site/src/contexts/ProgressContext';
-import SearchLoading from '@site/src/components/SearchLoading';
 
 interface RootProps {
   children: ReactNode;
@@ -118,9 +116,7 @@ export default function Root({ children }: RootProps): React.JSX.Element {
           if (typeof window !== 'undefined') {
             (window as Window & { __sentryTest?: () => void }).__sentryTest = () => {
               Sentry.captureException(
-                new Error(
-                  '[Sentry test] Manual verification — safe to ignore in production.',
-                ),
+                new Error('[Sentry test] Manual verification — safe to ignore in production.'),
               );
             };
           }

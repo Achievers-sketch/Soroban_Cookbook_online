@@ -19,7 +19,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import OriginalSearchPage from '@theme-original/SearchPage';
-import SearchFilters, { type SearchFilterState } from '@site/src/components/SearchFilters';
+import { SearchFilters, type SearchFilterState } from '@site/src/components/SearchFilters';
 import { matchesFilters } from '@site/src/utils/searchFilterUtils';
 
 // ── helpers ───────────────────────────────────────────────────────────────────
@@ -87,7 +87,9 @@ export default function SearchPage(props: Record<string, unknown>): React.JSX.El
 
   // Stable ref so the MutationObserver closure always reads the latest filters.
   const filtersRef = useRef(filters);
-  filtersRef.current = filters;
+  useEffect(() => {
+    filtersRef.current = filters;
+  }, [filters]);
 
   // Portal target: the container rendered by the original search page.
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
@@ -96,9 +98,7 @@ export default function SearchPage(props: Record<string, unknown>): React.JSX.El
   useEffect(() => {
     // Give the plugin one tick to render its markup.
     const id = window.setTimeout(() => {
-      const container = document.querySelector<HTMLElement>(
-        '.container.margin-vert--lg',
-      );
+      const container = document.querySelector<HTMLElement>('.container.margin-vert--lg');
       if (container) setPortalTarget(container);
     }, 0);
     return () => window.clearTimeout(id);

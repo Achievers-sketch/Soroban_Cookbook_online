@@ -110,10 +110,7 @@ export default function PatternFilterBar({
         {CATEGORY_OPTIONS.map(({ value, label }) => (
           <button
             key={value}
-            className={clsx(
-              styles.categoryPill,
-              filters.category === value && styles.active,
-            )}
+            className={clsx(styles.categoryPill, filters.category === value && styles.active)}
             onClick={() => setCategory(value as CategoryValue)}
             aria-pressed={filters.category === value}>
             {label}

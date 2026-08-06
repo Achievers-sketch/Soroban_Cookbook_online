@@ -12,7 +12,6 @@
  *
  * Lazy-loading below-fold components (Testimonials, NewsletterSignup)
  * removes them from the critical bundle and reduces TTI.
- * Intended to run from the documentation/ directory (CI working-directory).
  */
 
 module.exports = {
@@ -21,9 +20,6 @@ module.exports = {
       numberOfRuns: 1,
       settings: {
         // formFactor must match screenEmulation.mobile (Lighthouse validation).
-      staticDistDir: './build',
-      numberOfRuns: 1,
-      settings: {
         formFactor: 'mobile',
         screenEmulation: {
           mobile: true,
@@ -76,18 +72,6 @@ module.exports = {
         'uses-text-compression': ['warn', { minScore: 1 }],
         'render-blocking-resources': ['warn', { maxLength: 0 }],
         'uses-optimized-images': ['warn', { minScore: 1 }],
-      url: ['/', '/docs/'],
-    },
-    assert: {
-      assertions: {
-        'categories:seo': ['error', { minScore: 0.85 }],
-        'categories:accessibility': ['error', { minScore: 0.85 }],
-        'categories:best-practices': ['warn', { minScore: 0.8 }],
-        'categories:performance': ['warn', { minScore: 0.7 }],
-        viewport: 'error',
-        'font-size': 'warn',
-        'tap-targets': 'warn',
-        'content-width': 'warn',
       },
     },
     upload: {

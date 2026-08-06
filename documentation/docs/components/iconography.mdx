@@ -57,7 +57,7 @@ Icons support five predefined sizes:
 | `lg` | 24px  | Feature sections, heroes  |
 | `xl` | 32px  | Large displays, emphasis  |
 
-<IconShowcase />
+{/* IconShowcase demo removed — component is not shipped in this package. */}
 
 ## Accessibility
 
@@ -146,46 +146,38 @@ Here are commonly used icons in the documentation:
 
 ### Navigation
 
-<IconGrid
-  icons={[
-    { icon: Menu, label: 'Menu' },
-    { icon: Search, label: 'Search' },
-    { icon: ArrowRight, label: 'Arrow Right' },
-    { icon: ExternalLink, label: 'External Link' },
-  ]}
-/>
+<div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+  <span><Icon icon={Menu} size="lg" ariaLabel="Menu" /> Menu</span>
+  <span><Icon icon={Search} size="lg" ariaLabel="Search" /> Search</span>
+  <span><Icon icon={ArrowRight} size="lg" ariaLabel="Arrow Right" /> Arrow Right</span>
+  <span><Icon icon={ExternalLink} size="lg" ariaLabel="External Link" /> External Link</span>
+</div>
 
 ### Actions
 
-<IconGrid
-  icons={[
-    { icon: Download, label: 'Download' },
-    { icon: Settings, label: 'Settings' },
-    { icon: Github, label: 'GitHub' },
-    { icon: Terminal, label: 'Terminal' },
-  ]}
-/>
+<div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+  <span><Icon icon={Download} size="lg" ariaLabel="Download" /> Download</span>
+  <span><Icon icon={Settings} size="lg" ariaLabel="Settings" /> Settings</span>
+  <span><Icon icon={Github} size="lg" ariaLabel="GitHub" /> GitHub</span>
+  <span><Icon icon={Terminal} size="lg" ariaLabel="Terminal" /> Terminal</span>
+</div>
 
 ### Status
 
-<IconGrid
-  icons={[
-    { icon: CheckCircle, label: 'Success' },
-    { icon: AlertCircle, label: 'Warning' },
-    { icon: XCircle, label: 'Error' },
-    { icon: Info, label: 'Info' },
-  ]}
-/>
+<div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+  <span><Icon icon={CheckCircle} size="lg" ariaLabel="Success" /> Success</span>
+  <span><Icon icon={AlertCircle} size="lg" ariaLabel="Warning" /> Warning</span>
+  <span><Icon icon={XCircle} size="lg" ariaLabel="Error" /> Error</span>
+  <span><Icon icon={Info} size="lg" ariaLabel="Info" /> Info</span>
+</div>
 
 ### Content
 
-<IconGrid
-  icons={[
-    { icon: BookOpen, label: 'Documentation' },
-    { icon: Code, label: 'Code' },
-    { icon: Zap, label: 'Quick/Fast' },
-  ]}
-/>
+<div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+  <span><Icon icon={BookOpen} size="lg" ariaLabel="Documentation" /> Documentation</span>
+  <span><Icon icon={Code} size="lg" ariaLabel="Code" /> Code</span>
+  <span><Icon icon={Zap} size="lg" ariaLabel="Quick/Fast" /> Quick/Fast</span>
+</div>
 
 ## Custom Props
 

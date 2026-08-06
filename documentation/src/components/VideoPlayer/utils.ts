@@ -38,7 +38,8 @@ export function extractYouTubeId(url: string): string | null {
     return null;
   } catch {
     // If URL parsing fails, try regex patterns
-    const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11,})/;
+    const youtubeRegex =
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11,})/;
     const match = url.match(youtubeRegex);
     return match ? match[1] : null;
   }
@@ -81,11 +82,7 @@ export function extractVimeoId(url: string): string | null {
  */
 export function detectProvider(url: string): VideoProvider | null {
   // Check for YouTube patterns
-  if (
-    url.includes('youtube.com') ||
-    url.includes('youtu.be') ||
-    /^[a-zA-Z0-9_-]{11,}$/.test(url)
-  ) {
+  if (url.includes('youtube.com') || url.includes('youtu.be') || /^[a-zA-Z0-9_-]{11,}$/.test(url)) {
     const youtubeId = extractYouTubeId(url);
     if (youtubeId) return 'youtube';
   }

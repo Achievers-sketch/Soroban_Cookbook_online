@@ -117,7 +117,8 @@
 
 .collapsibleContent {
   overflow: hidden;
-  transition: max-height var(--transition-slow) var(--ease-out),
+  transition:
+    max-height var(--transition-slow) var(--ease-out),
     opacity var(--transition-base) var(--ease-out);
   max-height: 0;
   opacity: 0;

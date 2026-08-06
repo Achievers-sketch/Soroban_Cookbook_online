@@ -1,21 +1,36 @@
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import { describe, it, expect, vi, afterEach } from 'vitest';
 import React from 'react';
-import NewsletterSignup from './NewsletterSignup';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import {
+  __setMockDocusaurusContext,
+  __resetMockDocusaurusContext,
+} from '../../test-mocks/useDocusaurusContext';
 
-vi.mock('@docusaurus/useDocusaurusContext', () => ({
-  default: () => ({
-    siteConfig: {
-      customFields: {
-        newsletterEndpoint: undefined,
-      },
-    },
-  }),
+vi.mock('../../utils/csrf', () => ({
+  getOrCreateCSRFToken: () => 'test-csrf-token',
+  clearCSRFToken: vi.fn(),
+  updateCSRFTokenFromResponse: vi.fn(),
 }));
 
+import NewsletterSignup from './NewsletterSignup';
+
 describe('NewsletterSignup', () => {
+  beforeEach(() => {
+    __setMockDocusaurusContext({
+      siteConfig: {
+        customFields: {
+          newsletterEndpoint: undefined,
+        },
+      },
+    });
+  });
+
   afterEach(() => {
+    __resetMockDocusaurusContext();
     vi.useRealTimers();
+    vi.unstubAllGlobals();
+    vi.clearAllMocks();
   });
 
   it('renders the signup form with heading, input, and button', () => {
@@ -92,22 +107,8 @@ describe('NewsletterSignup', () => {
     const describedBy = input.getAttribute('aria-describedby');
     expect(describedBy).toBeTruthy();
     expect(document.getElementById(describedBy!)).toHaveTextContent('Enter an email address.');
-import React from 'react';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import {
-  __setMockDocusaurusContext,
-  __resetMockDocusaurusContext,
-} from '../../test-mocks/useDocusaurusContext';
-
-vi.mock('../../utils/csrf', () => ({
-  getOrCreateCSRFToken: () => 'test-csrf-token',
-  clearCSRFToken: vi.fn(),
-  updateCSRFTokenFromResponse: vi.fn(),
-}));
-
-import NewsletterSignup from './NewsletterSignup';
+  });
+});
 
 describe('NewsletterSignup error states (#348)', () => {
   beforeEach(() => {

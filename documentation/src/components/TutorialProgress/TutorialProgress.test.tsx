@@ -78,9 +78,8 @@ describe('TutorialProgress', () => {
       observe = observeMock;
       disconnect = disconnectMock;
     }
-    (
-      globalThis as unknown as { IntersectionObserver: unknown }
-    ).IntersectionObserver = MockIntersectionObserver;
+    (globalThis as unknown as { IntersectionObserver: unknown }).IntersectionObserver =
+      MockIntersectionObserver;
 
     Element.prototype.scrollIntoView = vi.fn();
   });

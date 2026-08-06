@@ -14,31 +14,18 @@ export type Props = {
  */
 export default function DocBreadcrumbsStructuredData(props: Props): ReactNode {
   const { siteConfig } = useDocusaurusContext();
+  const sidebarFromHook = useSidebarBreadcrumbs() as BreadcrumbItem[] | null | undefined;
+  const docObj = useDoc();
 
-  let sidebarBreadcrumbs: BreadcrumbItem[] | null = null;
-  if (props.breadcrumbs !== undefined) {
-    sidebarBreadcrumbs = props.breadcrumbs;
-  } else {
-    try {
-      sidebarBreadcrumbs = useSidebarBreadcrumbs() as BreadcrumbItem[] | null;
-    } catch {
-      // Gracefully handle pages outside DocsSidebarProvider
-      sidebarBreadcrumbs = null;
-    }
-  }
+  const sidebarBreadcrumbs =
+    props.breadcrumbs !== undefined ? props.breadcrumbs : (sidebarFromHook ?? null);
 
-  let docMetadata: { title?: string; permalink?: string } | undefined;
-  try {
-    const docObj = useDoc();
-    if (docObj?.metadata) {
-      docMetadata = {
+  const docMetadata = docObj?.metadata
+    ? {
         title: docObj.metadata.title,
         permalink: docObj.metadata.permalink,
-      };
-    }
-  } catch {
-    // Gracefully handle pages outside DocProvider
-  }
+      }
+    : undefined;
 
   const schema = generateBreadcrumbSchema({
     breadcrumbs: sidebarBreadcrumbs,

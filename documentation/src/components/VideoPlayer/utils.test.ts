@@ -2,6 +2,8 @@
  * Tests for VideoPlayer utility functions
  */
 
+import { describe, it, expect } from 'vitest';
+import type { VideoProvider } from './types';
 import {
   extractYouTubeId,
   extractVimeoId,
@@ -68,9 +70,7 @@ describe('VideoPlayer utilities', () => {
 
   describe('detectProvider', () => {
     it('should detect YouTube from watch URL', () => {
-      expect(detectProvider('https://www.youtube.com/watch?v=dQw4w9WgXcQ')).toBe(
-        'youtube',
-      );
+      expect(detectProvider('https://www.youtube.com/watch?v=dQw4w9WgXcQ')).toBe('youtube');
     });
 
     it('should detect YouTube from youtu.be URL', () => {
@@ -107,7 +107,7 @@ describe('VideoPlayer utilities', () => {
 
     it('should throw error for unknown provider', () => {
       expect(() => {
-        getEmbedUrl('unknown' as any, '123');
+        getEmbedUrl('unknown' as VideoProvider, '123');
       }).toThrow();
     });
   });
@@ -143,9 +143,7 @@ describe('VideoPlayer utilities', () => {
 
   describe('isValidVideoUrl', () => {
     it('should return true for valid YouTube URL', () => {
-      expect(isValidVideoUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ')).toBe(
-        true,
-      );
+      expect(isValidVideoUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ')).toBe(true);
     });
 
     it('should return true for valid Vimeo URL', () => {

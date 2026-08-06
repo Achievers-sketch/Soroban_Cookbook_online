@@ -22,7 +22,7 @@ function normalizeHighlight(highlightLines: number[] | undefined): Set<number> {
   return new Set((highlightLines ?? []).filter((line) => line > 0));
 }
 
-export default function CodeSnippet({
+export default function TabbedCodeSnippet({
   code = '',
   language = 'text',
   fileName,

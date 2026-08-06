@@ -23,6 +23,7 @@ GitHub under the [Soroban-Cookbook](https://github.com/Soroban-Cookbook/Soroban_
 organization.
 
 <!-- PLACEHOLDER: Replace with project legal entity / contact if established. -->
+
 **Controller / contact (placeholder):** For privacy requests, open a GitHub
 issue or discussion on the repository, or contact the maintainers via the
 project Discord listed on the site. A formal registered address, Data
@@ -33,8 +34,8 @@ repository at the time of writing.
 
 ### Information you provide
 
-| Data | When | Purpose |
-|------|------|---------|
+| Data          | When                       | Purpose                                                             |
+| ------------- | -------------------------- | ------------------------------------------------------------------- |
 | Email address | Newsletter form (optional) | Send project announcements when a newsletter endpoint is configured |
 
 We do **not** ask for names, payment details, or account passwords on this
@@ -42,11 +43,11 @@ documentation site.
 
 ### Information stored in your browser
 
-| Storage | Type | Purpose | Essential? |
-|---------|------|---------|------------|
-| Theme preference (`theme` / color mode keys) | `localStorage` | Remember light/dark mode | Yes (functional) |
-| Cookie consent choice (`soroban-cookie-consent`) | `localStorage` | Remember analytics preference | Yes (functional) |
-| CSRF token (`soroban-csrf-token`) | `sessionStorage` | Protect newsletter form submissions | Yes (security) |
+| Storage                                          | Type             | Purpose                             | Essential?       |
+| ------------------------------------------------ | ---------------- | ----------------------------------- | ---------------- |
+| Theme preference (`theme` / color mode keys)     | `localStorage`   | Remember light/dark mode            | Yes (functional) |
+| Cookie consent choice (`soroban-cookie-consent`) | `localStorage`   | Remember analytics preference       | Yes (functional) |
+| CSRF token (`soroban-csrf-token`)                | `sessionStorage` | Protect newsletter form submissions | Yes (security)   |
 
 ### Analytics and cookies (optional)
 
@@ -72,6 +73,7 @@ should only run when analytics consent is granted.
 ## Legal basis (GDPR-oriented summary)
 
 <!-- PLACEHOLDER: Confirm legal bases with counsel for your jurisdiction. -->
+
 Typical bases for a documentation site of this type:
 
 - **Legitimate interest / necessity** for essential storage required to deliver
@@ -87,13 +89,13 @@ by the project owner.
 
 Depending on configuration and your actions, data may be processed by:
 
-| Service | Role | Data involved |
-|---------|------|---------------|
-| GitHub Pages / hosting provider | Hosts static site files | Standard HTTP logs per host policy |
-| Vercel (if used for previews/deploy) | Hosting | Standard HTTP logs per host policy |
-| Google Analytics 4 | Optional analytics | Usage metrics after consent |
-| Newsletter backend (`NEWSLETTER_ENDPOINT`) | Email subscription | Email address you submit |
-| Discord / Stack Overflow / Stellar docs | External links you choose to open | Per those sites’ policies |
+| Service                                    | Role                              | Data involved                      |
+| ------------------------------------------ | --------------------------------- | ---------------------------------- |
+| GitHub Pages / hosting provider            | Hosts static site files           | Standard HTTP logs per host policy |
+| Vercel (if used for previews/deploy)       | Hosting                           | Standard HTTP logs per host policy |
+| Google Analytics 4                         | Optional analytics                | Usage metrics after consent        |
+| Newsletter backend (`NEWSLETTER_ENDPOINT`) | Email subscription                | Email address you submit           |
+| Discord / Stack Overflow / Stellar docs    | External links you choose to open | Per those sites’ policies          |
 
 We do not sell personal data.
 
@@ -105,12 +107,12 @@ countries. Where Google Analytics is enabled, Google’s transfer mechanisms app
 
 ## Data retention
 
-| Data | Retention |
-|------|-----------|
-| Theme / consent in your browser | Until you clear site data or change consent |
-| CSRF token | Browser session |
-| Newsletter email | Controlled by the newsletter backend operator <!-- PLACEHOLDER: state retention period when known --> |
-| Analytics | Per Google Analytics retention settings when enabled |
+| Data                            | Retention                                                                                             |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Theme / consent in your browser | Until you clear site data or change consent                                                           |
+| CSRF token                      | Browser session                                                                                       |
+| Newsletter email                | Controlled by the newsletter backend operator <!-- PLACEHOLDER: state retention period when known --> |
+| Analytics                       | Per Google Analytics retention settings when enabled                                                  |
 
 ## Your rights
 

@@ -114,7 +114,7 @@ cargo install --locked soroban-cli
 Soroban smart contracts are compiled to WebAssembly (WASM). The `wasm32-unknown-unknown` target tells the Rust compiler to target WASM bytecode instead of native machine code.
 
 <script type="application/ld+json">
-{
+{JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
@@ -143,5 +143,5 @@ Soroban smart contracts are compiled to WebAssembly (WASM). The `wasm32-unknown-
       }
     }
   ]
-}
+})}
 </script>

@@ -265,7 +265,7 @@ describe('createDebouncedOnQuery', () => {
   it('fires only for the last term when called rapidly', () => {
     const debouncedOnQuery = createDebouncedOnQuery();
 
-    debouncedOnQuery('s');          // too short → will be no-op even if it fires
+    debouncedOnQuery('s'); // too short → will be no-op even if it fires
     debouncedOnQuery('so');
     debouncedOnQuery('sor');
     debouncedOnQuery('sorob');

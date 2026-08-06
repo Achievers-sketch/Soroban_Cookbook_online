@@ -1,5 +1,10 @@
 import MDXComponents from '@theme-original/MDXComponents';
-import { PatternCallout, PatternMeta, PatternSection, EstimatedTime } from '@site/src/components/PatternDoc';
+import {
+  PatternCallout,
+  PatternMeta,
+  PatternSection,
+  EstimatedTime,
+} from '@site/src/components/PatternDoc';
 import { CodeSnippet } from '@site/src/components/CodeSnippet';
 import { PatternCustomizer } from '@site/src/components/PatternCustomizer';
 import { VideoPlayer } from '@site/src/components/VideoPlayer';
@@ -22,4 +27,3 @@ export default {
   CodeComparison,
   PrerequisitesChecker,
 };
-

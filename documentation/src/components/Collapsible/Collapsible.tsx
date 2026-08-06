@@ -53,6 +53,7 @@ export default function Collapsible({
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isOpen = isControlled ? controlledOpen : internalOpen;
   const contentRef = useRef<HTMLDivElement>(null);
+  const [contentHeight, setContentHeight] = useState(0);
 
   const handleToggle = useCallback(() => {
     if (!isControlled) {
@@ -61,7 +62,11 @@ export default function Collapsible({
     onToggle?.(!isOpen);
   }, [isControlled, isOpen, onToggle]);
 
-  const contentHeight = contentRef.current?.scrollHeight ?? 0;
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+    setContentHeight(el.scrollHeight);
+  }, [isOpen, children]);
 
   return (
     <details
@@ -72,14 +77,12 @@ export default function Collapsible({
         className,
       )}
       open={isOpen}
-      onToggle={handleToggle}
-    >
+      onToggle={handleToggle}>
       <summary className={styles.collapsibleSummary}>
         <span className={styles.collapsibleSummaryText}>{summary}</span>
         <span
           className={clsx(styles.collapsibleIcon, isOpen && styles.collapsibleIconOpen)}
-          aria-hidden="true"
-        >
+          aria-hidden="true">
           <ChevronDown size={16} />
         </span>
       </summary>
@@ -90,8 +93,7 @@ export default function Collapsible({
             '--content-height': `${contentHeight}px`,
           } as React.CSSProperties
         }
-        ref={contentRef}
-      >
+        ref={contentRef}>
         <div className={styles.collapsibleContentInner}>{children}</div>
       </div>
     </details>

@@ -3,7 +3,11 @@ import clsx from 'clsx';
 import PatternCard from '../cards/PatternCard';
 import styles from './PatternPreview.module.css';
 import { sanitizeUrl } from '@site/src/utils/sanitizeUrl';
-import { usePatternFilter, CATEGORY_OPTIONS, type CategoryValue } from '@site/src/hooks/usePatternFilter';
+import {
+  usePatternFilter,
+  CATEGORY_OPTIONS,
+  type CategoryValue,
+} from '@site/src/hooks/usePatternFilter';
 
 export interface Pattern {
   id: string;

@@ -42,10 +42,7 @@
 .quicknav {
   position: fixed;
   top: calc(var(--ifm-navbar-height) + var(--space-8));
-  right: max(
-    calc((100vw - var(--ifm-container-width-xl)) / 2 - 240px),
-    var(--space-4)
-  );
+  right: max(calc((100vw - var(--ifm-container-width-xl)) / 2 - 240px), var(--space-4));
   width: 200px;
   max-height: calc(100vh - var(--ifm-navbar-height) - var(--space-16));
   overflow-y: auto;
@@ -55,7 +52,8 @@
   box-shadow: var(--shadow-lg);
   padding: var(--space-4);
   z-index: var(--z-index-sticky);
-  transition: opacity var(--transition-base) var(--ease-out),
+  transition:
+    opacity var(--transition-base) var(--ease-out),
     transform var(--transition-base) var(--ease-out),
     visibility var(--transition-base) var(--ease-out);
   opacity: 0;

@@ -15,25 +15,17 @@ import { TutorialProgress } from '@site/src/components/TutorialProgress';
 import DocFeedback from '@site/src/components/DocFeedback';
 import ScrollSpyActivator from '@site/src/components/ScrollSpyActivator';
 import ProgressToggleButton from '@site/src/components/ProgressToggleButton/ProgressToggleButton';
+import { RecommendationWidget } from '@site/src/components/recommendations';
 import styles from './styles.module.css';
 
 type Props = React.ComponentProps<typeof Content>;
 
 type DocFrontMatter = { time?: string | number; steps?: string[] };
-type DocMetadata = { id: string; permalink: string };
 
 export default function DocItemContentWrapper(props: Props): ReactNode {
-  let metadata: DocMetadata | undefined;
-  let frontMatter: DocFrontMatter | undefined;
-
-  try {
-    const docObj = useDoc();
-    metadata = docObj.metadata;
-    frontMatter = docObj.frontMatter as DocFrontMatter;
-  } catch {
-    metadata = undefined;
-    frontMatter = undefined;
-  }
+  const docObj = useDoc();
+  const metadata = docObj.metadata;
+  const frontMatter = docObj.frontMatter as DocFrontMatter;
 
   const rawTime = frontMatter?.time;
   const label = parseEstimatedTime(rawTime);
@@ -49,12 +41,7 @@ export default function DocItemContentWrapper(props: Props): ReactNode {
       {steps && steps.length > 0 ? <TutorialProgress steps={steps} /> : null}
       <Content {...props} />
       {metadata?.id ? (
-        <BrowserOnly>
-          {() => {
-            const { RecommendationWidget } = require('../../../components/recommendations');
-            return <RecommendationWidget currentDocId={metadata.id} />;
-          }}
-        </BrowserOnly>
+        <BrowserOnly>{() => <RecommendationWidget currentDocId={metadata.id} />}</BrowserOnly>
       ) : null}
       {metadata?.permalink ? <ProgressToggleButton path={metadata.permalink} /> : null}
       <DocFeedback />

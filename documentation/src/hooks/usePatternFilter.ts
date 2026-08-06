@@ -94,9 +94,7 @@ export function usePatternFilter(
   const toggleTag = useCallback((tag: TagValue) => {
     setFilters((prev) => ({
       ...prev,
-      tags: prev.tags.includes(tag)
-        ? prev.tags.filter((t) => t !== tag)
-        : [...prev.tags, tag],
+      tags: prev.tags.includes(tag) ? prev.tags.filter((t) => t !== tag) : [...prev.tags, tag],
     }));
   }, []);
 
@@ -121,9 +119,7 @@ export function usePatternFilter(
         // We strip the '#' and check against each active tag filter.
         if (filters.tags.length > 0) {
           const patternTag = p.tag.replace(/^#/, '').toLowerCase();
-          const hasTag = filters.tags.some(
-            (t) => patternTag === t || patternTag.includes(t),
-          );
+          const hasTag = filters.tags.some((t) => patternTag === t || patternTag.includes(t));
           if (!hasTag) return false;
         }
 

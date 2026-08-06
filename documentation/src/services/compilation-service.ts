@@ -25,7 +25,7 @@ export interface CompilationResponse {
  */
 export async function compileContractRemote(
   request: CompilationRequest,
-  apiEndpoint = 'https://api.sorobancookbook.org/v1/compile'
+  apiEndpoint = 'https://api.sorobancookbook.org/v1/compile',
 ): Promise<CompilationResponse> {
   try {
     const response = await fetch(apiEndpoint, {

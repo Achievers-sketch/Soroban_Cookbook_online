@@ -71,13 +71,8 @@ function CopyButton({ text }: { text: string }) {
 }
 
 export default function QuickStartSection() {
-  let isDark = true;
-  try {
-    const { colorMode } = useColorMode();
-    isDark = colorMode === 'dark';
-  } catch {
-    isDark = true;
-  }
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === 'dark';
   const selectedTheme = isDark ? prismThemes.vsDark : prismThemes.github;
 
   return (

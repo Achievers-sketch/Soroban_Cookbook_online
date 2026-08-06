@@ -52,9 +52,7 @@ export default function VideoPlayer({
           <div className={styles.error}>
             <span className={styles.errorIcon}>⚠️</span>
             <span>Invalid video URL</span>
-            <span style={{ fontSize: '0.75rem', opacity: 0.8 }}>
-              Supported: YouTube, Vimeo
-            </span>
+            <span style={{ fontSize: '0.75rem', opacity: 0.8 }}>Supported: YouTube, Vimeo</span>
           </div>
         </div>
       </div>
@@ -89,7 +87,11 @@ export default function VideoPlayer({
           className={styles.iframe}
           src={iframeUrl.toString()}
           title={title || `Video: ${videoMetadata.videoId}`}
-          allow={allowFullscreen ? 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen' : 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'}
+          allow={
+            allowFullscreen
+              ? 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'
+              : 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+          }
           allowFullScreen={allowFullscreen}
           loading="lazy"
         />

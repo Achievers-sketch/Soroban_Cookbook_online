@@ -5,7 +5,7 @@
 
 export interface CodeSnippetProps {
   /** The code content to display */
-  code: string;
+  code?: string;
   /** Programming language for syntax highlighting */
   language?: string;
   /** Whether to show comments by default */
@@ -19,4 +19,3 @@ export interface CodeSnippetProps {
   /** Show/hide download button */
   showDownload?: boolean;
 }
-

@@ -110,7 +110,9 @@ export function PrerequisitesChecker({
         <div className={styles.titleRow}>
           <h3 className={styles.title}>{title}</h3>
           <span className={clsx(styles.badge, isReady ? styles.badgeReady : styles.badgePending)}>
-            {isReady ? '✓ Ready for Development' : `${requiredCompletedCount}/${requiredItems.length} Required Ready`}
+            {isReady
+              ? '✓ Ready for Development'
+              : `${requiredCompletedCount}/${requiredItems.length} Required Ready`}
           </span>
         </div>
         <p className={styles.description}>{description}</p>

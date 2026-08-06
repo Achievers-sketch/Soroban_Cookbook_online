@@ -26,7 +26,10 @@ export function readConsent(): ConsentRecord | null {
       return null;
     }
     const parsed = JSON.parse(raw) as ConsentRecord;
-    if (parsed?.version !== 1 || (parsed.analytics !== 'accepted' && parsed.analytics !== 'rejected')) {
+    if (
+      parsed?.version !== 1 ||
+      (parsed.analytics !== 'accepted' && parsed.analytics !== 'rejected')
+    ) {
       return null;
     }
     return parsed;

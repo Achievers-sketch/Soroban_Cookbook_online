@@ -1,3 +1,4 @@
+anonymised
 API
 authorisation
 authorise
@@ -5,13 +6,19 @@ authorised
 autoplay
 behaviour
 Binaryen
+browsable
 Bun
 CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSC
 CABC
 Cargo
+CBCOPY
 CD
+CDEF
 CDLZFC
 cdylib
+centralised
+Chainlink
+checkmarks
 CI
 clawback
 CLI
@@ -21,10 +28,15 @@ codegen
 collateralization
 Collateralization
 Contentful
+contractclient
 contracterror
 contractimpl
 contracttype
+Cooldown
+COOLDOWN
 CSS
+Customizer
+decentralised
 defi
 Deque
 deserialises
@@ -35,12 +47,16 @@ DSN
 easyops
 entrancy
 ESLint
+favourable
+Fira
 FOIT
 footgun
 friendbot
 Friendbot
+frontends
 frontmatter
 Frontmatter
+fulfilment
 functools
 GA4
 GBBD
@@ -56,6 +72,7 @@ HPJVIEUVNIXF
 HSTS
 HTLC
 incentivized
+initialise
 initialised
 Initialised
 insns
@@ -68,6 +85,7 @@ lib.rs
 lighthouserc
 LLDB
 lockfiles
+Mbps
 MD
 MDX
 Minimise
@@ -79,6 +97,7 @@ newtype
 Newtype
 nocapture
 nosniff
+OPFS
 optimisation
 optimisations
 optimise
@@ -90,6 +109,7 @@ Overlines
 pacman
 performancebudget
 PII
+playthrough
 preimage
 Prettier
 println
@@ -116,6 +136,7 @@ Soroban
 stablecoins
 Stablecoins
 Stellar
+stellardev
 stroop
 stroops
 SYJYDZT

@@ -8,7 +8,15 @@ import { getRecommendations } from '../../../../lib/recommendations/recommendati
 // Mock Link
 vi.mock('@docusaurus/Link', () => {
   return {
-    default: ({ to, children, ...props }: any) => React.createElement('a', { href: to, ...props }, children),
+    default: ({
+      to,
+      children,
+      ...props
+    }: {
+      to: string;
+      children?: React.ReactNode;
+      [key: string]: unknown;
+    }) => React.createElement('a', { href: to, ...props }, children),
   };
 });
 

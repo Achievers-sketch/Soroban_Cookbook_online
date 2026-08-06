@@ -57,14 +57,24 @@
 }
 
 .historyItem {
+  padding: 0;
+}
+
+.historyItemButton {
   display: flex;
   align-items: center;
+  width: 100%;
   padding: 8px 12px;
+  border: none;
+  background: transparent;
   cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
   transition: background-color 0.15s ease;
 }
 
-.historyItem:hover {
+.historyItemButton:hover {
   background-color: var(--ifm-hover-overlay);
 }
 

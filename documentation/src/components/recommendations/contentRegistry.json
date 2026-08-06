@@ -1,7 +1,7 @@
 [
   {
     "id": "components/alert-callout-showcase",
-    "title": "alert-callout-showcase",
+    "title": "Alert & Callout Showcase",
     "description": "Complete showcase of alert and callout components",
     "category": "components",
     "difficulty": "beginner",
@@ -20,7 +20,7 @@
   },
   {
     "id": "components/alerts",
-    "title": "alerts",
+    "title": "Alerts",
     "description": "Alert components for important messages",
     "category": "components",
     "difficulty": "beginner",
@@ -35,7 +35,7 @@
   },
   {
     "id": "components/buttons",
-    "title": "buttons",
+    "title": "Button Component",
     "description": "Soroban Cookbook button system with variants, sizes, states, icon support, and accessibility guidance.",
     "category": "components",
     "difficulty": "beginner",
@@ -49,7 +49,7 @@
   },
   {
     "id": "components/callouts",
-    "title": "callouts",
+    "title": "Callouts",
     "description": "Callout components for documentation emphasis",
     "category": "components",
     "difficulty": "beginner",
@@ -66,7 +66,7 @@
   },
   {
     "id": "components/iconography",
-    "title": "iconography",
+    "title": "Iconography",
     "description": "Guide for using icons in the Soroban Cookbook documentation",
     "category": "components",
     "difficulty": "beginner",
@@ -79,7 +79,7 @@
   },
   {
     "id": "components/testimonials",
-    "title": "testimonials",
+    "title": "Testimonials Component",
     "description": "Community testimonials section component with responsive cards and social channels.",
     "category": "components",
     "difficulty": "beginner",
@@ -107,7 +107,7 @@
   },
   {
     "id": "concepts/best-practices",
-    "title": "Soroban Best Practices",
+    "title": "Best Practices",
     "description": "Essential dos and donts for Soroban smart contract development — safe patterns, input validation, and a production-ready contract checklist.",
     "category": "concepts",
     "difficulty": "beginner",
@@ -124,8 +124,8 @@
   },
   {
     "id": "concepts/cross-contract-invocation",
-    "title": "cross-contract-invocation",
-    "description": "Soroban tutorial on cross-contract-invocation.",
+    "title": "Cross-Contract Invocation",
+    "description": "A practical guide to secure and maintainable cross-contract calls in Soroban — mechanics, failure modes, defensive patterns, and testing recommendations.",
     "category": "concepts",
     "difficulty": "intermediate",
     "status": "stable",
@@ -143,8 +143,8 @@
   },
   {
     "id": "concepts/error-handling",
-    "title": "error-handling",
-    "description": "Soroban tutorial on error-handling.",
+    "title": "Error Handling in Soroban",
+    "description": "Understanding error handling in Soroban smart contracts",
     "category": "concepts",
     "difficulty": "beginner",
     "status": "stable",
@@ -241,7 +241,7 @@
   },
   {
     "id": "concepts/storage",
-    "title": "Storage Patterns",
+    "title": "Storage",
     "description": "Master Sorobans three storage types — instance, persistent, and temporary — and learn patterns for efficient, scalable contract state management.",
     "category": "concepts",
     "difficulty": "intermediate",
@@ -260,7 +260,7 @@
   {
     "id": "concepts/testing-strategies",
     "title": "Advanced Soroban Testing Strategies",
-    "description": "Soroban tutorial on Advanced Soroban Testing Strategies.",
+    "description": "Design resilient Soroban test suites with unit, integration, and fuzz testing patterns connected to workspace-level Cargo and CI automation.",
     "category": "concepts",
     "difficulty": "beginner",
     "status": "stable",
@@ -293,7 +293,7 @@
   {
     "id": "concepts/token-standards",
     "title": "Soroban Token Standards Overview",
-    "description": "Soroban tutorial on Soroban Token Standards Overview.",
+    "description": "Compare Stellar Asset Contract (SAC) and custom Soroban token designs, including when to use each model and how the cookbook token-transfer example differs.",
     "category": "concepts",
     "difficulty": "beginner",
     "status": "stable",
@@ -325,8 +325,8 @@
   },
   {
     "id": "contributing/add-tested-example",
-    "title": "Test only your new example",
-    "description": "Soroban tutorial on Test only your new example.",
+    "title": "Adding a Tested Code Example",
+    "description": "How to contribute a new Soroban code example that is validated automatically by CI.",
     "category": "contributing",
     "difficulty": "beginner",
     "status": "stable",
@@ -355,7 +355,7 @@
   },
   {
     "id": "contributing/image-optimization",
-    "title": "image-optimization",
+    "title": "Image Optimization Guidelines",
     "description": "Best practices for using images in Soroban Cookbook documentation",
     "category": "contributing",
     "difficulty": "beginner",
@@ -368,8 +368,8 @@
   },
   {
     "id": "contributing/internal-linking",
-    "title": "internal-linking",
-    "description": "Soroban tutorial on internal-linking.",
+    "title": "Internal Linking Strategy",
+    "description": "How to structure cross-links across the Soroban Cookbook for SEO, discoverability, and reader navigation.",
     "category": "contributing",
     "difficulty": "beginner",
     "status": "stable",
@@ -426,7 +426,7 @@
   },
   {
     "id": "contributing/performance-impact",
-    "title": "performance-impact",
+    "title": "Image Optimization Performance Impact",
     "description": "Before and after metrics for image optimization implementation",
     "category": "contributing",
     "difficulty": "beginner",
@@ -440,7 +440,7 @@
   },
   {
     "id": "contributing/versioning-strategy",
-    "title": "versioning-strategy",
+    "title": "Versioning Strategy",
     "description": "How the Soroban Cookbook documentation is versioned alongside Soroban SDK releases.",
     "category": "contributing",
     "difficulty": "beginner",
@@ -453,7 +453,7 @@
   },
   {
     "id": "contributing",
-    "title": "Using bun (recommended)",
+    "title": "Contributing to Soroban Cookbook",
     "description": "Learn how to contribute to the Soroban Cookbook project.",
     "category": "general",
     "difficulty": "beginner",
@@ -468,7 +468,7 @@
   },
   {
     "id": "design-system/alerts-callouts",
-    "title": "alerts-callouts",
+    "title": "Alerts & Callouts",
     "description": "Alert and callout components for important messages and documentation emphasis",
     "category": "design-system",
     "difficulty": "beginner",
@@ -485,8 +485,8 @@
   },
   {
     "id": "design-system/badges-tags",
-    "title": "badges-tags",
-    "description": "Soroban tutorial on badges-tags.",
+    "title": "Badges & Tags",
+    "description": "Difficulty badges, category tags, status indicators, size variants, and accessibility guidelines for the Soroban Cookbook.",
     "category": "design-system",
     "difficulty": "beginner",
     "status": "stable",
@@ -503,8 +503,8 @@
   },
   {
     "id": "design-system/buttons",
-    "title": "buttons",
-    "description": "Soroban tutorial on buttons.",
+    "title": "Button System",
+    "description": "Visual variants, sizes, states, icon integration, button groups, accessibility, and dark mode support for the Soroban Cookbook button system.",
     "category": "design-system",
     "difficulty": "beginner",
     "status": "stable",
@@ -517,8 +517,8 @@
   },
   {
     "id": "design-system/empty-states",
-    "title": "empty-states",
-    "description": "Soroban tutorial on empty-states.",
+    "title": "Empty States",
+    "description": "Reusable empty-state patterns for docs, search, and pattern flows in the Soroban Cookbook design system.",
     "category": "design-system",
     "difficulty": "beginner",
     "status": "stable",
@@ -531,8 +531,8 @@
   },
   {
     "id": "design-system/typography",
-    "title": "typography",
-    "description": "Soroban tutorial on typography.",
+    "title": "Typography System",
+    "description": "Font families, type scale, heading hierarchy, responsive sizing, and accessibility guidelines for Soroban Cookbook developers.",
     "category": "design-system",
     "difficulty": "beginner",
     "status": "stable",
@@ -550,7 +550,7 @@
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 20,
     "tags": [
       "auth",
       "events",
@@ -561,8 +561,8 @@
   },
   {
     "id": "getting-started/browser-server-compilation",
-    "title": "Browser & Server-Side Soroban Compilation",
-    "description": "Soroban tutorial on Browser & Server-Side Soroban Compilation.",
+    "title": "Browser & Server-Side Compilation Spike",
+    "description": "Feasibility evaluation, architectural design, and constraint analysis for browser-based and server-side compilation of Soroban smart contracts.",
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
@@ -578,12 +578,12 @@
   },
   {
     "id": "getting-started/building-and-compilation",
-    "title": "Add the WASM compilation target",
-    "description": "Soroban tutorial on Add the WASM compilation target.",
+    "title": "Building and Compilation",
+    "description": "A complete guide to compiling Soroban smart contracts — from source to WebAssembly artifact, including flags, optimization strategies, and common build error remediation.",
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 20,
     "tags": [
       "optimization",
       "errors",
@@ -593,12 +593,12 @@
   },
   {
     "id": "getting-started/contract-interaction",
-    "title": "Pass an integer value by name",
-    "description": "Soroban tutorial on Pass an integer value by name.",
+    "title": "Contract Interaction Tutorial",
+    "description": "How to interact with deployed Soroban contracts from CLI and app contexts.",
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 20,
     "tags": [
       "optimization",
       "errors",
@@ -609,11 +609,11 @@
   {
     "id": "getting-started/contract-testing",
     "title": "Contract Testing Guide",
-    "description": "Soroban tutorial on Contract Testing Guide.",
+    "description": "Comprehensive guide to writing, structuring, and running tests for Soroban smart contracts. Learn unit testing patterns, helpers, mocking, and best practices.",
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 25,
     "tags": [
       "auth",
       "errors",
@@ -623,12 +623,12 @@
   },
   {
     "id": "getting-started/debugging",
-    "title": "Document the exact steps",
+    "title": "Debugging Guide",
     "description": "Systematic debugging workflows and practical troubleshooting techniques for Soroban smart contract development",
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 25,
     "tags": [
       "auth",
       "storage",
@@ -640,12 +640,12 @@
   },
   {
     "id": "getting-started/deploy-mainnet",
-    "title": "Inspect the on-chain contract metadata",
-    "description": "Soroban tutorial on Inspect the on-chain contract metadata.",
+    "title": "Deploy to Mainnet",
+    "description": "A risk-aware guide to deploying Soroban smart contracts to Stellar mainnet — pre-deploy checklist, release gating, security controls, and post-deploy monitoring.",
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 30,
     "tags": [
       "auth",
       "storage",
@@ -664,7 +664,7 @@
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 20,
     "tags": [
       "auth",
       "events",
@@ -681,7 +681,7 @@
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 15,
     "tags": [
       "auth",
       "storage",
@@ -694,11 +694,11 @@
   {
     "id": "getting-started/first-contract",
     "title": "Your First Contract",
-    "description": "Soroban tutorial on Your First Contract.",
+    "description": "Create, build, and test your first Soroban smart contract from scratch — a beginner-friendly introduction to contract development.",
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 15,
     "tags": [
       "storage"
     ],
@@ -706,12 +706,12 @@
   },
   {
     "id": "getting-started/local-testing-and-simulation",
-    "title": "Run all tests",
-    "description": "Soroban tutorial on Run all tests.",
+    "title": "Local Testing and Simulation",
+    "description": "Test and simulate your Soroban contracts locally before deploying to testnet. Covers sandbox invocation, unit testing, state inspection, and iterative development workflows.",
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 25,
     "tags": [
       "auth",
       "storage",
@@ -724,11 +724,11 @@
   {
     "id": "getting-started/local-testing",
     "title": "Soroban Local Testing with Simulation and Snapshots",
-    "description": "Soroban tutorial on Soroban Local Testing with Simulation and Snapshots.",
+    "description": "Run Soroban contracts locally with soroban contract invoke, use --simulate for preflight validation, and capture ledger snapshots for reproducible debugging loops.",
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 15,
     "tags": [
       "auth",
       "storage",
@@ -738,12 +738,12 @@
   },
   {
     "id": "getting-started/setup-linux",
-    "title": "Linux Environment Setup",
+    "title": "Setup on Linux",
     "description": "Set up your Soroban development environment on Linux — complete guide for Ubuntu, Debian, and other distributions.",
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 20,
     "tags": [
       "auth",
       "errors",
@@ -758,7 +758,7 @@
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 25,
     "tags": [
       "auth",
       "errors"
@@ -767,12 +767,12 @@
   },
   {
     "id": "getting-started/setup-windows",
-    "title": "Windows Environment Setup",
+    "title": "Setup on Windows",
     "description": "Set up your Soroban development environment on Windows — guides for both WSL 2 and native Windows installation.",
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 30,
     "tags": [
       "auth",
       "storage",
@@ -789,7 +789,7 @@
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 5,
     "tags": [
       "auth"
     ],
@@ -797,12 +797,12 @@
   },
   {
     "id": "getting-started/testing-errors",
-    "title": "Run all tests",
-    "description": "Soroban tutorial on Run all tests.",
+    "title": "Testing Error Scenarios",
+    "description": "Guide to testing error handling in Soroban contracts",
     "category": "getting-started",
     "difficulty": "beginner",
     "status": "stable",
-    "time": 10,
+    "time": 20,
     "tags": [
       "auth",
       "storage",
@@ -814,8 +814,8 @@
   },
   {
     "id": "legal/privacy",
-    "title": "privacy",
-    "description": "Soroban tutorial on privacy.",
+    "title": "Privacy Policy",
+    "description": "Soroban tutorial on Privacy Policy.",
     "category": "legal",
     "difficulty": "beginner",
     "status": "stable",
@@ -827,7 +827,7 @@
   },
   {
     "id": "migrations/baseline-22-0",
-    "title": "Baseline: docs versioning starts at `22.0`",
+    "title": "Baseline: docs versioning starts at 22.0",
     "description": "What documentation version 22.0 represents and how to use versioned docs going forward.",
     "category": "migrations",
     "difficulty": "beginner",
@@ -838,7 +838,7 @@
   },
   {
     "id": "migrations/template",
-    "title": "Migrating from `<from-version>` to `<to-version>`",
+    "title": "Template: Migrating from X to Y",
     "description": "Template for writing a new migration guide when cutting a documentation version.",
     "category": "migrations",
     "difficulty": "beginner",
@@ -852,12 +852,12 @@
   },
   {
     "id": "patterns/authorization",
-    "title": "Phase 5 (issue #333): API keyword frontmatter for code-snippet search.",
-    "description": "Soroban tutorial on Phase 5 (issue #333): API keyword frontmatter for code-snippet search..",
+    "title": "Authorization & Access Control Patterns",
+    "description": "Practical patterns for authorization, roles, and capability boundaries in Soroban contracts.",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
-    "time": 10,
+    "time": 25,
     "tags": [
       "auth",
       "storage",
@@ -869,12 +869,12 @@
   },
   {
     "id": "patterns/basic-token",
-    "title": "Phase 5 (issue #333): API keyword frontmatter for code-snippet search.",
-    "description": "Soroban tutorial on Phase 5 (issue #333): API keyword frontmatter for code-snippet search..",
+    "title": "Basic Token Implementation",
+    "description": "Complete token contract with mint, transfer, and balance functions — foundation for token standards.",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
-    "time": 10,
+    "time": 20,
     "tags": [
       "auth",
       "storage",
@@ -886,12 +886,12 @@
   },
   {
     "id": "patterns/contract-factory",
-    "title": "Contract Factory Pattern",
-    "description": "Soroban tutorial on Contract Factory Pattern.",
+    "title": "Contract Factory",
+    "description": "Deploy multiple contract instances from a factory contract",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
-    "time": 10,
+    "time": 20,
     "tags": [
       "",
       "auth",
@@ -904,12 +904,12 @@
   },
   {
     "id": "patterns/custom-types",
-    "title": "custom-types",
-    "description": "Soroban tutorial on custom-types.",
+    "title": "Designing Robust Custom Types",
+    "description": "Best practices for modeling, serialization, and evolution of custom data types in Soroban.",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
-    "time": 10,
+    "time": 25,
     "tags": [
       "auth",
       "storage",
@@ -923,12 +923,12 @@
   },
   {
     "id": "patterns/error-handling",
-    "title": "Phase 5 (issue #333): API keyword frontmatter for code-snippet search.",
-    "description": "Soroban tutorial on Phase 5 (issue #333): API keyword frontmatter for code-snippet search..",
+    "title": "Error Handling",
+    "description": "Error taxonomy, custom error patterns, and user-facing clarity strategies.",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
-    "time": 10,
+    "time": 20,
     "tags": [
       "auth",
       "storage",
@@ -941,12 +941,12 @@
   },
   {
     "id": "patterns/error-recovery",
-    "title": "error-recovery",
-    "description": "Soroban tutorial on error-recovery.",
+    "title": "Error Recovery Patterns",
+    "description": "Comprehensive error handling patterns for Soroban smart contracts",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
-    "time": 10,
+    "time": 20,
     "tags": [
       "auth",
       "storage",
@@ -959,7 +959,7 @@
   {
     "id": "patterns/escrow-basic",
     "title": "Escrow — Basic",
-    "description": "Soroban tutorial on Escrow — Basic.",
+    "description": "Two-party escrow with buyer, seller, and arbiter roles. Covers deposit, conditional release, and arbiter-controlled refund.",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
@@ -979,7 +979,7 @@
   {
     "id": "patterns/escrow-multiparty",
     "title": "Multi-Party Escrow",
-    "description": "Soroban tutorial on Multi-Party Escrow.",
+    "description": ">",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
@@ -994,8 +994,8 @@
   },
   {
     "id": "patterns/hello-world",
-    "title": "hello-world",
-    "description": "Soroban tutorial on hello-world.",
+    "title": "Hello World Storage",
+    "description": "Minimal Soroban contract with instance storage — pattern template example.",
     "category": "patterns",
     "difficulty": "beginner",
     "status": "stable",
@@ -1010,12 +1010,12 @@
   },
   {
     "id": "patterns/lifecycle-upgrades",
-    "title": "Phase 5 (issue #333): API keyword frontmatter for code-snippet search.",
-    "description": "Soroban tutorial on Phase 5 (issue #333): API keyword frontmatter for code-snippet search..",
+    "title": "Contract Lifecycle & Upgrade Safety",
+    "description": "Authoritative guide on contract deployment phases, versioning, and upgrade safety in Soroban.",
     "category": "patterns",
     "difficulty": "advanced",
     "status": "stable",
-    "time": 10,
+    "time": 30,
     "tags": [
       "auth",
       "storage",
@@ -1030,12 +1030,12 @@
   },
   {
     "id": "patterns/optimization-playbook",
-    "title": "optimization-playbook",
-    "description": "Soroban tutorial on optimization-playbook.",
+    "title": "Contract Optimization Playbook",
+    "description": "A systematic guide to profiling, benchmarking, and optimizing Soroban smart contracts for gas and performance.",
     "category": "patterns",
     "difficulty": "advanced",
     "status": "stable",
-    "time": 10,
+    "time": 25,
     "tags": [
       "storage",
       "events",
@@ -1046,12 +1046,12 @@
   },
   {
     "id": "patterns/oracle-consumer",
-    "title": "Oracle Consumer Pattern",
-    "description": "Soroban tutorial on Oracle Consumer Pattern.",
+    "title": "Oracle Consumer",
+    "description": "Read external price feeds and data from oracle contracts",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
-    "time": 10,
+    "time": 20,
     "tags": [
       "events",
       "auth",
@@ -1064,12 +1064,12 @@
   },
   {
     "id": "patterns/proposal-lifecycle",
-    "title": "proposal-lifecycle",
-    "description": "Soroban tutorial on proposal-lifecycle.",
+    "title": "Proposal Lifecycle (DAO State Machine)",
+    "description": "Model a DAO proposal as an explicit state machine — Pending → Active → Succeeded/Defeated → Executed.",
     "category": "patterns",
     "difficulty": "advanced",
     "status": "stable",
-    "time": 10,
+    "time": 25,
     "tags": [
       "auth",
       "storage",
@@ -1082,8 +1082,8 @@
   },
   {
     "id": "patterns/reentrancy-guard",
-    "title": "reentrancy-guard",
-    "description": "Soroban tutorial on reentrancy-guard.",
+    "title": "Reentrancy Guard Pattern",
+    "description": "Prevent reentrancy attacks in Soroban smart contracts using mutex lock state flags.",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
@@ -1111,11 +1111,11 @@
   {
     "id": "patterns/timelock-vault",
     "title": "Timelock Vault",
-    "description": "Soroban tutorial on Timelock Vault.",
+    "description": "Lock assets until a scheduled timestamp, then release them to a beneficiary.",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
-    "time": 10,
+    "time": 20,
     "tags": [
       "storage",
       "auth",
@@ -1127,12 +1127,12 @@
   },
   {
     "id": "patterns/token-snapshot",
-    "title": "token-snapshot",
-    "description": "Soroban tutorial on token-snapshot.",
+    "title": "Token Snapshot",
+    "description": "Create immutable point-in-time balance snapshots for governance voting, dividend distribution, and audit trails — with flash-loan resistance and claim tracking.",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
-    "time": 10,
+    "time": 25,
     "tags": [
       "auth",
       "storage",
@@ -1146,12 +1146,12 @@
   },
   {
     "id": "patterns/token-standards",
-    "title": "token-standards",
-    "description": "Soroban tutorial on token-standards.",
+    "title": "Token Standards & Implementation",
+    "description": "Comprehensive guide to Soroban token standards, SEP-41 interface, Stellar Asset Contract (SAC), custom tokens, and NFTs.",
     "category": "patterns",
     "difficulty": "intermediate",
     "status": "stable",
-    "time": 10,
+    "time": 30,
     "tags": [
       "auth",
       "storage",
@@ -1165,7 +1165,7 @@
   },
   {
     "id": "responsive/breakpoints",
-    "title": "breakpoints",
+    "title": "Responsive Breakpoint System",
     "description": "Mobile-first responsive design guidelines, breakpoint tokens, container system, and utility classes for the Soroban Cookbook.",
     "category": "responsive",
     "difficulty": "beginner",
@@ -1229,7 +1229,7 @@
   },
   {
     "id": "security/fundamentals",
-    "title": "fundamentals",
+    "title": "Security Fundamentals",
     "description": "Essential security practices for Soroban smart contracts — threat modeling, secure coding patterns, and protecting funds from vulnerabilities.",
     "category": "security",
     "difficulty": "beginner",
@@ -1249,7 +1249,7 @@
   },
   {
     "id": "security/governance",
-    "title": "governance",
+    "title": "Governance Security",
     "description": "Security considerations for decentralized governance contracts in Soroban — voting systems, proposal mechanisms, and attack mitigation.",
     "category": "security",
     "difficulty": "intermediate",
@@ -1266,8 +1266,8 @@
   },
   {
     "id": "security/token-audit",
-    "title": "token-audit",
-    "description": "Soroban tutorial on token-audit.",
+    "title": "Token Pattern Security Audit",
+    "description": "Security considerations and audit checklists for Soroban token patterns — basic tokens, allowances, wrappers, vaults, vesting, and SAC integration.",
     "category": "security",
     "difficulty": "beginner",
     "status": "stable",
