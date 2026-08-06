@@ -1063,6 +1063,24 @@
     "href": "/docs/patterns/oracle-consumer"
   },
   {
+    "id": "patterns/overview",
+    "title": "Pattern library",
+    "description": "Reusable Soroban smart contract patterns — storage, tokens, DeFi, and more.",
+    "category": "patterns",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "errors",
+      "tokens",
+      "governance",
+      "upgrade"
+    ],
+    "href": "/docs/patterns/overview"
+  },
+  {
     "id": "patterns/proposal-lifecycle",
     "title": "Proposal Lifecycle (DAO State Machine)",
     "description": "Model a DAO proposal as an explicit state machine — Pending → Active → Succeeded/Defeated → Executed.",

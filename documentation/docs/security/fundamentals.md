@@ -139,4 +139,4 @@ For token contracts (mint, transfer, allowances, vaults, wrappers), complete the
 - [Token Pattern Security Audit](/docs/security/token-audit) — token-specific audit checklist
 - [Governance Security](/docs/security/governance) — voting and timelock risks
 - [Cross-Contract Invocation](/docs/concepts/cross-contract-invocation) — safe external call patterns
-- [Randomness & Entropy](/docs/concepts/randomness) — on-chain randomness limitations and secure patterns
+- [Randomness & Entropy](../concepts/randomness) — on-chain randomness limitations and secure patterns

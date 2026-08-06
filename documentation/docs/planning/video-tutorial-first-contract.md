@@ -9,7 +9,7 @@ sidebar_label: Video - First Contract
 **Duration:** 12-15 minutes  
 **Target Audience:** Developers who completed the Getting Started tutorial  
 **Difficulty Level:** Beginner  
-**Prerequisite:** [Getting Started video](/docs/planning/video-tutorial-getting-started)
+**Prerequisite:** [Getting Started video](./video-tutorial-getting-started)
 
 ## Video Objectives
 
