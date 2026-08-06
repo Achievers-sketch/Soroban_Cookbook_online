@@ -15,14 +15,14 @@ configured thresholds.
 
 ## Current budgets
 
-Measured from a production build on 2026-07-27, then given ~12% headroom:
+Measured from a production build on 2026-08-06 (after docs versioning), then given ~12% headroom:
 
 | Budget ID | What is measured | Limit |
 |-----------|------------------|-------|
-| `main-js` | `build/assets/js/main.*.js` | 600 KB (614,400 bytes) |
-| `main-css` | `build/assets/css/styles.*.css` | 220 KB (225,280 bytes) |
-| `total-js` | All `build/**/*.js` | ~2.25 MB (2,359,296 bytes) |
-| `total-css` | All `build/**/*.css` | 220 KB (225,280 bytes) |
+| `main-js` | `build/assets/js/main.*.js` | 704 KB (720,896 bytes) |
+| `main-css` | `build/assets/css/styles.*.css` | 272 KB (278,528 bytes) |
+| `total-js` | All `build/**/*.js` | ~8.75 MB (9,175,040 bytes) |
+| `total-css` | All `build/**/*.css` | 272 KB (278,528 bytes) |
 
 Sizes are **uncompressed** file sizes on disk (not gzip transfer size).
 
