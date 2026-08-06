@@ -90,7 +90,9 @@
     "typescript": "~7.0.2",
     "vitest": "^4.1.10",
     "wait-on": "9.1.0",
-    "webpack": "5.94.0"
+    "webpack": "5.94.0",
+    "@testing-library/dom": "^10.4.1",
+    "vite": "^8.2.0"
   },
   "browserslist": {
     "production": [

@@ -10,10 +10,6 @@ const config: Config = {
   tagline: 'A comprehensive guide to building smart contracts on Stellar with Soroban',
   favicon: 'img/logo.svg',
 
-  future: {
-    v4: true,
-  },
-
   url: process.env.SITE_URL || 'https://soroban-cookbook.dev',
   baseUrl: process.env.BASE_URL || '/',
 
@@ -96,7 +92,6 @@ const config: Config = {
       attributes: {
         'http-equiv': 'Content-Security-Policy',
         content:
-"default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.dicebear.com; font-src 'self' data:; connect-src 'self' https:; form-action 'self' https:; object-src 'none'; base-uri 'self'",
           "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.dicebear.com; font-src 'self' data:; connect-src 'self' https:; form-action 'self' https:; object-src 'none'; base-uri 'self'; worker-src 'self'",
       },
     },
@@ -484,7 +479,6 @@ const config: Config = {
             },
             {
               html: '<button type="button" class="footer__link-item" style="background:none;border:none;padding:0;color:inherit;cursor:pointer;font:inherit;text-align:left" onclick="window.dispatchEvent(new CustomEvent(\'soroban-open-consent\'))">Cookie settings</button>',
-              to: '/docs/legal/privacy',
             },
           ],
         },
