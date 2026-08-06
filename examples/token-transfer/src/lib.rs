@@ -1,5 +1,5 @@
 #![no_std]
-use soroban_sdk::{contract, contracterror, contractimpl, contracttype, Address, Env};
+use soroban_sdk::{contract, contracterror, contractimpl, contracttype, Address, Env, String};
 
 #[contracttype]
 #[derive(Clone)]
@@ -7,6 +7,9 @@ pub enum DataKey {
     Balance(Address),
     Allowance(Address, Address), // (owner, spender)
     TotalSupply,
+    Name,
+    Symbol,
+    Decimals,
 }
 
 #[contracterror]
@@ -24,6 +27,20 @@ pub struct TokenTransfer;
 
 #[contractimpl]
 impl TokenTransfer {
+
+    /// Initialize the token metadata.
+/// This should only be called once after deployment.
+pub fn initialize(
+    env: Env,
+    name: String,
+    symbol: String,
+    decimals: u32,
+) {
+    env.storage().persistent().set(&DataKey::Name, &name);
+    env.storage().persistent().set(&DataKey::Symbol, &symbol);
+    env.storage().persistent().set(&DataKey::Decimals, &decimals);
+}
+
     /// Mint tokens to an address (for testing purposes).
     pub fn mint(env: Env, to: Address, amount: i128) {
     let key = DataKey::Balance(to.clone());
@@ -121,6 +138,30 @@ impl TokenTransfer {
     pub fn balance(env: Env, of: Address) -> i128 {
         let key = DataKey::Balance(of);
         env.storage().persistent().get(&key).unwrap_or(0)
+    }
+
+      /// Return the token name.
+    pub fn name(env: Env) -> String {
+        env.storage()
+            .persistent()
+            .get(&DataKey::Name)
+            .unwrap()
+    }
+
+    /// Return the token symbol.
+    pub fn symbol(env: Env) -> String {
+        env.storage()
+            .persistent()
+            .get(&DataKey::Symbol)
+            .unwrap()
+    }
+
+    /// Return the number of decimals used by the token.
+    pub fn decimals(env: Env) -> u32 {
+        env.storage()
+            .persistent()
+            .get(&DataKey::Decimals)
+            .unwrap()
     }
 
     /// Return the total supply of the token.
@@ -528,4 +569,50 @@ mod tests {
         assert_eq!(client.balance(&alice), 750);
         assert_eq!(client.balance(&dave), 250);
     }
+    
+    #[test]
+    fn test_name_returns_initialized_value() {
+        let (env, _, client) = setup();
+
+        client.initialize(
+            &String::from_str(&env, "Example Token"),
+            &String::from_str(&env, "EXT"),
+            &7,
+        );
+
+        assert_eq!(
+            client.name(),
+            String::from_str(&env, "Example Token")
+        );
+    }
+
+    #[test]
+    fn test_symbol_returns_initialized_value() {
+        let (env, _, client) = setup();
+
+        client.initialize(
+            &String::from_str(&env, "Example Token"),
+            &String::from_str(&env, "EXT"),
+            &7,
+        );
+
+        assert_eq!(
+            client.symbol(),
+            String::from_str(&env, "EXT")
+        );
+    }
+
+    #[test]
+    fn test_decimals_returns_initialized_value() {
+        let (env, _, client) = setup();
+
+        client.initialize(
+            &String::from_str(&env, "Example Token"),
+            &String::from_str(&env, "EXT"),
+            &7,
+        );
+
+        assert_eq!(client.decimals(), 7);
+    }
+
 }
