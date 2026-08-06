@@ -1,11 +1,10 @@
 {
   "generators": {
-    "address": 3,
+    "address": 1,
     "nonce": 0,
     "mux_id": 0
   },
   "auth": [
-    [],
     [],
     [],
     []
@@ -30,16 +29,13 @@
               "key": {
                 "vec": [
                   {
-                    "symbol": "Balance"
-                  },
-                  {
-                    "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFCT4"
+                    "symbol": "Decimals"
                   }
                 ]
               },
               "durability": "persistent",
               "val": {
-                "i128": "100"
+                "u32": 7
               }
             }
           },
@@ -57,13 +53,37 @@
               "key": {
                 "vec": [
                   {
-                    "symbol": "TotalSupply"
+                    "symbol": "Name"
                   }
                 ]
               },
               "durability": "persistent",
               "val": {
-                "i128": "100"
+                "string": "Example Token"
+              }
+            }
+          },
+          "ext": "v0"
+        },
+        "live_until": 4095
+      },
+      {
+        "entry": {
+          "last_modified_ledger_seq": 0,
+          "data": {
+            "contract_data": {
+              "ext": "v0",
+              "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
+              "key": {
+                "vec": [
+                  {
+                    "symbol": "Symbol"
+                  }
+                ]
+              },
+              "durability": "persistent",
+              "val": {
+                "string": "EXT"
               }
             }
           },
