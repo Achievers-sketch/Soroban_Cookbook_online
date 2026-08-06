@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { execFileSync } from 'child_process';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const docsRoot = path.resolve(__dirname, '../docs');
@@ -203,5 +204,13 @@ for (const file of files) {
   }
 }
 
-fs.writeFileSync(outputPath, JSON.stringify(registry, null, 2), 'utf8');
+fs.writeFileSync(outputPath, `${JSON.stringify(registry, null, 2)}\n`, 'utf8');
+try {
+  const prettierBin = path.resolve(__dirname, '../node_modules/.bin/prettier');
+  if (fs.existsSync(prettierBin)) {
+    execFileSync(prettierBin, ['--write', outputPath], { stdio: 'inherit' });
+  }
+} catch (err) {
+  console.warn('Prettier format skipped for content registry:', err.message);
+}
 console.log(`Generated content registry with ${registry.length} items at ${outputPath}`);
