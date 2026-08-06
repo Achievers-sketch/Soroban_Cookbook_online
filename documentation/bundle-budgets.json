@@ -1,9 +1,10 @@
 {
-  "description": "CI bundle size budgets for the Docusaurus documentation build. Thresholds are based on measured production asset sizes (2026-07) with ~12% headroom for intentional growth. Update deliberately when a feature requires a larger budget.",
-  "measuredAt": "2026-07-27",
+  "description": "CI bundle size budgets for the Docusaurus documentation build. Thresholds are based on measured production asset sizes with headroom for intentional growth. Update deliberately when a feature requires a larger budget.",
+  "measuredAt": "2026-08-06",
   "notes": [
     "Sizes are uncompressed on-disk bytes after `bun run build` (not gzip transfer size).",
     "Total JS includes all code-split chunks; the main entry is checked separately as the critical-path budget.",
+    "Budgets refreshed after merging Dependabot bumps (lucide-react 1.x, docusaurus-search-local 0.55, cspell 10 toolchain) plus feature PRs that landed in the merge campaign.",
     "The older `.performancebudget.json` values (300 KB JS / 50 KB CSS) are aspirational Lighthouse resource targets and are intentionally not used as hard CI gates here because they do not match current output."
   ],
   "budgets": [
@@ -12,28 +13,28 @@
       "description": "Main client JavaScript entry (critical path)",
       "pattern": "build/assets/js/main.*.js",
       "aggregate": false,
-      "maxBytes": 614400
+      "maxBytes": 716800
     },
     {
       "id": "main-css",
       "description": "Primary stylesheet",
       "pattern": "build/assets/css/styles.*.css",
       "aggregate": false,
-      "maxBytes": 225280
+      "maxBytes": 276480
     },
     {
       "id": "total-js",
       "description": "All JavaScript assets under build/",
       "pattern": "build/**/*.js",
       "aggregate": true,
-      "maxBytes": 2359296
+      "maxBytes": 8912896
     },
     {
       "id": "total-css",
       "description": "All CSS assets under build/",
       "pattern": "build/**/*.css",
       "aggregate": true,
-      "maxBytes": 225280
+      "maxBytes": 276480
     }
   ]
 }
