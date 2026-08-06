@@ -92,7 +92,7 @@ cargo test
 - [Building and Compilation](./building-and-compilation) — compile your contract to WASM
 - [Deploy to testnet](./deploy-testnet)
 - [Learn about storage](../concepts/storage)
-- [Explore patterns](../patterns/overview.md)
+- [Explore patterns](../patterns/overview)
 
 ## Knowledge Check
 

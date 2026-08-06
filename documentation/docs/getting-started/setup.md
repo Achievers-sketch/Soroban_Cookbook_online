@@ -71,8 +71,8 @@ You should see the Soroban CLI help output.
 Now that your environment is ready:
 
 1. [Create your first contract](./first-contract.md)
-2. [Learn core concepts](../concepts/overview.md)
-3. [Explore patterns](../patterns/overview.md)
+2. [Learn core concepts](../concepts/overview)
+3. [Explore patterns](../patterns/overview)
 
 ## Troubleshooting
 

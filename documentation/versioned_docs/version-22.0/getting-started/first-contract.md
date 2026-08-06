@@ -91,7 +91,7 @@ cargo test
 - [Contract Testing Guide](./contract-testing) - Learn how to write and run tests
 - [Deploy to testnet](./deploy-testnet)
 - [Learn about storage](../concepts/storage)
-- [Explore patterns](../patterns/overview.md)
+- [Explore patterns](../patterns/overview)
 
 - [Building and Compilation](/docs/getting-started/building-and-compilation) — compile your contract to WASM
 - [Deploy to testnet](/docs/getting-started/deploy-testnet)

@@ -161,9 +161,9 @@ Ready to start building? Here's the recommended path:
 
 1. **[Environment Setup](../getting-started/setup.md)** - Get your development tools ready
 2. **[Your First Contract](../getting-started/first-contract.md)** - Build and test a simple contract
-3. **[Core Concepts](./overview.md)** - Understand storage, authorization, and events
+3. **[Core Concepts](./overview)** - Understand storage, authorization, and events
 4. **[Deploy to Testnet](../getting-started/deploy-testnet.md)** - Put your contract on the network
-5. **[Explore Patterns](../patterns/overview.md)** - Learn reusable contract patterns
+5. **[Explore Patterns](../patterns/overview)** - Learn reusable contract patterns
 
 ## Essential Terminology
 
@@ -189,7 +189,7 @@ With Soroban, you can create:
 ## Next Steps
 
 - **Just starting?** → [Set up your environment](../getting-started/setup.md)
-- **Want to understand more?** → [Read core concepts](./overview.md)
+- **Want to understand more?** → [Read core concepts](./overview)
 - **Ready to code?** → [Build your first contract](../getting-started/first-contract.md)
 
 ## Resources

@@ -62,5 +62,5 @@ This pattern is effective when your business logic exceeds standard token semant
 
 ## Related reading
 
-- [Pattern Library](../patterns/overview.md)
+- [Pattern Library](../patterns/overview)
 - [Advanced Soroban Testing Strategies](./testing-strategies.md)

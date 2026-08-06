@@ -329,9 +329,9 @@ rustup toolchain uninstall <toolchain-name>
 Now that your Linux environment is ready:
 
 1. [Create your first contract](./first-contract.md)
-2. [Learn core concepts](../concepts/overview.md)
+2. [Learn core concepts](../concepts/overview)
 3. [Deploy to testnet](./deploy-testnet.md)
-4. [Explore patterns](../patterns/overview.md)
+4. [Explore patterns](../patterns/overview)
 
 ## Additional Resources
 

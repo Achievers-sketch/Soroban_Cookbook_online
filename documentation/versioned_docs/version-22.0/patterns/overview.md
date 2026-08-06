@@ -128,7 +128,7 @@ Have a pattern to share? See our [Contributing Guide](https://github.com/Soroban
 
 Start exploring:
 
-1. Review the [Core Concepts](../concepts/overview.md)
+1. Review the [Core Concepts](../concepts/overview)
 2. Pick a pattern that fits your use case
 3. Study the implementation
 4. Adapt it to your needs

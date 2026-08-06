@@ -692,8 +692,8 @@ Now that your Windows environment is set up:
 
 1. [Create your first contract](./first-contract.md)
 2. [Deploy to testnet](./deploy-testnet.md)
-3. [Learn core concepts](../concepts/overview.md)
-4. [Explore patterns](../patterns/overview.md)
+3. [Learn core concepts](../concepts/overview)
+4. [Explore patterns](../patterns/overview)
 
 ## Additional Resources
 
