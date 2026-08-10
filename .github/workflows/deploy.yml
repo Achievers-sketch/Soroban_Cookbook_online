@@ -169,7 +169,7 @@ jobs:
         # Requires secret: SLACK_WEBHOOK_URL
         # See DEPLOYMENT.md → Deploy Status Notifications for setup
         if: ${{ secrets.SLACK_WEBHOOK_URL != '' }}
-        uses: slackapi/slack-github-action@v1.27.0
+        uses: slackapi/slack-github-action@v4.0.0
         with:
           payload: |
             {
