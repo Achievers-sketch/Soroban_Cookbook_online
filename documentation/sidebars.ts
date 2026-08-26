@@ -69,6 +69,7 @@ const sidebars: SidebarsConfig = {
         'patterns/error-handling',
         'patterns/error-recovery',
         'patterns/escrow-multiparty',
+        'patterns/multi-token-vault',
         'patterns/optimization-playbook',
         'patterns/lifecycle-upgrades',
         'patterns/proposal-lifecycle',

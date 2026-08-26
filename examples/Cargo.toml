@@ -24,6 +24,7 @@ members = [
     "token-vesting",
     "token-wrapper",
     "upgradeable",
+    "multi-token-vault",
     "multisig-wallet",
 ]
 resolver = "2"
