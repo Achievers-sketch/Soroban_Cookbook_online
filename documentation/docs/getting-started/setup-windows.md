@@ -1,4 +1,5 @@
 ---
+time: 30
 sidebar_position: 2
 title: Setup on Windows
 description: Set up your Soroban development environment on Windows — guides for both WSL 2 and native Windows installation.
@@ -6,12 +7,10 @@ description: Set up your Soroban development environment on Windows — guides f
 
 # Windows Environment Setup
 
-title: Windows Environment Setup
-description: Complete guide to setting up Soroban development on Windows with WSL 2.
-sidebar_position: 2
----
-
 Set up your Soroban development environment on Windows. This guide covers both WSL (Windows Subsystem for Linux) - the recommended approach - and native Windows installation.
+
+<PrerequisitesChecker />
+
 
 ## Quick Decision: WSL vs Native
 
@@ -691,8 +690,8 @@ Now that your Windows environment is set up:
 
 1. [Create your first contract](./first-contract.md)
 2. [Deploy to testnet](./deploy-testnet.md)
-3. [Learn core concepts](../concepts/overview.md)
-4. [Explore patterns](../patterns/overview.md)
+3. [Learn core concepts](../concepts/overview)
+4. [Explore patterns](../patterns/overview)
 
 ## Additional Resources
 

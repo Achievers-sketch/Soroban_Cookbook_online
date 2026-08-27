@@ -1,4 +1,5 @@
 ---
+time: 20
 sidebar_position: 1
 title: Setup on Linux
 description: Set up your Soroban development environment on Linux — complete guide for Ubuntu, Debian, and other distributions.
@@ -6,12 +7,10 @@ description: Set up your Soroban development environment on Linux — complete g
 
 # Linux Environment Setup
 
-title: Linux Environment Setup
-description: Set up your Soroban development environment on Linux.
-sidebar_position: 3
----
-
 Set up your Soroban development environment on Linux to start building smart contracts. This guide covers Ubuntu/Debian-based distributions with notes for other Linux distros.
+
+<PrerequisitesChecker />
+
 
 ## Prerequisites
 
@@ -328,9 +327,9 @@ rustup toolchain uninstall <toolchain-name>
 Now that your Linux environment is ready:
 
 1. [Create your first contract](./first-contract.md)
-2. [Learn core concepts](../concepts/overview.md)
+2. [Learn core concepts](../concepts/overview)
 3. [Deploy to testnet](./deploy-testnet.md)
-4. [Explore patterns](../patterns/overview.md)
+4. [Explore patterns](../patterns/overview)
 
 ## Additional Resources
 

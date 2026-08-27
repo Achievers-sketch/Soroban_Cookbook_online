@@ -1,6 +1,14 @@
+---
+time: 25
+title: setup-macos
+---
+
 # macOS Environment Setup
 
 Set up your Soroban development environment on macOS. This guide covers Intel and Apple Silicon (M1/M2/M3) Macs running macOS 11 (Big Sur) or later.
+
+<PrerequisitesChecker />
+
 
 ## Prerequisites
 
@@ -606,9 +614,9 @@ cargo build -v --timings
 Now that your macOS environment is ready:
 
 1. [Create your first contract](./first-contract.md)
-2. [Learn core concepts](../concepts/overview.md)
+2. [Learn core concepts](../concepts/overview)
 3. [Deploy to testnet](./deploy-testnet.md)
-4. [Explore patterns](../patterns/overview.md)
+4. [Explore patterns](../patterns/overview)
 
 ## Additional Resources
 
