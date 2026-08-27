@@ -152,7 +152,14 @@ const config: Config = {
   // ─── Search Analytics Client Module (issue #329) ──────────────────────────
   // Loads on every page to observe the search input and fire onQuery /
   // onResult analytics events via src/utils/searchAnalytics.ts.
-  clientModules: [require.resolve('./src/clientModules/searchAnalyticsModule.ts')],
+  //
+  // ─── Mermaid Zoom Client Module (issue #316) ──────────────────────────────
+  // Makes rendered Mermaid diagrams clickable, opening a zoomable/pannable
+  // lightbox view via src/clientModules/mermaidZoomModule.ts.
+  clientModules: [
+    require.resolve('./src/clientModules/searchAnalyticsModule.ts'),
+    require.resolve('./src/clientModules/mermaidZoomModule.ts'),
+  ],
   markdown: {
     mermaid: true,
   },
@@ -380,6 +387,7 @@ const config: Config = {
             './src/css/badges-tags.css',
             './src/css/custom.css',
             './src/css/search-experience.css',
+            './src/css/mermaid-zoom.css',
           ],
         },
         ...(gtagMeasurementId
