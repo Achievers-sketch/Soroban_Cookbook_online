@@ -2,6 +2,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import rehypeTaskListLabels from './src/remark/rehypeTaskListLabels';
+import accessibleGithubPrismTheme from './src/theme/prismAccessibleGithub';
 
 /** Optional GA4 measurement ID — enables page views + custom events when set. */
 const gtagMeasurementId = process.env.GTAG_MEASUREMENT_ID || process.env.GOOGLE_ANALYTICS_ID || '';
@@ -490,7 +491,7 @@ const config: Config = {
       copyright: `Built by the community • Powered by Stellar • MIT License • © ${new Date().getFullYear()}`,
     },
     prism: {
-      theme: prismThemes.github,
+      theme: accessibleGithubPrismTheme,
       darkTheme: prismThemes.vsDark,
       additionalLanguages: ['rust', 'toml', 'bash'],
     },
