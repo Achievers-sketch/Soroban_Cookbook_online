@@ -53,6 +53,12 @@
   --ifm-color-emphasis-800: #1f2937;
   --ifm-color-emphasis-900: #111827;
 
+  /* Navbar search placeholder and the `ctrl`/`K` hint <kbd> rendered by
+     docusaurus-search-local both use this token against
+     --ifm-color-emphasis-200. Infima's default (emphasis-500, #6b7280) only
+     reaches 3.9:1 on that background; emphasis-600 reaches 6.1:1. */
+  --ifm-navbar-search-input-placeholder-color: var(--ifm-color-emphasis-600);
+
   /* Card Colors */
   --ifm-card-background-color: #ffffff;
   --ifm-border-color: #e5e7eb;
@@ -200,6 +206,10 @@
   --ifm-color-emphasis-700: #e2e8f0;
   --ifm-color-emphasis-800: #f1f5f9;
   --ifm-color-emphasis-900: #f8fafc;
+
+  /* Same WCAG AA fix as the light theme: emphasis-500 (#94a3b8) is only 4.0:1
+     on emphasis-200 (#334155); emphasis-600 reaches 7.0:1. */
+  --ifm-navbar-search-input-placeholder-color: var(--ifm-color-emphasis-600);
 
   /* Card Colors */
   --ifm-card-background-color: #1e293b;

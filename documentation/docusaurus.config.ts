@@ -1,6 +1,7 @@
 import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import rehypeTaskListLabels from './src/remark/rehypeTaskListLabels';
 
 /** Optional GA4 measurement ID — enables page views + custom events when set. */
 const gtagMeasurementId = process.env.GTAG_MEASUREMENT_ID || process.env.GOOGLE_ANALYTICS_ID || '';
@@ -358,6 +359,9 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/docs',
+          // Names GFM task-list checkboxes so markdown checklists don't trip
+          // axe-core's `label` rule. See src/remark/rehypeTaskListLabels.ts.
+          rehypePlugins: [rehypeTaskListLabels],
           editUrl:
             'https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/documentation/',
           // Docs versioning: the latest cut version (e.g. "22.0") is served at the
