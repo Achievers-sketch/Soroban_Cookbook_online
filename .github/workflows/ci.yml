@@ -263,6 +263,10 @@ jobs:
           restore-keys: |
             cargo-examples-
 
+      - name: Check every example crate has a README
+        run: bash scripts/check-example-readmes.sh
+        continue-on-error: true
+
       - name: Run example tests
         run: bash scripts/test-examples.sh
         continue-on-error: true
