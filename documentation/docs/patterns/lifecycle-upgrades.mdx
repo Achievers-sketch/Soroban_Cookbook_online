@@ -4,12 +4,30 @@ sidebar_position: 6
 title: Contract Lifecycle & Upgrade Safety
 description: Authoritative guide on contract deployment phases, versioning, and upgrade safety in Soroban.
 image: /img/soroban-social-card.png
+# Phase 5 (issue #333): API keyword frontmatter for code-snippet search.
+keywords:
+  - upgrade
+  - set_wasm_hash
+  - update_current_contract_wasm
+  - deploy
+  - wasm
+  - contract upgrade
+  - migration
+  - versioning
+  - soroban_sdk
+  - Env
+  - deployer
+  - install
+  - bump_sequence
+  - ledger
+  - storage migration
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { Callout } from '@site/src/components/Callout';
 import { Alert } from '@site/src/components/Alert';
+import { CodeComparison } from '@site/src/components/CodeComparison';
 
 ## Overview
 
@@ -54,8 +72,19 @@ A healthy protocol moves through distinct phases, each with specific entry and e
 
 Upgrades must be protected by strict access control. In Soroban, the `upgrade` function should typically require the authorization of an admin or a decentralized governance body.
 
-```rust illustrative
-#[contractimpl]
+<CodeComparison
+  beforeLabel="Insecure (before)"
+  afterLabel="Authorized (after)"
+  title="Adding access control to the upgrade function"
+  language="rust"
+  before={`#[contractimpl]
+impl MyContract {
+    pub fn upgrade(env: Env, new_wasm_hash: BytesN<32>) {
+        // Anyone can upgrade the contract — dangerous!
+        env.deployer().update_current_contract_wasm(new_wasm_hash);
+    }
+}`}
+  after={`#[contractimpl]
 impl MyContract {
     pub fn upgrade(env: Env, new_wasm_hash: BytesN<32>) {
         let admin: Address = env.storage().instance().get(&DataKey::Admin).unwrap();
@@ -63,8 +92,8 @@ impl MyContract {
 
         env.deployer().update_current_contract_wasm(new_wasm_hash);
     }
-}
-```
+}`}
+/>
 
 <Callout variant="tip" title="Governance Best Practice">
 For high-value protocols, avoid single-key admin accounts. Use a multi-signature account or a DAO with a mandatory timelock (e.g., 7 days) to allow users to exit if they disagree with a pending upgrade.

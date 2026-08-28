@@ -1,3 +1,12 @@
+# Dependabot configuration for Soroban Cookbook
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+#
+# The documentation site uses Bun (bun.lock) under documentation/.
+# Dependabot's npm ecosystem updates package.json and regenerates bun.lock
+# when a Bun lockfile is present in that directory.
+version: 2
+updates:
+  # Application / documentation dependencies (Bun + package.json)
 version: 2
 updates:
   # Enable version updates for npm (Bun project dependencies under documentation/)
@@ -5,6 +14,31 @@ updates:
     directory: "/documentation"
     schedule:
       interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "javascript"
+    commit-message:
+      prefix: "chore(deps)"
+    # Groups reduce PR noise for non-major updates within the same ecosystem area
+    groups:
+      docusaurus:
+        patterns:
+          - "@docusaurus/*"
+      eslint:
+        patterns:
+          - "eslint*"
+          - "@typescript-eslint/*"
+      testing:
+        patterns:
+          - "vitest*"
+          - "@vitest/*"
+          - "@testing-library/*"
+          - "@playwright/*"
+          - "jsdom"
+
+  # GitHub Actions used by workflows under .github/workflows/
     open-pull-requests-limit: 10
 
   # Enable version updates for Cargo (Rust examples)
@@ -19,4 +53,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore(ci)"
     open-pull-requests-limit: 10
