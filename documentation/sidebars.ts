@@ -46,6 +46,7 @@ const sidebars: SidebarsConfig = {
         'concepts/introduction',
         'concepts/overview',
         'concepts/best-practices',
+        'concepts/error-handling',
         'concepts/storage',
         'concepts/authorization',
         'concepts/events',
