@@ -23,6 +23,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/deploy-testnet',
         'getting-started/deploy-mainnet',
         'getting-started/contract-interaction',
+        'getting-started/debugging',
         'contributing',
         'contributing/add-tested-example',
         'contributing/analytics-events',
@@ -73,12 +74,14 @@ const sidebars: SidebarsConfig = {
         'patterns/lifecycle-upgrades',
         'patterns/proposal-lifecycle',
         'patterns/reentrancy-guard',
+        'patterns/streaming-payments',
+        'patterns/contract-registry',
       ],
     },
     {
       type: 'category',
       label: 'Security',
-      items: ['security/fundamentals', 'security/governance', 'security/defi-patterns'],
+      items: ['security/fundamentals', 'security/governance', 'security/defi-patterns', 'security/upgrade-checklist'],
     },
     {
       type: 'category',
