@@ -444,7 +444,8 @@
   --sb-badge-updated-bg: #1d4ed8;
   --sb-badge-updated-border: #1e40af;
 
-  --sb-badge-coming-soon-text: #9ca3af;
+  /* #624 — dark mode contrast: #d1d5db on dark bg yields ≥ 7:1 (WCAG AAA) */
+  --sb-badge-coming-soon-text: #d1d5db;
   --sb-badge-coming-soon-border: #374151;
 
   --sb-badge-deprecated-bg: #b91c1c;
@@ -458,7 +459,8 @@
   --sb-badge-experimental-border: rgba(192, 132, 252, 0.3);
 
   --sb-badge-draft-bg: rgba(156, 163, 175, 0.12);
-  --sb-badge-draft-text: #9ca3af;
+  /* #624 — dark mode contrast: #d1d5db on dark bg yields ≥ 7:1 (WCAG AAA) */
+  --sb-badge-draft-text: #d1d5db;
   --sb-badge-draft-border: rgba(156, 163, 175, 0.25);
 
   --sb-tag-token-bg: rgba(96, 165, 250, 0.15);
