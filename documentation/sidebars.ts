@@ -114,6 +114,7 @@ const sidebars: SidebarsConfig = {
       label: 'Planning',
       items: [
         'planning/ab-testing',
+        'planning/code-playground',
         'planning/video-tutorial-getting-started',
         'planning/video-tutorial-first-contract',
       ],
