@@ -24,7 +24,7 @@ const config: Config = {
     newsletterEndpoint: process.env.NEWSLETTER_ENDPOINT ?? '',
     /** Soroban Cookbook Discord invite link. Set DISCORD_INVITE_URL at build time once the server is created. */
     discordInviteUrl: process.env.DISCORD_INVITE_URL ?? '',
-/**
+    /**
      * Sentry DSN for error monitoring (issue #136).
      * Set SENTRY_DSN in your CI/CD environment or .env.local.
      * When absent, Sentry is not initialised (safe for local dev).
@@ -63,7 +63,7 @@ const config: Config = {
         'http-equiv': 'Content-Security-Policy',
         content: [
           "default-src 'self'",
-"script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms",
+          "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms",
           "style-src 'self' 'unsafe-inline'",
           "img-src 'self' data: https:",
           "font-src 'self' data:",
@@ -154,8 +154,16 @@ const config: Config = {
   // ─── Search Analytics Client Module (issue #329) ──────────────────────────
   // Loads on every page to observe the search input and fire onQuery /
   // onResult analytics events via src/utils/searchAnalytics.ts.
+  //
+  // ─── Mermaid Zoom Client Module (issue #316) ──────────────────────────────
+  // Makes rendered Mermaid diagrams clickable, opening a zoomable/pannable
+  // lightbox view via src/clientModules/mermaidZoomModule.ts.
+  //
+  // ─── Touch Gesture Client Module ───────────────────────────────────────────
+  // Enables touch-based interactions and gestures for mobile users.
   clientModules: [
     require.resolve('./src/clientModules/searchAnalyticsModule.ts'),
+    require.resolve('./src/clientModules/mermaidZoomModule.ts'),
     require.resolve('./src/clientModules/touchGestureModule.ts'),
   ],
   markdown: {
@@ -388,6 +396,7 @@ const config: Config = {
             './src/css/badges-tags.css',
             './src/css/custom.css',
             './src/css/search-experience.css',
+            './src/css/mermaid-zoom.css',
           ],
         },
         ...(gtagMeasurementId
