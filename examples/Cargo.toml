@@ -28,5 +28,6 @@ members = [
     "upgradeable",
     "multi-token-vault",
     "multisig-wallet",
+    "royalty-splitter",
 ]
 resolver = "2"
