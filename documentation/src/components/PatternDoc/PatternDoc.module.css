@@ -25,9 +25,17 @@
   font-size: 0.8125rem;
   font-weight: 600;
   line-height: 1.2;
-  color: var(--ifm-color-primary);
+  /* The 12% primary tint lands near #e6f0eb, where --ifm-color-primary is
+     only 3.9:1. primary-darkest reaches 6.7:1 and still reads as brand green. */
+  color: var(--ifm-color-primary-darkest);
   background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
   border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 28%, transparent);
+}
+
+/* In dark mode the tint sits on a dark surface, so the brighter primary is the
+   readable choice; primary-darkest would be too close to the background. */
+[data-theme='dark'] .estimatedTime {
+  color: var(--ifm-color-primary);
 }
 
 .estimatedTimePrefix {
@@ -35,7 +43,6 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  opacity: 0.85;
 }
 
 .estimatedTimeLabel {
